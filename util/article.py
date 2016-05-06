@@ -88,7 +88,7 @@ class ArticleConverter:
       print('   schema:headline "{}" ;'.format(metadata['title'][0]),file=triples)
       print('   schema:datePublished "{}" ;'.format(metadata['published'][0]),file=triples)
       print('   schema:dateModified "{}" ;'.format(metadata['updated'][0]),file=triples)
-      print('   schema:isBasedOnUrl "{}" ;'.format(basedOn),file=triples)
+      print('   schema:isBasedOnUrl <{}> ;'.format(basedOn),file=triples)
       if ("keywords" in metadata):
          print('   schema:keywords {} ;'.format(','.join(['"' + m + '"' for m in metadata['keywords']])),file=triples)
       triples.write('   schema:author ')
