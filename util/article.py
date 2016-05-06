@@ -2,6 +2,8 @@ import CommonMark,re,argparse
 
 import sys,io,os,shutil
 
+from html import escape
+
 META_RE = re.compile(r'^[ ]{0,3}(?P<key>[A-Za-z0-9_-]+):\s*(?P<value>.*)')
 META_MORE_RE = re.compile(r'^[ ]{4,}(?P<value>.*)')
 
@@ -20,11 +22,14 @@ class ArticleConverter:
       glob = io.StringIO()
       metadata = {}
       hasMetadata = True
+      hasTitle = False
       line = md.readline()
       while hasMetadata:
          m = META_RE.match(line)
          if (not(m)):
             glob.write(line)
+            if not hasTitle and line[0:2]=='# ':
+               hasTitle = True
             glob.write('\n')
             hasMetadata = False
          else:
@@ -44,12 +49,14 @@ class ArticleConverter:
                   metadata[key].append(more.group('value').strip())
 
       for line in md:
+         if not hasTitle and line[0:2]=='# ':
+            hasTitle = True
          glob.write(line)
 
-      self.toHTML(glob.getvalue(),metadata,html)
+      self.toHTML(glob.getvalue(),metadata,html,generateTitle=not hasTitle)
       self.toTurtle(base,metadata,triples)
 
-   def toHTML(self,md,metadata,html):
+   def toHTML(self,md,metadata,html,generateTitle=False):
 
       uri = self.weburi + metadata['published'][0]
 
@@ -71,6 +78,9 @@ class ArticleConverter:
       html.write(']\n')
       print('}',file=html)
       print('</script>',file=html)
+
+      if generateTitle:
+         print("<h1>{}</h1>".format(escape(metadata['title'][0],quote=False)),file=html)
 
       print(CommonMark.commonmark(md),file=html)
 
