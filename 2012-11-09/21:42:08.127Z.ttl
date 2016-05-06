@@ -5,6 +5,6 @@
    schema:headline "Updates and yet more updates ..." ;
    schema:datePublished "2012-11-09T21:42:08.127Z" ;
    schema:dateModified "2012-11-09T21:42:08.127Z" ;
-   schema:isBasedOnUrl "http://alexmilowski.github.io/milowski-journal/2012-11-09/21:42:08.127Z.html" ;
+   schema:isBasedOnUrl <http://alexmilowski.github.io/milowski-journal/2012-11-09/21:42:08.127Z.html> ;
    schema:keywords "RDFa","Green Turtle","JSON-LD","XML Prague","XProc","Raspberry Pi","weather","phd" ;
    schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

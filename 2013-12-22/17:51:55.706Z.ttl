@@ -5,6 +5,6 @@
    schema:headline "MathML Christmas" ;
    schema:datePublished "2013-12-22T17:51:55.706Z" ;
    schema:dateModified "2013-12-22T17:51:55.706Z" ;
-   schema:isBasedOnUrl "http://alexmilowski.github.io/milowski-journal/2013-12-22/17:51:55.706Z.html" ;
+   schema:isBasedOnUrl <http://alexmilowski.github.io/milowski-journal/2013-12-22/17:51:55.706Z.html> ;
    schema:keywords "MathML" ;
    schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

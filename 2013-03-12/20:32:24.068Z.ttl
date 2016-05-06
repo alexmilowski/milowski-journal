@@ -5,6 +5,6 @@
    schema:headline "What is the Subject Origin?" ;
    schema:datePublished "2013-03-12T20:32:24.068Z" ;
    schema:dateModified "2013-03-12T20:32:24.068Z" ;
-   schema:isBasedOnUrl "http://alexmilowski.github.io/milowski-journal/2013-03-12/20:32:24.068Z.html" ;
+   schema:isBasedOnUrl <http://alexmilowski.github.io/milowski-journal/2013-03-12/20:32:24.068Z.html> ;
    schema:keywords "RDFa","RDFa API","JavaScript" ;
    schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

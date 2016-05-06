@@ -5,6 +5,6 @@
    schema:headline "Too Much Data and Too Little Memory" ;
    schema:datePublished "2012-06-29T12:26:20.418-07:00" ;
    schema:dateModified "2012-06-29T12:26:20.418-07:00" ;
-   schema:isBasedOnUrl "http://alexmilowski.github.io/milowski-journal/2012-06-29/12:26:20.418-07:00.html" ;
+   schema:isBasedOnUrl <http://alexmilowski.github.io/milowski-journal/2012-06-29/12:26:20.418-07:00.html> ;
    schema:keywords "MarkLogic","weather","XProc","big data" ;
    schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

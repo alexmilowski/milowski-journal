@@ -5,6 +5,6 @@
    schema:headline "Using RDFa to Annotate Images" ;
    schema:datePublished "2012-05-24T09:17:12.327-07:00" ;
    schema:dateModified "2012-05-24T09:17:12.327-07:00" ;
-   schema:isBasedOnUrl "http://alexmilowski.github.io/milowski-journal/2012-05-24/09:17:12.327-07:00.html" ;
+   schema:isBasedOnUrl <http://alexmilowski.github.io/milowski-journal/2012-05-24/09:17:12.327-07:00.html> ;
    schema:keywords "rdfa","javascript" ;
    schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

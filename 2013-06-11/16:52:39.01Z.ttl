@@ -5,6 +5,6 @@
    schema:headline "Microdata in Green Turtle" ;
    schema:datePublished "2013-06-11T16:52:39.01Z" ;
    schema:dateModified "2013-06-11T16:52:39.01Z" ;
-   schema:isBasedOnUrl "http://alexmilowski.github.io/milowski-journal/2013-06-11/16:52:39.01Z.html" ;
+   schema:isBasedOnUrl <http://alexmilowski.github.io/milowski-journal/2013-06-11/16:52:39.01Z.html> ;
    schema:keywords "RDFa","Microdata","Green Turtle" ;
    schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

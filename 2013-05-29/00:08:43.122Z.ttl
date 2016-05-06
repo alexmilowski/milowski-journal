@@ -5,6 +5,6 @@
    schema:headline "Green Turtle 1.0 Released!" ;
    schema:datePublished "2013-05-29T00:08:43.122Z" ;
    schema:dateModified "2013-05-29T00:08:43.122Z" ;
-   schema:isBasedOnUrl "http://alexmilowski.github.io/milowski-journal/2013-05-29/00:08:43.122Z.html" ;
+   schema:isBasedOnUrl <http://alexmilowski.github.io/milowski-journal/2013-05-29/00:08:43.122Z.html> ;
    schema:keywords "RDFa","JavaScript","Turtle","Green Turtle" ;
    schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

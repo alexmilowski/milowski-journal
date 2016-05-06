@@ -5,5 +5,5 @@
    schema:headline "Web-based Editor for Atomojo" ;
    schema:datePublished "2010-02-20T10:56:14-05:00" ;
    schema:dateModified "2010-02-20T10:56:14-05:00" ;
-   schema:isBasedOnUrl "http://alexmilowski.github.io/milowski-journal/2010-02-20/10:56:14-05:00.html" ;
+   schema:isBasedOnUrl <http://alexmilowski.github.io/milowski-journal/2010-02-20/10:56:14-05:00.html> ;
    schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

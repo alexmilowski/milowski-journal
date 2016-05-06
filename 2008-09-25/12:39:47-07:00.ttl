@@ -5,5 +5,5 @@
    schema:headline "Restlet is Awesome!" ;
    schema:datePublished "2008-09-25T12:39:47-07:00" ;
    schema:dateModified "2008-09-25T12:39:47-07:00" ;
-   schema:isBasedOnUrl "http://alexmilowski.github.io/milowski-journal/2008-09-25/12:39:47-07:00.html" ;
+   schema:isBasedOnUrl <http://alexmilowski.github.io/milowski-journal/2008-09-25/12:39:47-07:00.html> ;
    schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .
