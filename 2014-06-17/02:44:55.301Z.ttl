@@ -5,6 +5,6 @@
    schema:headline "Do Elements have URIs?" ;
    schema:datePublished "2014-06-17T02:44:55.301Z" ;
    schema:dateModified "2014-06-17T02:44:55.301Z" ;
-   schema:isBasedOnUrl "https://raw.githubusercontent.com/alexmilowski/milowski-journal/master/entries/2014-06-17/02:44:55.301Z.html" ;
+   schema:isBasedOnUrl "http://alexmilowski.github.io/milowski-journal/2014-06-17/02:44:55.301Z.html" ;
    schema:keywords "RDFa","Web","Green Turtle","MarkLogic","XPointer","RDFa API" ;
    schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

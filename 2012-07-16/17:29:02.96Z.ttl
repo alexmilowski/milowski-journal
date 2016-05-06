@@ -5,6 +5,6 @@
    schema:headline "Experiments with Big Weather Data in MarkLogic - Right-sizing and Indexing" ;
    schema:datePublished "2012-07-16T17:29:02.96Z" ;
    schema:dateModified "2012-07-16T17:29:02.96Z" ;
-   schema:isBasedOnUrl "https://raw.githubusercontent.com/alexmilowski/milowski-journal/master/entries/2012-07-16/17:29:02.96Z.html" ;
+   schema:isBasedOnUrl "http://alexmilowski.github.io/milowski-journal/2012-07-16/17:29:02.96Z.html" ;
    schema:keywords "MarkLogic","big data","weather" ;
    schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

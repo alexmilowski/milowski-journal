@@ -5,5 +5,5 @@
    schema:headline "MarkLogic World 2013: mesonet.info: A Large-scale Weather Database for Citizen Science" ;
    schema:datePublished "2013-04-12T21:22:46.184Z" ;
    schema:dateModified "2013-04-12T21:22:46.184Z" ;
-   schema:isBasedOnUrl "https://raw.githubusercontent.com/alexmilowski/milowski-journal/master/entries/2013-04-12/21:22:46.184Z.html" ;
+   schema:isBasedOnUrl "http://alexmilowski.github.io/milowski-journal/2013-04-12/21:22:46.184Z.html" ;
    schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

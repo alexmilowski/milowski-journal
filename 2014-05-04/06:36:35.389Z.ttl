@@ -5,6 +5,6 @@
    schema:headline "XProc to the Rescue: Restoring AtomPub" ;
    schema:datePublished "2014-05-04T06:36:35.389Z" ;
    schema:dateModified "2014-05-04T06:36:35.389Z" ;
-   schema:isBasedOnUrl "https://raw.githubusercontent.com/alexmilowski/milowski-journal/master/entries/2014-05-04/06:36:35.389Z.html" ;
+   schema:isBasedOnUrl "http://alexmilowski.github.io/milowski-journal/2014-05-04/06:36:35.389Z.html" ;
    schema:keywords "XProc","atom","atompub" ;
    schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

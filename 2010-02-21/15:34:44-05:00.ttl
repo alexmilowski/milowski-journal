@@ -5,5 +5,5 @@
    schema:headline "Using contenteditable in Atomojo's Editor" ;
    schema:datePublished "2010-02-21T15:34:44-05:00" ;
    schema:dateModified "2010-02-21T15:34:44-05:00" ;
-   schema:isBasedOnUrl "https://raw.githubusercontent.com/alexmilowski/milowski-journal/master/entries/2010-02-21/15:34:44-05:00.html" ;
+   schema:isBasedOnUrl "http://alexmilowski.github.io/milowski-journal/2010-02-21/15:34:44-05:00.html" ;
    schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

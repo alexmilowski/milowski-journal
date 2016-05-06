@@ -5,6 +5,6 @@
    schema:headline "Experiments with Big Weather Data in MarkLogic - The Naive Approach" ;
    schema:datePublished "2012-04-11T11:08:29.62-07:00" ;
    schema:dateModified "2012-04-11T11:08:29.62-07:00" ;
-   schema:isBasedOnUrl "https://raw.githubusercontent.com/alexmilowski/milowski-journal/master/entries/2012-04-11/11:08:29.62-07:00.html" ;
+   schema:isBasedOnUrl "http://alexmilowski.github.io/milowski-journal/2012-04-11/11:08:29.62-07:00.html" ;
    schema:keywords "MarkLogic","big data","weather" ;
    schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

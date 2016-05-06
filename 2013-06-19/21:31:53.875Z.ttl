@@ -5,6 +5,6 @@
    schema:headline "Managing Documents in MarkLogic with XProc" ;
    schema:datePublished "2013-06-19T21:31:53.875Z" ;
    schema:dateModified "2013-06-19T21:31:53.875Z" ;
-   schema:isBasedOnUrl "https://raw.githubusercontent.com/alexmilowski/milowski-journal/master/entries/2013-06-19/21:31:53.875Z.html" ;
+   schema:isBasedOnUrl "http://alexmilowski.github.io/milowski-journal/2013-06-19/21:31:53.875Z.html" ;
    schema:keywords "XProc","MarkLogic","XQuery","big data","Calabash","MLD Approach" ;
    schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

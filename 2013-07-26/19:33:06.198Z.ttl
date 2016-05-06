@@ -5,6 +5,6 @@
    schema:headline "Problems with Microdata" ;
    schema:datePublished "2013-07-26T19:33:06.198Z" ;
    schema:dateModified "2013-07-26T19:33:06.198Z" ;
-   schema:isBasedOnUrl "https://raw.githubusercontent.com/alexmilowski/milowski-journal/master/entries/2013-07-26/19:33:06.198Z.html" ;
+   schema:isBasedOnUrl "http://alexmilowski.github.io/milowski-journal/2013-07-26/19:33:06.198Z.html" ;
    schema:keywords "Microdata","RDFa","schema.org" ;
    schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .
