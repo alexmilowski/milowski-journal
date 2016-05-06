@@ -1,5 +1,5 @@
 
-OUTDIR=build
+OUTDIR=../milowski-journal-pages
 
 all:
 	mkdir -p $(OUTDIR)
