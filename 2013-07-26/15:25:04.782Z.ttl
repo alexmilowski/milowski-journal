@@ -1,0 +1,10 @@
+@base <http://www.milowski.com/journal/entry/2013-07-26T15:25:04.782Z> .
+@prefix schema: <http://schema.org/> .
+<>
+   a schema:BlogPosting ;
+   schema:headline "Green Turtle - Injection and Microdata Options" ;
+   schema:datePublished "2013-07-26T15:25:04.782Z" ;
+   schema:dateModified "2013-07-26T15:25:04.782Z" ;
+   schema:isBasedOnUrl "https://raw.githubusercontent.com/alexmilowski/milowski-journal/master/entries/2013-07-26/15:25:04.782Z.html" ;
+   schema:keywords "Green Turtle","RDFa","Microdata","Chrome Extension" ;
+   schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

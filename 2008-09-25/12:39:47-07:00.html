@@ -1,0 +1,42 @@
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2008-09-25T12:39:47-07:00">
+<script type="application/json+ld">
+{
+"@context" : "http://schema.org/",
+"@id" : "http://www.milowski.com/journal/entry/2008-09-25T12:39:47-07:00",
+"headline" : "Restlet is Awesome!",
+"datePublished" : "2008-09-25T12:39:47-07:00",
+"dateModified" : "2008-09-25T12:39:47-07:00",
+"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
+}
+</script>
+<h1>Restlet is Awesome!</h1>
+<p><a href="http://www.restlet.org">Restlet</a> is really an amazing project.  It is so easy to create a REST-oriented service.</p>
+<p>For example, here's an example of a hello world service:</p>
+<pre><code>public class HelloWorld extends Application {
+   public HelloWorld(Context context) {
+      super(context);
+   }
+
+   public Restlet createRoot() {
+       Router router = new Router(getContext());
+
+       router.attach(&quot;/hello&quot;,new Restlet(getContext()) {
+           public void handle(Request request, Response response) {
+                response.setStatus(Status.SUCCESS_OK);
+                response.setEntity(new StringRepresentation(&quot;Hello World!&quot;,MediaType.TEXT_PLAIN);
+           }
+       });
+
+       router.attach(&quot;/goodbye&quot;,new Restlet(getContext()) {
+           public void handle(Request request, Response response) {
+                response.setStatus(Status.SUCCESS_OK);
+                response.setEntity(new StringRepresentation(&quot;Goodbye Cruel World!&quot;,MediaType.TEXT_PLAIN);
+           }
+       });       return router; 
+   }
+}
+</code></pre>
+<p>Here we have an application that responds to two resource paths: &quot;/hello&quot; and &quot;/goodbye&quot;.  Each is is associated by attaching a &quot;restlet&quot; to a router.</p>
+<p>Now, we could get more complicated and handle the requests more elegantly, but the above demonstrates how easy it is to route requests to instances that can handle them.</p>
+
+</article>

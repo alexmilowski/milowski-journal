@@ -1,0 +1,9 @@
+@base <http://www.milowski.com/journal/entry/2008-09-25T14:53:42-07:00> .
+@prefix schema: <http://schema.org/> .
+<>
+   a schema:BlogPosting ;
+   schema:headline "slow & painful" ;
+   schema:datePublished "2008-09-25T14:53:42-07:00" ;
+   schema:dateModified "2008-09-25T14:53:42-07:00" ;
+   schema:isBasedOnUrl "https://raw.githubusercontent.com/alexmilowski/milowski-journal/master/entries/2008-09-25/14:53:42-07:00.html" ;
+   schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

@@ -1,0 +1,33 @@
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2013-06-07T15:22:33.26Z">
+<script type="application/json+ld">
+{
+"@context" : "http://schema.org/",
+"@id" : "http://www.milowski.com/journal/entry/2013-06-07T15:22:33.26Z",
+"headline" : "Scientific Measurements in Schema.org",
+"datePublished" : "2013-06-07T15:22:33.26Z",
+"dateModified" : "2013-06-07T15:22:33.26Z",
+"keywords" : ["rdfa","schema.org","science","SI units"],
+"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
+}
+</script>
+<h1>Scientific Measurements in Schema.org</h1>
+<p>The physical sciences use the idea of a <a href="http://en.wikipedia.org/wiki/Quantity#Quantity_in_physical_science">quantity</a> to measure the world around us.  While that might seem simple, basing a measurement on a system of units that can be quantified, measured accurately, verified isn't exactly simple.  Nevertheless, a great deal of time and effort has converged into the <a href="http://en.wikipedia.org/wiki/International_System_of_Units">International System of Units (SI)</a> .</p>
+<p>One of the good things about this system is that you can compose a base unit and a prefix to deal with scale.  That is, you can combine a base unit with a prefix to get a different scale of measurement (e.g. m (meter) versus km (1000 meters), cm (1/100 of a meter), etc.).  This allows a whole scheme of measurements where the scale is known along with a base unit without constructing separate names or symbols.</p>
+<p>In an attempt to align my <a href="http://www.mesonet.info/">weather data efforts</a> with <a href="http://www.schema.org/">schema.org</a> 's types, I looked into what was available currently in either the <a href="http://www.schema.org/docs/full.html">current types</a> or <a href="http://www.w3.org/wiki/WebSchemas/SchemaDotOrgProposals">proposals</a> for representing quantities.  The most obvious candidate is <a href="http://www.schema.org/QuantitativeValue">QuantitativeValue</a> that has a <code>value</code> and <code>unitCode</code> property.  The unfortunate part of this is that <code>unitCode</code> is a UN/CEFACT code and, if you look at the codes in <a href="http://www.unece.org/cefact/xml_schemas/index.html">their XML Schemas</a> , you'll see all kinds of odd units and codes that aren't a good match for SI units nor their commonly used symbols.  Yet, this type came from valid uses in the <a href="http://www.heppnetz.de/projects/goodrelations/">Good Relations vocabulary</a> and, in that context, the use of UN/CEFACT makes sense.</p>
+<p>To further complicate this issue, there are generic properties in the schema.org types of <code>height</code> , <code>width</code> , <code>depth</code> , and <code>weight</code> and one would expect, going forward, to use these in non-UN/CEFACT contexts.  At this point, there are two choices: make a new class for quantities or modify QuantitativeValue.  If you ignore the odd name of  “QuantitativeValue” over  “Quantity” , I believe the right choices is to modify and add properties that can capture SI units and scientific quantities it a better way.</p>
+<p>This is where the <a href="http://www.qudt.org/">QUDT (Quantities, Units, Dimensions, and Data Types in OWL and XML)</a> comes into play.  While I highly recommend reading this specification, the results come down to some basic classes and properties that are very useful:</p>
+<ul>
+<li>qudt:QuantityValue - the actual class for specifying a value that the numeric value, symbol, and unit defined.</li>
+<li>qudt:symbol - the unit symbol property (a string).</li>
+<li>qudt:unit - the unit defined as a qudt:Unit (essentially a URI).</li>
+</ul>
+<p>QUDT has the interesting property that it defines a vocabulary of SI units as well as non-SI units that can be mapped.  Each instance of qudt:Unit has a name (a URI) and defines the necessary property values needed to map from that unit to some base SI unit.  For example, the Celsius temperature unit is defined against the Kelvin temperature SI base unit.</p>
+<p>The result is simply that schema.org can use the names (the URIs) of the units defined by QUDT without necessarily incorporating the whole QUDT hierarchy.  If you want the full graph, you can incorporate the QUDT vocabulary and things should work out well.</p>
+<p>My proposal to modify QuantitativeValue is simple:</p>
+<ul>
+<li>Add a <code>unitSymbol</code> property as a string to capture the common string label of the unit.  This is distinct from unitCode that will remain a UN/CEFACT code.</li>
+<li>Add a <code>unit</code> property that is a URI that names the unit.  This allows the QUDT vocabulary to be used directly.</li>
+</ul>
+<p>Now the problem is getting this through whatever schema.org process exists.  A</p>
+
+</article>

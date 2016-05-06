@@ -1,0 +1,54 @@
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2012-07-16T17:29:02.96Z">
+<script type="application/json+ld">
+{
+"@context" : "http://schema.org/",
+"@id" : "http://www.milowski.com/journal/entry/2012-07-16T17:29:02.96Z",
+"headline" : "Experiments with Big Weather Data in MarkLogic - Right-sizing and Indexing",
+"datePublished" : "2012-07-16T17:29:02.96Z",
+"dateModified" : "2012-07-16T17:29:02.96Z",
+"keywords" : ["MarkLogic","big data","weather"],
+"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
+}
+</script>
+<h1>Experiments with Big Weather Data in MarkLogic - Right-sizing and Indexing</h1>
+<p>A lot has happened since my last update on my  “big data” weather experiment with <a href="http://www.marklogic.com/">MarkLogic</a> .  I've been through a server crash, low memory trouble, reloaded my database, calculated the actual server requirements, and migrated to a new server.   In summary:  “Whew!  That was a lot of work and hair pulling.”</p>
+<p>Most of my troubles started with allowing my import process to just run its course.  I knew I'd eventually outgrow my server size and it happened a bit before I thought it would.  While the server OS crash was rather unexpected, the recovery was certainly a task.  Once you have too much content in your database for the server you have, doing anything takes a long time.</p>
+<p>I decided that I really didn't need a geospatial index on all of the weather reports given that I had another that could give me the location of each station.  The idea was to reduce the storage costs.  That required all the content in the database to be reindexed--which at about 190GB+ was going to take a long time given the constrained server.</p>
+<p>That assumption was just all wrong.  First, the re-indexing was taking a very long time.  After several days of waiting I just gave up and cleared the forest.  Importing a smaller amount of data and testing the indices (sage advice from Norm Walsh) was the better path.  It also allowed me to calculate the amount of memory required for a month's worth of data according to <a href="http://stackoverflow.com/questions/11196119/memory-usage-planning-recommendations">Michael Blakeyley's method</a> .</p>
+<p>As I said, I cleared the forest and started up a new EC2 instance with a higher CPU allocation (<a href="http://aws.amazon.com/ec2/instance-types/">c1.medium</a> ) and ran three separate import processes to re-load the data.  At the the point where I had about 3 weeks worth of data, I merged all the stands and calculated the memory requirements at: <code>3968MB * 8/3 * 4/3 = 14.1GB</code> .</p>
+<p>I was able to get similar performance to what I had been getting before the server was overloaded with 3 weeks of data except that one of my reports was very slow.  I had dropped the geospatial index over all of the weather reports and that report now had to perform a for loop with a index-based query to retrieve the number of reports per quadrangle.  The result was a much slower response when you need to do that for all the quadrangles.  This query change is show below:</p>
+<pre><code>
+sum(
+   for $s in cts:search(
+        collection(&quot;http://.../stations/&quot;), 
+        cts:element-attribute-pair-geospatial-query(
+            xs:QName(&quot;s:station&quot;), QName(&quot;&quot;,&quot;latitude&quot;), QName(&quot;&quot;,&quot;longitude&quot;),
+            $quad) )
+       return xdmp:estimate(
+            collection(concat(&quot;http://.../weather/&quot;,$s/s:station/@id))
+            /s:report[@received&gt;=$dtstart and @received&lt;=$dtend]))
+
+</code></pre>
+<p>As an experiment, I added back the geospatial index on all the weather reports and waited for the re-index to complete.  This time the re-index completed in a rational amount of time.  The result was what I expected (i.e. faster, same as before) and the query is listed below.</p>
+<pre><code>
+xdmp:estimate(
+   cts:search(
+       collection(&quot;http://.../weather/&quot;)/s:report,
+           cts:and-query(
+               (cts:element-attribute-range-query(
+                    xs:QName(&quot;s:report&quot;), QName(&quot;&quot;,&quot;received&quot;),&quot;&gt;=&quot;,$dtstart),
+                cts:element-attribute-range-query(
+                    xs:QName(&quot;s:report&quot;), QName(&quot;&quot;,&quot;received&quot;),&quot;&lt;=&quot;,$dtend),
+                cts:element-attribute-pair-geospatial-query(
+                    xs:QName(&quot;s:report&quot;), QName(&quot;&quot;,&quot;latitude&quot;), QName(&quot;&quot;,&quot;longitude&quot;), 
+                    $quad) ) )))
+
+</code></pre>
+<p>Adding the index increased the in-memory stand cost and so the new memory requirements are at: <code>4457MB * 8/3 * 4/3 = 15.8GB</code> .   Given the disk space usage increase was minimal, the increased cost seemed nominal in comparison to the massive increase in performance for the above query.  As such, the additional memory is worth every byte.</p>
+<p>Originally, the server also ran out of disk space.  To address this problem and to sort out disk performance, I moved to a RAID10 device over eight 200GB EBS volumes.  From everything I've read, this should provide better performance than a single 800GB EBS volume.  I haven't actually tested that theory but that change certainly hasn't made the server response for adding content or queries slower.</p>
+<p>Finally, I moved the whole thing over to a new EC2 instance (<a href="http://aws.amazon.com/ec2/instance-types/">m2.xlarge</a> ) that has 17.1GB of memory and more EC2 Compute Units (more CPU).  That change was the real test of all of these configuration changes.  The whole in-stand memory cost should be able to be satisfied by the new server instance.</p>
+<p>The result was fantastic.  The cost of the most expensive reports all the way through to page generation has dropped to less than two seconds.  That includes the latency from my browser, on my desktop, through my OK network connection to Amazon AWS's us-east-1c availability zone.</p>
+<p>The result is that I know that I can store at least one month of data without penalty on this system.  I'm going to be tracking the cost increases and any change in performance over the next few weeks.  Ultimately, I want a cluster plan for how big each forest is allowed to get and how many EC2 instances, EBS volumes, etc. I'll need to support that.</p>
+<p>Right now, I'm just a happy MarkLogic camper.</p>
+
+</article>

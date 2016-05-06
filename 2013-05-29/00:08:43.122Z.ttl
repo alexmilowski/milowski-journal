@@ -1,0 +1,10 @@
+@base <http://www.milowski.com/journal/entry/2013-05-29T00:08:43.122Z> .
+@prefix schema: <http://schema.org/> .
+<>
+   a schema:BlogPosting ;
+   schema:headline "Green Turtle 1.0 Released!" ;
+   schema:datePublished "2013-05-29T00:08:43.122Z" ;
+   schema:dateModified "2013-05-29T00:08:43.122Z" ;
+   schema:isBasedOnUrl "https://raw.githubusercontent.com/alexmilowski/milowski-journal/master/entries/2013-05-29/00:08:43.122Z.html" ;
+   schema:keywords "RDFa","JavaScript","Turtle","Green Turtle" ;
+   schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

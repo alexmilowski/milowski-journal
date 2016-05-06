@@ -1,0 +1,19 @@
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2013-05-29T00:08:43.122Z">
+<script type="application/json+ld">
+{
+"@context" : "http://schema.org/",
+"@id" : "http://www.milowski.com/journal/entry/2013-05-29T00:08:43.122Z",
+"headline" : "Green Turtle 1.0 Released!",
+"datePublished" : "2013-05-29T00:08:43.122Z",
+"dateModified" : "2013-05-29T00:08:43.122Z",
+"keywords" : ["RDFa","JavaScript","Turtle","Green Turtle"],
+"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
+}
+</script>
+<h1>Green Turtle 1.0 Released!</h1>
+<p>I've just released 1.0 of <a href="https://code.google.com/p/green-turtle/">Green Turtle</a> .  My implementation now passes <strong>all</strong> the tests in the W3C conformance test suite for both <a href="http://www.w3.org/TR/rdfa-core/">RDFa 1.1</a> and <a href="http://www.w3.org/TR/turtle/">Turtle</a> .</p>
+<p>There is also a great new feature that integrates Turtle handling directly into the API and allows for automatic processing of embedded Turtle.  This allows data providers to use RDFa or <a href="http://www.w3.org/TR/turtle/#in-html">embedded Turtle</a> directly in their documents and Green Turtle will do the right thing!</p>
+<p>Also, this release supports RDFa in HTML as specified in the <a href="http://www.w3.org/TR/html-rdfa/">latest draft</a> and passes all the relevant tests for that processing mode.</p>
+<p>Finally, <a href="https://code.google.com/p/green-turtle/wiki/MicroAPI">the API</a> has been adjusted to allow direct access to representation parsers (e.g. Turtle).  This feature allows a developer to retrieve or construct triples via a representation like Turtle and then merge them into the current document's data.  As such, all the nice features of the RDFa API are available to the developer for Turtle as well.</p>
+
+</article>

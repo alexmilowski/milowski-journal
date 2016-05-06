@@ -1,0 +1,10 @@
+@base <http://www.milowski.com/journal/entry/2014-05-07T04:19:29.985Z> .
+@prefix schema: <http://schema.org/> .
+<>
+   a schema:BlogPosting ;
+   schema:headline "An Introduction to My PhD Research" ;
+   schema:datePublished "2014-05-07T04:19:29.985Z" ;
+   schema:dateModified "2014-05-07T04:19:29.985Z" ;
+   schema:isBasedOnUrl "https://raw.githubusercontent.com/alexmilowski/milowski-journal/master/entries/2014-05-07/04:19:29.985Z.html" ;
+   schema:keywords "phd","science","PAN","web","opendata","Edinburgh" ;
+   schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

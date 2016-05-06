@@ -1,0 +1,10 @@
+@base <http://www.milowski.com/journal/entry/2013-03-12T06:08:53.199Z> .
+@prefix schema: <http://schema.org/> .
+<>
+   a schema:BlogPosting ;
+   schema:headline "Refactoring the RDFa API - Getting the Data" ;
+   schema:datePublished "2013-03-12T06:08:53.199Z" ;
+   schema:dateModified "2013-03-12T06:08:53.199Z" ;
+   schema:isBasedOnUrl "https://raw.githubusercontent.com/alexmilowski/milowski-journal/master/entries/2013-03-12/06:08:53.199Z.html" ;
+   schema:keywords "RDFa","JavaScript","RDFa API" ;
+   schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

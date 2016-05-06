@@ -1,0 +1,127 @@
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2012-09-19T15:38:11.827Z">
+<script type="application/json+ld">
+{
+"@context" : "http://schema.org/",
+"@id" : "http://www.milowski.com/journal/entry/2012-09-19T15:38:11.827Z",
+"headline" : "RDFa in the Browser",
+"datePublished" : "2012-09-19T15:38:11.827Z",
+"dateModified" : "2012-09-19T15:38:11.827Z",
+"keywords" : ["RDFa","browser"],
+"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
+}
+</script>
+<h1>RDFa in the Browser</h1>
+<p>While there is a lot talk about how <a href="http://www.w3.org/TR/rdfa-core/">RDFa</a> is or will be used by search engines and others for indexing, my main focus has been on how authors can use RDFa to encode  “local knowledge.” Services that are local to the page, most often implemented by inclusion of some script, act upon such local knowledge that is encoded somewhere in the page.  In the past, people used the <code>class</code> or <code>id</code> attributes to identify the targeted content and then some amount of scripting made the rest of the connections.</p>
+<p>I'm interested in using RDFa in this role of encoding local knowledge.  Once the author has made annotations using RDFa, a well-written service can just be included by referencing a script that acts upon the page by locating elements with certain type annotations.  An example of this is my post about <a href="http://www.milowski.com/journal/entry/2012-05-24T09:17:12.327-07:00/"><cite>Using RDFa to Annotate Images</cite></a> where images are overlaid with annotations drawn by inserting a canvas layer into the document.</p>
+<p>The recent 0.19 release of <a href="http://code.google.com/p/green-turtle/">Green Turtle</a> provides the <a href="http://www.w3.org/TR/rdfa-api/">RDFa API</a> and extensions that make building these services much easier.  At the core is an RDFa 1.1 compliant processor that produces the underlying triples, stores them as a graph, and has back-pointers to their origins from the document.  With the RDFa API, you can use that API to go back and forth between the RDF graph and the document.</p>
+<h2>Using Green Turtle</h2>
+<p>Using <a href="http://code.google.com/p/green-turtle/">Green Turtle</a> to provide the <a href="http://www.w3.org/TR/rdfa-api/">RDFa API</a> to your web page is as simple as just including a script.  The main script is available for <a href="http://green-turtle.googlecode.com/files/RDFa.min.0.19.0.js">download</a> from the project page.  Once you've included the script, it will automatically attach itself to your HTML/XHTML web page.  After RDFa processing has completed, the triples are available to any local application.</p>
+<p>Once the processing has completed, any script can access the triples.  For example, if you want to find specific elements by the <code>typeof</code> annotation used, you would write:</p>
+<pre><code>
+var elements = document.getElementsByType(&quot;http://example.org/mytype&quot;)
+
+</code></pre>
+<p>and the <code>elements</code> variable now holds an array of elements from the document that were annotated with the type URI <code>http://example.org/mytype</code> .</p>
+<h2>RDFa in Action</h2>
+<p>It is quite simple to type links using RDFa by adding a <code>typeof</code> attribute to a anchor element:</p>
+<pre><code>
+&lt;a href=&quot;http://www.milowski.com/#alex&quot; typeof=&quot;http://example.org/Person/ref&quot;&gt;Alex Milowski&lt;/a&gt;
+
+</code></pre>
+<p>and elsewhere you can describe that link:</p>
+<pre><code>
+&lt;div resource=&quot;http://www.milowski.com/#alex&quot; typeof=&quot;Person&quot; vocab=&quot;http://schema.org/&quot;&gt;
+&lt;span property=&quot;email&quot;&gt;alex@milowski.com&lt;/span&gt;, 
+&lt;span property=&quot;alumniOf&quot;&gt;University of Minnesota&lt;/span&gt;, 
+&lt;span property=&quot;alumniOf&quot;&gt;San Francisco State University&lt;/span&gt;, 
+&lt;span property=&quot;affiliation&quot;&gt;University of Edinburgh&lt;/span&gt;
+&lt;/div&gt;
+
+</code></pre>
+<p>And then you can make it do something:</p>
+<p>using the following script:</p>
+<pre><code>
+var link = document.getElementsByType(&quot;http://example.org/Person/ref&quot;)[0];
+var alumniOf = document.data.getValues(link.href,&quot;http://schema.org/alumniOf&quot;);
+var affiliation = document.data.getValues(link.href,&quot;http://schema.org/affiliation&quot;);
+link.onclick = function() {
+    alert(&quot;Currently at &quot;+affiliation+&quot;, alumni of &quot;+alumniOf);
+    return false;
+}
+
+</code></pre>
+<div resource="http://www.milowski.com/#alex" style="display: none" typeof="Person" vocab="http://schema.org/">
+<span property="email">alex@milowski.com</span>, 
+<span property="alumniOf">University of Minnesota</span>, 
+<span property="alumniOf">San Francisco State University</span>, 
+<span property="affiliation">University of Edinburgh</span>
+</div><script type="text/javascript">
+document.addEventListener(
+      &quot;rdfa.loaded&quot;,
+      function() {
+         var link = document.getElementsByType(&quot;http://example.org/Person/ref&quot;)[0];
+         var alumniOf = document.data.getValues(link.href,&quot;http://schema.org/alumniOf&quot;);
+         var affiliation = document.data.getValues(link.href,&quot;http://schema.org/affiliation&quot;);
+         link.onclick = function() {
+            alert(&quot;Currently at &quot;+affiliation+&quot;, alumni of &quot;+alumniOf);
+            return false;
+         }
+      },
+      false
+    );
+</script>
+<h2>Extensions</h2>
+<p>The <a href="http://www.w3.org/TR/rdfa-api/">RDFa API</a> is only a working group note.  As such, there is still debate about what it should and shouldn't contain. Meanwhile, Green Turtle provides a number of useful extensions that are documented on the <a href="http://code.google.com/p/green-turtle/">project page</a> .</p>
+<p>Notably, every element that is a subject origin (e.g. something with an <code>about</code> , <code>typeof</code> , or <code>resource</code> attribute) has a property called data.  This property provides the subject URI and types:</p>
+<ol>
+<li><code>element.data.id</code> - the subject URI.</li>
+<li><code>element.data.types</code> - an array of type URIs.</li>
+</ol>
+<p>This becomes very useful to find the subject URI when you retrieve an element by type:</p>
+<pre><code>
+document.getElementsByType(&quot;http://example.org/mytype&quot;)[0].data.id
+
+</code></pre>
+<p>Another useful extension is the ability to get descendant elements by type.  Often, once you've located an element, you may want to find a descendant of a specific type.  The <code>Element.getElementsByType(uri)</code> method takes a type URI and finds all descendant elements which have been annotated with a <code>typeof</code> attribute with that specific value.</p>
+<p>Again, all of these extensions are documented on the <a href="http://code.google.com/p/green-turtle/">project page</a> .</p>
+<h2>Using the RDFa Processor Directly</h2>
+<p>Some users may want to harvest the triples for their own purposes without using the RDFa API.  There is <a href="http://green-turtle.googlecode.com/files/RDFaProcessor.min.0.19.0.js">another packaging</a> of Green Turtle for this purpose.  A simple callback processor can be created by extending the <code>RDFaProcessor</code> class:</p>
+<pre><code>
+CallbackProcessor.prototype = new RDFaProcessor();
+CallbackProcessor.prototype.constructor=RDFaProcessor;
+function CallbackProcessor() {
+   RDFaProcessor.call(this);
+}
+
+CallbackProcessor.prototype.newSubjectOrigin = function(origin,subject) {
+   console.log(&quot;New origin for &quot;+subject);
+}
+
+CallbackProcessor.prototype.addTriple = function(origin,subject,predicate,object) {
+   console.log(&quot;New triple: &quot;+subject+&quot;, predicate &quot;+predicate+
+               &quot;, object &quot;+object.value+&quot;, &quot;+object.language+&quot;, &quot;+object.type);
+}
+
+</code></pre>
+<h2>Tricky Bits: Timing, Changes, and Other Documents</h2>
+<p>When you include the script, by default it will process the current document and at some point, shortly after the document has completely loaded, the RDFa processing will be completed.  This is the consequence of the browser not having a native implementation of RDFa.  As a result, if you have other scripts that want to consume RDFa and also act when the document has loaded, you have a timing problem.</p>
+<p>Green Turtle provides a <code>rdfa.loaded</code> event that can be used to detect when the RDFa processing is complete after document loading has completed.  The use of the event is straight forward:</p>
+<pre><code>
+document.addEventListener(
+   &quot;rdfa.loaded&quot;,
+   function() {
+      // your stuff here
+   },
+   false
+);
+
+</code></pre>
+<p>Also, currently Green Turtle doesn't track changes to the document.  If you update the document locally, you'll need to re-process the document to update the RDF graph.  This is a simple call:</p>
+<pre><code>
+RDFa.attach(document,true);
+
+</code></pre>
+<p>The second argument of true tells the processor that it needs to update the graph.</p>
+<p>In general, the <code>RDFa.attach()</code> function can be used to invoke RDFa processing on any document.  If you load another document via <code>XMLHttpRequest</code> , you can harvest RDFa from that document by just calling <code>RDFa.attach(document)</code> .</p>
+
+</article>

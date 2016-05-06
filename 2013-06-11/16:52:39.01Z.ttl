@@ -1,0 +1,10 @@
+@base <http://www.milowski.com/journal/entry/2013-06-11T16:52:39.01Z> .
+@prefix schema: <http://schema.org/> .
+<>
+   a schema:BlogPosting ;
+   schema:headline "Microdata in Green Turtle" ;
+   schema:datePublished "2013-06-11T16:52:39.01Z" ;
+   schema:dateModified "2013-06-11T16:52:39.01Z" ;
+   schema:isBasedOnUrl "https://raw.githubusercontent.com/alexmilowski/milowski-journal/master/entries/2013-06-11/16:52:39.01Z.html" ;
+   schema:keywords "RDFa","Microdata","Green Turtle" ;
+   schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

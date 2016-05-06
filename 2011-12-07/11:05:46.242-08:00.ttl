@@ -1,0 +1,10 @@
+@base <http://www.milowski.com/journal/entry/2011-12-07T11:05:46.242-08:00> .
+@prefix schema: <http://schema.org/> .
+<>
+   a schema:BlogPosting ;
+   schema:headline "Bad Choices in Forwards Compatibility within IE" ;
+   schema:datePublished "2011-12-07T11:05:46.242-08:00" ;
+   schema:dateModified "2011-12-07T11:05:46.242-08:00" ;
+   schema:isBasedOnUrl "https://raw.githubusercontent.com/alexmilowski/milowski-journal/master/entries/2011-12-07/11:05:46.242-08:00.html" ;
+   schema:keywords "html5","IE","web" ;
+   schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

@@ -1,0 +1,42 @@
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2014-06-17T02:44:55.301Z">
+<script type="application/json+ld">
+{
+"@context" : "http://schema.org/",
+"@id" : "http://www.milowski.com/journal/entry/2014-06-17T02:44:55.301Z",
+"headline" : "Do Elements have URIs?",
+"datePublished" : "2014-06-17T02:44:55.301Z",
+"dateModified" : "2014-06-17T02:44:55.301Z",
+"keywords" : ["RDFa","Web","Green Turtle","MarkLogic","XPointer","RDFa API"],
+"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
+}
+</script>
+<h1>Do Elements have URIs?</h1>
+<p>I was discussing a problem with triples generated from RDFa and the in-browser applications I have developed using <a href="https://github.com/alexmilowski/green-turtle">Green Turtle</a>  with a learned colleague of mine whose opinions I value greatly. In short, I wanted to duplicate the kinds of processing I'm doing in the browser so I can run it through XProc and do more complicated processing of the documents. Yet, I rely on the <em>origin of triples</em>  in the document for my application to work.</p>
+<p>His response was  “just generate a URI” and I pushed back a bit. I don't think of the origin of a triple as a thing that is easily named with a URI and I need to explain why I believe that.</p>
+<p>Why do I care?  Because I do things with RDFa in the browser (a simple <a href="http://www.milowski.com/journal/entry/2012-05-24T09:17:12.327-07:00/">example</a> and a <a href="http://www.mesonet.info/">complicated one</a> ) and sometimes I want to do the same thing outside of the browser; other tools are failing me right now.</p>
+<h2>A Bit of History</h2>
+<p>Some of you might remember <a href="http://www.w3.org/TR/xptr-framework/">XPointer Framework </a> that provided a mechanism for embedding a pointer into the fragment identifier.  In theory, you can point to specific elements <a href="http://www.w3.org/TR/xptr-element/">by using  “tumblers” </a> (e.g.,  <code>/1/2</code> is the second child of the first element) or by a <a href="http://www.w3.org/TR/xptr-xpointer/">pointer</a> (i.e., an XPath expression) but you might need to deal with the complexity of whatever namespaces your document uses.  The result is something that might not be so easy to parse, cut-n-paste, or otherwise manipulate but it should work.</p>
+<p>Yet, we really don't have XPointer functionality in browsers except possibly in relation to some minimal form necessary for <a href="http://www.w3.org/TR/SVG/">SVG's</a> use of <a href="http://www.w3.org/TR/xlink11/">XLink</a> .  Some of it might have to do with the complexity involved and diminishing returns.  That is, people have gotten along with naked fragment identifiers and the id attribute for quite awhile.  Others have usurped the fragment portion of the URI for other nefarious purposes (e.g., application state).</p>
+<h2>Nothing is Free</h2>
+<p>In the browser, there is no support other than for naked fragment identifiers that map to HTML's id attribute.  We don't even have consistent <code>xml:id</code> support within the browsers.  Not to mention, there is the conflict of HTML's id attribute and xml:id when serializing as XML syntax.  Keep in mind, developers have to implement whatever we cook up and time or mind share is not on XPointer's side.</p>
+<p>The net is that we get nothing for free and we have little to rely upon.</p>
+<h2>Fragile Pointers</h2>
+<p>There is probably an implicit rule for the Web:</p>
+<p>We learned that with links on the Web and gave things unique URIs.  We then we learned that we need to assign identifiers to portions of content within Web resources for similar reasons.  Extra identifiers don't hurt and they give people the ability to point at specific things in your content.  Thus, having a good scheme for a liberal sprinkling of identifiers is a good idea.</p>
+<p>Unfortunately, thoughtful content doesn't always happen.  Some might say that it rarely happens.  As such, if you want to point to specific things and they don't have identifiers, you are out of luck.  XPointer was suppose to help solve that and you didn't get it.</p>
+<p>But my original problem is not about linking and is instead about tracking origins  <strong>during the processing</strong> of the document. The <a href="http://www.w3.org/TR/rdfa-api/">RDFa API</a> that Green Turtle implements provides the ability to get elements by their type or specific property values.  This allows the ability to write applications that process elements based on their type and various other annotations to go between the annotation graph of triples and the document to  “make things happen ” in the very same document.</p>
+<p>I don't want to generate a URI, nor a pointer, and doing so feels like work around.  It is a result of a system that isn't designed to track origin or, dare I say, provenance.</p>
+<h2>Provenance?</h2>
+<p>In my opinion, the origin of a triple isn't the common use of the term  “provenance” as used in many Semantic Web communities.  Often, provenance means the Web resource from whence the triple was generated and not the element node.  To complicate this, provenance can also mean the  “earliest known history” and so the term is very overloaded.</p>
+<p>A triple in RDFa originates from a particular element. In a few cases (e.g.,  <code>typeof</code> attributes with more than one type), an element can generate more than one triple.  Meanwhile, in reverse, every triple from RDFa annotations has a single element node that is its origin.</p>
+<p>Thus, I prefer  “origin” over  “provenance” so that I can avoid the overloaded and confusing use of the word provenance in both industry and research.</p>
+<h2>Interoperability?</h2>
+<p>From any Web resource annotated with RDFa you can generate <a href="http://www.w3.org/TR/turtle/">Turtle</a> or <a href="http://www.w3.org/TR/json-ld/">JSON-LD</a> output that represents the triples harvested from the document. Unfortunately, we lose any information about the origin of a triple unless we generate more information.  Such additional information would need to have a URI or pointer to the element from which the triple was generated.  That brings us full circle and left holding an empty bag.</p>
+<p>Any tool that processes the RDFa directly has this information when it harvests the triples.  Within that context, we can use that information, just like Green Turtle does, to provide the application a way to traverse between the annotation graph of triples and the document from whence they came.  Unfortunately, this seems to be a different model ftp, what many systems have implemented.</p>
+<p>In the end, I am less concerned about interoperability, mainly because it is my tool chain that I am using to process information.  I'll use whatever tools that work and I don't intend to expose the intermediate states onto the Web.  Those might be famous last words, so I'll take some  “I told you so” tokens in advance.</p>
+<h2>Still Searching for a Solution</h2>
+<p>I don't have a solution to do this right now.  I'm tempted to use <a href="http://phantomjs.org">PhantomJS</a> or <a href="http://nodejs.org">node.js</a> to run my application as if it was in the browser and then process the output with <a href="http://www.w3.org/TR/XProc">XProc</a> .  This would satisfy my main use case of post-processing the results into static variants for various purposes.</p>
+<p>I would like to put this content into <a href="http://www.marklogic.com/">MarkLogic</a> and run some of the processing there, but they don't support RDFa and they don't have a notion of an origin of a triple.  It would be ideal to have this within the context of a database because the origin is a node and storing an internal reference should be straightforward (but I'm guessing).  I bet I could hack up <a href="http://www.exist-db.org/exist/apps/homepage/index.html">eXist</a> and make it do this for me too.</p>
+<p>Right now, I have too much to do.  The applications work in the browser and I'll let the dust settle for the rest of it.  Maybe I'll find a clever solution somewhere in the near future.</p>
+
+</article>

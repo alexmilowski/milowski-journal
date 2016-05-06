@@ -1,0 +1,10 @@
+@base <http://www.milowski.com/journal/entry/2013-05-06T20:42:15.965Z> .
+@prefix schema: <http://schema.org/> .
+<>
+   a schema:BlogPosting ;
+   schema:headline "Unified Content Descriptors" ;
+   schema:datePublished "2013-05-06T20:42:15.965Z" ;
+   schema:dateModified "2013-05-06T20:42:15.965Z" ;
+   schema:isBasedOnUrl "https://raw.githubusercontent.com/alexmilowski/milowski-journal/master/entries/2013-05-06/20:42:15.965Z.html" ;
+   schema:keywords "RDFa","IVOA","Astronomy","schema.org" ;
+   schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

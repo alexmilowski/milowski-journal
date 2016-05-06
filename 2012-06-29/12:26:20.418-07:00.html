@@ -1,0 +1,109 @@
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2012-06-29T12:26:20.418-07:00">
+<script type="application/json+ld">
+{
+"@context" : "http://schema.org/",
+"@id" : "http://www.milowski.com/journal/entry/2012-06-29T12:26:20.418-07:00",
+"headline" : "Too Much Data and Too Little Memory",
+"datePublished" : "2012-06-29T12:26:20.418-07:00",
+"dateModified" : "2012-06-29T12:26:20.418-07:00",
+"keywords" : ["MarkLogic","weather","XProc","big data"],
+"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
+}
+</script>
+<h1>Too Much Data and Too Little Memory</h1>
+<p>Since my last update, I've made a lot of good progress on my  “big weather data” project.  The goal was always to understand how to organize scientific sensor data like weather reports within a database system like MarkLogic.  Alas, I don't currently have access to the hardware to really produce a production quality system that actually stores terabytes of information.  I did want to see how far I could get and what the characteristics of cluster would be to store such large-scale information.</p>
+<p>Unfortunately, I pushed things a bit too far.  As you may have read, I had some troubles with disk space that set me back quite a bit.  After recovering from that near disaster, I continue to be impressed by MarkLogic's ability to persevere when faced with limited resources.  While that's an interesting and valuable facet of a database system, I now need to scale back the about of data to a reasonable size for the hardware I have and determine how this system should scale.</p>
+<p>What that really means is that I need:</p>
+<ol>
+<li>to understand the per-gigabyte (or number of reports) system requirements in terms of CPU, disk space, and memory;</li>
+<li>to right-scale the system I'm using to a rational segment of data (a month?  two months?);</li>
+<li>to project a plan for how this system would cluster and scale.</li>
+</ol>
+<p>Meanwhile, I have my current database that is far too large for the amount of memory I have available.  As I have the raw source and can re-create the database given enough time, I need to delete weather reports from the database till the system performs reasonably well.  That will allow me to finish testing the queries and index structures while also enabling better measurement of the system resources needed.</p>
+<p>Given how much data I've pumped into the database, deleting content has become a problem.  If you select too large of a segment to delete, the query will time out and nothing will actually get deleted.  As such, the reports to delete need to be segmented into small transactions.</p>
+<p>Also, given the low-memory conditions, these deletes needs to be performed in sequence.  I've tried using <code>xdmp:spawn,</code> but running deletes in parallel isn't helpful as the operations compete for resources and run slower (possibly timing out).  Also, keep in mind that the time segments to delete need to be small enough as there are around 66K weather reports per hour and each of those weather reports are now separate documents.</p>
+<p>This is where using <a href="http://www.w3.org/TR/XProc">XProc</a> with MarkLogic really shines.  XProc allows me to write a long-running script that will sequence a set of delete requests to the database.  The control of that script is the XProc engine, <a href="http://xmlcalabash.com/">calabash</a> , and so I don't have to worry about timeouts within the database server as long as the requests are small enough.</p>
+<p>Here's the outline of what the XProc needs to do:</p>
+<ul>
+<li>Start with a day and generate a sequence of start times from which we'll delete (e.g. 2012-04-01T05:30:00Z ).</li>
+<li>For each start time, send a query to MarkLogic that will delete reports from the start date for a certain duration (e.g. 5 minutes).</li>
+</ul>
+<p>I can generate the list of start times easily with the XQuery:</p>
+<pre><code>declare variable $date external;
+&lt;starts&gt;
+{
+let $start := xs:dateTime(concat($date,&quot;T00:00:00Z&quot;)),
+    $duration := xs:dayTimeDuration(&quot;PT5M&quot;)
+    for $i in (0 to 287)
+       return &lt;start&gt;{$start + $i*$duration}&lt;/start&gt;
+}
+&lt;/starts&gt;
+</code></pre>
+<p>The weather reports are also easily deleted by the XQuery:</p>
+<pre><code>declare namespace s=&quot;http://.../V/APRS/&quot;;
+declare variable $start external;
+declare variable $duration external;
+
+&lt;operation&gt;deleted {$start} for {$duration}{
+let $dstart := xs:dateTime($start),
+    $dend := $dstart + xs:dayTimeDuration($duration)
+   for $r in collection(&quot;http://.../weather/&quot;)/s:report[@received&gt;=$dstart and @received&lt;$dend]
+      return xdmp:document-delete(base-uri($r))
+}
+&lt;/operation&gt;
+
+</code></pre>
+<p>and I can sequence them in XProc as follows:</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;p:declare-step xmlns:p=&quot;http://www.w3.org/ns/xproc&quot;
+    xmlns:c=&quot;http://www.w3.org/ns/xproc-step&quot; version=&quot;1.0&quot;
+    xmlns:ml=&quot;http://xmlcalabash.com/ns/extensions/marklogic&quot;
+    xmlns:cx=&quot;http://xmlcalabash.com/ns/extensions&quot;    
+    &gt;
+    &lt;p:option name='xdb.user'/&gt;
+    &lt;p:option name='xdb.password'/&gt;
+    &lt;p:option name='xdb.host'/&gt;
+    &lt;p:option name='xdb.port'/&gt;
+    &lt;p:option name=&quot;day&quot;/&gt;
+    &lt;p:output port=&quot;result&quot;/&gt;
+    
+    &lt;p:import href=&quot;http://xmlcalabash.com/extension/steps/library-1.0.xpl&quot;/&gt;
+
+    &lt;!-- generate the start times --&gt;
+
+    &lt;p:xquery&gt;
+        &lt;p:with-param name=&quot;date&quot; select=&quot;$day&quot;/&gt;
+        &lt;p:input port=&quot;source&quot;&gt;&lt;p:inline&gt;&lt;doc/&gt;&lt;/p:inline&gt;&lt;/p:input&gt;
+        &lt;p:input port=&quot;query&quot;&gt;
+            &lt;p:data wrapper=&quot;c:data&quot; href=&quot;generate-start.xq&quot; content-type=&quot;text/plain&quot;/&gt;
+        &lt;/p:input&gt;
+    &lt;/p:xquery&gt;
+
+    &lt;!-- iterate over the start times and delete reports from the database --&gt;
+
+    &lt;p:viewport match=&quot;/starts/start&quot;&gt;
+
+        &lt;cx:message&gt;
+            &lt;p:with-option name=&quot;message&quot; select=&quot;concat('Processing ',/start)&quot;/&gt;
+        &lt;/cx:message&gt;
+
+        &lt;ml:adhoc-query&gt;
+            &lt;p:with-option name='user' select='$xdb.user'/&gt;
+            &lt;p:with-option name='password' select='$xdb.password'/&gt;
+            &lt;p:with-option name='host' select='$xdb.host'/&gt;
+            &lt;p:with-option name='port' select='$xdb.port'/&gt;
+            &lt;p:with-param name=&quot;start&quot; select=&quot;string(/start)&quot;/&gt;
+            &lt;p:with-param name=&quot;duration&quot; select=&quot;'PT5M'&quot;/&gt;
+            &lt;p:input port=&quot;source&quot;&gt;
+                &lt;p:data wrapper=&quot;c:query&quot; href=&quot;delete-report-duration.xq&quot; content-type=&quot;text/plain&quot;/&gt;
+            &lt;/p:input&gt;
+        &lt;/ml:adhoc-query&gt;
+
+    &lt;/p:viewport&gt;
+
+&lt;/p:declare-step&gt;
+
+</code></pre>
+<p>My current plan is to use a similar XProc process to trim content from the database while new content is continually streamed into it.  This will allow me to keep the current weather data within the database while I determine a larger strategy to store all of it.</p>
+
+</article>

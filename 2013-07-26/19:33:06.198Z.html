@@ -1,0 +1,35 @@
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2013-07-26T19:33:06.198Z">
+<script type="application/json+ld">
+{
+"@context" : "http://schema.org/",
+"@id" : "http://www.milowski.com/journal/entry/2013-07-26T19:33:06.198Z",
+"headline" : "Problems with Microdata",
+"datePublished" : "2013-07-26T19:33:06.198Z",
+"dateModified" : "2013-07-26T19:33:06.198Z",
+"keywords" : ["Microdata","RDFa","schema.org"],
+"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
+}
+</script>
+<h1>Problems with Microdata</h1>
+<p>Given my recent grumbling about Google Blink developers trying to <a href="https://groups.google.com/a/chromium.org/forum/#%21topic/blink-dev/zIg2KC7PyH0">remove XSLT</a> from Chrome, the current state of Microdata vs <a href="http://www.w3.org/TR/rdfa-core/">RDFa</a> makes me think we're creating another level of incompatibilities on the Web.  XSLT generally failed client-side on the Web due to the poor implementation within the various browsers.  At this point, of course people aren't using it en masse because it just didn't work.</p>
+<p>Microdata and its unknown status makes me feel like we're headed for more broken, partial ideas on the Web.  We'd get proper adoption of some kind of  “Semantic Web Annotation”  if there was one syntax that everyone was using.  Yet, the <a href="http://schema.org/">schema.org</a> folks (Google et. al.) keep pushing Microdata.  I'd personally prefer <a href="http://www.w3.org/TR/rdfa-core/">RDFa</a> .</p>
+<p>It is remarkable that while the W3C members seem to have chosen to only have one specification ( <a href="http://www.w3.org/TR/rdfa-core/">RDFa!</a> ), schema.org seems to keep chugging along with Microdata.  The status of whatever  “Microdata” really is within the W3C or on the Web is really unknown--even to people like myself who try to keep close tabs on such things.</p>
+<h4>What is Microdata?</h4>
+<p>Attempting to answer the question  “What exactly is Microdata?” only leads to more questions.  First, which specification are we going to use: <a href="http://dev.w3.org/html5/md-LC/">the 24 May 2011 draft</a> linked to from the schema.org page, the <a href="http://www.w3.org/TR/microdata/">latest draft dated 25 Oct 2012 </a> ,  or the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/microdata.html">WhatWG draft </a> that can change randomly?</p>
+<p>The real problem is that this specification is in limbo as it has been derailed from a   “recommendation track” document.  Essentially, there was <a href="http://lists.w3.org/Archives/Public/public-html-comments/2012Nov/">push back</a> , some very well thought out arguments against Microdata (e.g. by <a href="http://manu.sporny.org/2012/microdata-cr/">Manu Sporny</a> ), and a task force for some kind of unification or co-existence (read <a href="http://www.jenitennison.com/blog/node/165">Jeni Tennison's blog post</a> about this).</p>
+<p>There's a lot of passion packed into this debate and, yet, after all this time, nothing has really changed that much.  It is unclear what the status of Microdata is at the <a href="http://www.w3.org/">W3C</a> and schema.org just plugs on ahead assuming that we all know and want this thing called Microdata.</p>
+<h4>My Problems with Microdata</h4>
+<p>While I have huge issues with the process that has led us into this mess, as the implementer of <a href="http://code.google.com/p/green-turtle/">Green Turtle</a> , I have many technical issues when it comes to implementing Microdata (assuming I can pick a spec against which to implement):</p>
+<ul>
+<li><em>Lack of a default vocabulary mechanism.</em> Inferring property value URIs from an overt type (e.g. the <code>itemtype</code> attribute) feels like a pure hack.  It works in closed type systems like schema.org but it doesn't in general.   RDFa has the <code>vocab</code> attribute that allows an author to declare a default.  That feels like a missing feature for Microdata.</li>
+<li><em>Items without types?</em> What's the point of having an untyped item?  It isn't useful to schema.org nor to any other comparable use.  All a processor knows is that there is an item with some properties whose unique names can't be determined.  Of course, this is the red herring of Microdata: oh look, all you really need is a itemscope attribute (unless you want to do something useful and then you need an itemtype attribute too).</li>
+<li><em>No Shorthand Mechanism.</em> Prefixes and default vocabularies are  “ugly” until you have real data with very verbose type and property URIs mixed from different real-world vocabularies.  At that point, prefixes to shorten URIs (e.g. <a href="http://www.w3.org/TR/curie/">CURIEs</a> ) seem like a really nice feature.</li>
+<li><em>No Tests!!!</em> A specification without tests guarantees interoperability problems.  There are no well-defined, publicly available, and agreed upon tests for Microdata.  That's a real problem.</li>
+<li><em>No defined Semantic Web mapping.</em> If Microdata is to exist on the Web, it really needs to play well with others.  Specifically, as it is adding semantic annotations to Web pages, it needs to have a well-defined mapping into triples and the Semantic Web.  That's a real problem for Microdata because you can annotate items without ever giving a context for identifying the vocabulary.  The result is that some Microdata maps to triples well and some does not without a great deal of assumptions.</li>
+</ul>
+<p>I could go on but I'll stop there.</p>
+<h4>Clean Up Your Mess!</h4>
+<p>Bing, Google, Yahoo, and Yandex ran on ahead with Microdata on schema.org.  Because Google is there (and possibly the others too), everyone just assumes Microdata has some legitimacy.  Maybe it does or maybe it is a disaster.</p>
+<p>I have one thing to say: clean up your mess!  If my 8 year old son spills his milk, he gets a towel (sometimes at my suggestion) and cleans up his mess.  Google et. al. has spilled the trash can of partially-abandoned specifications onto the Web and they need to get a towel and clean it up.</p>
+
+</article>

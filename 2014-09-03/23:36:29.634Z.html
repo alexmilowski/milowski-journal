@@ -1,0 +1,82 @@
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2014-09-03T23:36:29.634Z">
+<script type="application/json+ld">
+{
+"@context" : "http://schema.org/",
+"@id" : "http://www.milowski.com/journal/entry/2014-09-03T23:36:29.634Z",
+"headline" : "NASA OpenNEX Challenge and Processing HDF5 in Python",
+"datePublished" : "2014-09-03T23:36:29.634Z",
+"dateModified" : "2014-09-03T23:36:29.634Z",
+"keywords" : ["OpenNEX","NASA","HDF","Python"],
+"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
+}
+</script>
+<h1>NASA OpenNEX Challenge and Processing HDF5 in Python</h1>
+<p>I've recently been playing around a lot with HDF5 data as second part of the <a href="https://www.innocentive.com/ar/challenge/9933584"><cite>NASA Challenge: New Ways to Use, Visualize, and Analyze OpenNEX Climate and Earth Science Data</cite></a> . <a href="http://www.ltg.ed.ac.uk/%7Eht/">Henry Thompson</a>  and I won a small award in the first challenge for our proposal to apply the PAN Methodology to the OpenNEX data.  Specifically, we are looking at the <a href="https://nex.nasa.gov/nex/static/htdocs/site/extra/opennex/">NASA Earth Exchange (NEX) </a> data sets that are <a href="https://aws.amazon.com/nasa/nex/">hosted by Amazon AWS</a> that provides climate projects both retrospectively (1950-2005) and prospectively (2006-2099).</p>
+<p>The model is partitioned into files stored on Amazon S3 in 60 month segments (5 years). Each file contains a grid at 1/120° resolution of temperature values from the climate model.  The extent of the data set roughly covers the area between 24° to 49° latitude and -127° to -66° longitude (think: North America). In total, that is 60 copies of a matrix of 3105 columns by 7025 rows or 1,308,757,500 temperature values. Thus, each file is roughly 1.3GB in size.</p>
+<p>In my experiments with the data, there is only data over land areas and I've calculated that roughly 45% of that data is  “fill values” . That is, values where the model has no prediction but the HDF5 format requires a value. As such, there are only about 700 million actual values to process and less than 700MB of actual non-fill data.</p>
+<h2>Processing HD5 is Difficult</h2>
+<p>There are many obstacles to processing <a href="http://www.hdfgroup.org/HDF5/">HDF5</a> . There are many different versions: is it netCDF, HDF5, HDF5-EOS, or HDF4? You can't necessarily tell by looking at the files, there isn't a media type that will tell you the different versions, and they are often incompatible with each other (you can't read HDF4 with HDF5 tools).</p>
+<p>To make things worse, HDF5 is really a library. There is a specification but there is really only one implementation. Thus, the format is the C implementation.  Thus, you have to make sure you have the right library version installed that reads the version of HDF you are processing.</p>
+<p>I originally discovered that I could dump HDF5 into XML using a tool called <a href="http://www.hdfgroup.org/HDF5/doc/RM/Tools.html#Tools-Dump"><code>h5dump</code> </a> but that proved to be pointless.  The choice of markup is verbose and you can't subset the data.</p>
+<p>You can get slices of the data via the <code>h5dump</code> tool but the output is in a <a href="http://www.hdfgroup.org/HDF5/doc/ddl.html"> “Data Definition Language ” format. </a> As such, I would need to find a parser to process that data format as well.  At that point, I gave up on using <code>h5dump</code> .</p>
+<h2>Python to the Rescue</h2>
+<p>I did discover that you can process HDF5 data in Python via a module called <a href="http://www.h5py.org">h5py</a> . It uses <a href="http://www.numpy.org">numpy</a> to give you vectorized access to the multi-dimensional data set.</p>
+<p>Access to the OpenNEX data couldn't be easier:</p>
+<pre><code>
+&gt;&gt;&gt; import numpy
+&gt;&gt;&gt; import h5py
+&gt;&gt;&gt; f = h5py.File(&quot;tasmax_quartile75_amon_rcp85_CONUS_202601-203012.nc&quot;,&quot;r&quot;)
+&gt;&gt;&gt; f[&quot;tasmax&quot;]
+&lt;HDF5 dataset &quot;tasmax&quot;: shape (60, 3105, 7025), type &quot;&lt;f4&quot;&gt;
+&gt;&gt;&gt; 
+
+</code></pre>
+<p>The file becomes a hashtable of data sets that are numpy multi-dimensional arrays underneath. You can access the numpy array directly:</p>
+<pre><code>&gt;&gt;&gt; dset = f[&quot;tasmax&quot;].value
+&gt;&gt;&gt; dset
+array([[[  1.00000002e+20,   1.00000002e+20,   1.00000002e+20, ...,
+           1.00000002e+20,   1.00000002e+20,   1.00000002e+20],
+        [  1.00000002e+20,   1.00000002e+20,   1.00000002e+20, ...,
+           1.00000002e+20,   1.00000002e+20,   1.00000002e+20],
+        [  1.00000002e+20,   1.00000002e+20,   1.00000002e+20, ...,
+           1.00000002e+20,   1.00000002e+20,   1.00000002e+20],
+        ..., 
+...
+
+</code></pre>
+<p>Now it becomes a task of accessing the numpy array properly to do your processing. Given the size of my data, if you do this wrong, you'll spend a great deal of time iterating over data. Because I'm new to numpy, I spent a great deal of time iterating over data before I got something that worked reasonably well.</p>
+<p>One of the tasks I need to do is to summarize the data and reduce the resolution. This is a process of collecting chunks of adjacent cells and averaging the value for the cell. I have the additional nuance that there are fill values of 1.00000002e+20 instead of a regular zero value and that makes the problem a bit harder.</p>
+<p>The solution looks pretty neat:</p>
+<pre><code>d = numpy.empty((621,1421),numpy.float32);
+months  = dset.shape[0]
+rows    = dset.shape[1]
+columns = dset.shape[2]
+m = 0         # just month 1 (January, start of 60 month period)
+chunkSize = 5 # summarizing 5 by 5 grid subsets
+
+for i in range(0,d.shape[0]):
+   for j in range(0,d.shape[1]):
+      s = dset[m,i*chunkSize:i*chunkSize+chunkSize,j*chunkSize:j*chunkSize+chunkSize]
+      reduction = reduce(lambda r,x: (r[0]+1,r[1]+x) if x&lt;1.00000002e20 else r, s.flat,(0,0))
+      d[i,j] = 0 if reduction[0] == 0 else reduction[1] / reduction[0]
+
+
+</code></pre>
+<p>Along the way I discovered tuples and that increased the speed by twice. I need to count the number of grid entries that have values to calculate the average. You can do that as two steps:</p>
+<pre><code>count = reduce(lambda r,x: r+1 if x&lt;1.00000002e20 else r, s.flat,0)
+sum = reduce(lambda r,x: r+x if x&lt;1.00000002e20 else r, s.flat,0)
+d[i,j] = 0 if count==0 else sum / count
+</code></pre>
+<p>or as one step:</p>
+<pre><code>reduction = reduce(lambda r,x: (r[0]+1,r[1]+x) if x&lt;1.00000002e20 else r, s.flat,(0,0))
+d[i,j] = 0 if reduction[0] == 0 else reduction[1] / reduction[0];
+</code></pre>
+<p>and the one step does half the work and so is faster.</p>
+<h2>Is Python Slow?</h2>
+<p>It seemed to me that Python seems a bit slow.  In fact, when manipulating large arrays of data without numpy, it was painfully slow.  That makes me question why it is used so often for processing scientific data.</p>
+<p>The interactive nature of Python allowed me to experiment with the HDF5 data in ways that I could not with the pre-canned tools like <code>h5dump</code> .  This let me experiment with the data and understand a bit more about the size of the task.  That experimentation enabled me to think about the problem at hand rather than brute-force a solution with code.</p>
+<p>While this process would be enormously faster in C++, it would be harder to write.  I would have had to learn a low-level HDF5 C-API and handle many issues myself as a result.  That would have made the prototyping processing much more complex.  Yet, if I really need this to run really fast, I might attempt to do so.</p>
+<p>In looking around for rationales about Python and processing speed, I found a stack exchange question titled <a href="http://codegolf.stackexchange.com/questions/26323/how-slow-is-python-really-or-how-fast-is-your-language"> “How slow is python really? (Or how fast is your language?)” </a> about the speed of Python in comparison to other languages.  There are a lot of interesting results, including how fast <a href="http://www.rust-lang.org">Rust</a> is as a language. That makes me wonder whether other languages can better balance the experimentation enabled by dynamic-typed interpreted languages vs the speed afforded by strict-typed compiled languages.</p>
+<p>Because this is a  “write once” operation, I am less worried about the speed of the process.  The processing time is reasonable enough to do what I need to do with OpenNEX data set.</p>
+
+</article>

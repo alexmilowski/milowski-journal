@@ -1,0 +1,47 @@
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2013-07-26T15:25:04.782Z">
+<script type="application/json+ld">
+{
+"@context" : "http://schema.org/",
+"@id" : "http://www.milowski.com/journal/entry/2013-07-26T15:25:04.782Z",
+"headline" : "Green Turtle - Injection and Microdata Options",
+"datePublished" : "2013-07-26T15:25:04.782Z",
+"dateModified" : "2013-07-26T15:25:04.782Z",
+"keywords" : ["Green Turtle","RDFa","Microdata","Chrome Extension"],
+"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
+}
+</script>
+<h1>Green Turtle - Injection and Microdata Options</h1>
+<p>I've just released version 1.2 of <a href="https://code.google.com/p/green-turtle/">Green Turtle</a> and its <a href="https://chrome.google.com/webstore/detail/green-turtle-rdfa/loggcajcfkpdeoaeihclldihfefijjam">Chrome extension</a> .  While there are minor bug fixes, there are three new features:</p>
+<ul>
+<li>The way that the script on the Web page and the extension talk to each other has been greatly improved.  By doing so, I got rid of a hack where it used a meta element to pass triples to the extension.  The new method has the additional benefit of supporting other extensions--possibly in other browsers--with the same technique.</li>
+</ul>
+<ul>
+<li>Microdata packaging and option.</li>
+</ul>
+<ul>
+<li>Script injection.</li>
+</ul>
+<h4>Microdata Packaging</h4>
+<p>A packaging of Microdata has been added to both the script and the extension.  The experimental Microdata processor is now included with Green Turtle and can be enabled via a simple switch:</p>
+<pre><code>
+&lt;script type=&quot;text/javascript&quot;&gt;
+GreenTurtle.implementation.processors[&quot;microdata&quot;].enabled = true;
+&lt;/script&gt;
+
+</code></pre>
+<p>Including the above script just after the Green Turtle script will turn on Microdata support (off by default).  You can also disable <a href="http://www.w3.org/TR/turtle/">Turtle</a> processing much the same way (on by default):</p>
+<pre><code>
+&lt;script type=&quot;text/javascript&quot;&gt;
+GreenTurtle.implementation.processors[&quot;text/turtle&quot;].enabled = false;
+&lt;/script&gt;
+
+</code></pre>
+<p>Any Microdata is turned into triples and added the the graph along with any RDFa or Turtle found in the document.  If the Microdata can't be turned into triples, it is just ignored.  It would be really nice if there was a specification for this but there really isn't as of yet.</p>
+<p>Microdata is also packaged with the extension and is off by default.  You can enable this feature in the extension options page.</p>
+<h4>Injection</h4>
+<p>The other big new feature is injection of the processor into documents that don't already have Green Turtle.  When the extension detects a Web page that does not have Green Turtle, it will inject the script from a version stored in the extension.  The result is that <code>document.data</code> and all the APIs are available from the console.  This will enable you to do additional experimentation in the console or for other extensions to use the graph data.</p>
+<p>This also provides a more efficient means for handling large documents.  This feature is on by default but you can turn it off in the extension options page.  If you turn it off, it will still try to harvest triples but they won't be available from the console.</p>
+<h4>Extension Options</h4>
+<p>The extension now has an options page.  Just go to the  “Extensions” menu item in Chrome and click on the  “Options” link next to Green Turtle.  Checking  “Enable Microdata” will automatically enable Microdata for all injected scripts.  There is also a control for turning off script injection.</p>
+
+</article>

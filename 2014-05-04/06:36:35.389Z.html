@@ -1,0 +1,139 @@
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2014-05-04T06:36:35.389Z">
+<script type="application/json+ld">
+{
+"@context" : "http://schema.org/",
+"@id" : "http://www.milowski.com/journal/entry/2014-05-04T06:36:35.389Z",
+"headline" : "XProc to the Rescue: Restoring AtomPub",
+"datePublished" : "2014-05-04T06:36:35.389Z",
+"dateModified" : "2014-05-04T06:36:35.389Z",
+"keywords" : ["XProc","atom","atompub"],
+"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
+}
+</script>
+<h1>XProc to the Rescue: Restoring AtomPub</h1>
+<h2>Restoring AtomPub via XProc</h2>
+<p>My website is driven by a set of Atom feeds that are organized by categorization.  Yes, I know, so old school.</p>
+<p>I recently setup a new <a href="http://www.marklogic.com/">MarkLogic</a> server and I needed to transition to it for my various research projects as well as my website. As it happens, my website is more complicated than my research simply because my research data is designed to be reloadble.  In my research, I've strived to achive idempotent data operation so I can simple just setup the new server, replay content events, and all will be well.</p>
+<p>My website isn't quite so well organized and when things actually happened (i.e. when I wrote them) matters. The good news is, if you look at <a href="https://tools.ietf.org/html/rfc5023">AtomPub</a> in the right way, you get idempontent operations. In theory, since I wrote my  <a href="https://code.google.com/atomojo/">AtomPub</a> implementation, it should exhibit some of the desired behaviors.</p>
+<h3>Tyrany of the Band of One</h3>
+<p>I wrote the AtomPub implemention and so I also wrote the backup and restore procedures.  Backup works great and restore kinda stinks. That's the tyrany of being a sole developer on something: when you write code that stinks, no one complains.</p>
+<p>I struggled to bring my mind back several years as to why I approached the problem in that way. I fixed a few bugs in the AtomPub implementation but, still, it seemed like there should be a better way. I also wrote it all in Java and that can't be the best way to manipulate XML.</p>
+<p>There is something else out there.  Something that might be better and I might know something about.</p>
+<h3>Beating a Dead Horse or XProc?</h3>
+<p>I re-wrote the restore process in XProc and it essentially has to do the following:</p>
+<ul>
+<li>Load the service document from the target AtomPub to understand what workspace the collections are being created within.</li>
+<li>Traverse the service document for the source AtomPub (or backup) and for each collection:   * Create the collection.</li>
+<li>Create an entry for each entry found in the source collection.</li>
+</ul>
+<p>The XProc looks like this:</p>
+<pre><code>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;p:declare-step xmlns:p=&quot;http://www.w3.org/ns/xproc&quot;
+    xmlns:c=&quot;http://www.w3.org/ns/xproc-step&quot; version=&quot;1.0&quot;
+    xmlns:app=&quot;http://www.w3.org/2007/app&quot; xmlns:atom=&quot;http://www.w3.org/2005/Atom&quot;
+   name=&quot;restore&quot;&gt;
+   &lt;p:input port=&quot;source&quot; primary=&quot;true&quot;/&gt;
+   &lt;p:output port=&quot;result&quot; primary=&quot;true&quot;/&gt;
+   &lt;p:option name=&quot;target&quot;/&gt;
+   &lt;p:option name=&quot;token&quot;/&gt;
+   &lt;!-- get the target service document --&gt;
+   &lt;p:template&gt;
+      &lt;p:with-param name=&quot;token&quot; select=&quot;$token&quot;/&gt;
+      &lt;p:with-param name=&quot;target&quot; select=&quot;$target&quot;/&gt;
+      &lt;p:input port=&quot;source&quot;&gt;&lt;p:empty/&gt;&lt;/p:input&gt;
+      &lt;p:input port=&quot;template&quot;&gt;
+         &lt;p:inline&gt;
+            &lt;c:request method=&quot;GET&quot; href=&quot;{$target}&quot;&gt;
+               &lt;c:header name=&quot;Authorization&quot; value=&quot;Bearer {$token}&quot;/&gt;
+            &lt;/c:request&gt;
+         &lt;/p:inline&gt;
+      &lt;/p:input&gt;
+   &lt;/p:template&gt;
+   &lt;p:http-request/&gt;
+   
+   &lt;p:group&gt;
+      &lt;!-- get the URI for creating collections --&gt;
+      &lt;p:variable name=&quot;target-collections&quot; select=&quot;resolve-uri(/app:service/app:workspace/@href,$target)&quot;/&gt;
+      
+      &lt;!-- viewport over the collections in the source service --&gt;
+      &lt;p:viewport match=&quot;app:collection&quot;&gt;
+         &lt;p:viewport-source&gt;
+            &lt;p:pipe step=&quot;restore&quot; port=&quot;source&quot;/&gt;
+         &lt;/p:viewport-source&gt;
+         &lt;p:variable name=&quot;slug&quot; select=&quot;substring-after(substring-before(/app:collection/@href,'/__index__.atom'),'/')&quot;/&gt;
+         &lt;p:load&gt;
+            &lt;p:with-option name=&quot;href&quot; select=&quot;resolve-uri(/app:collection/@href,base-uri(/app:collection))&quot;/&gt;
+         &lt;/p:load&gt;
+         &lt;p:xslt&gt;
+            &lt;p:input port=&quot;stylesheet&quot;&gt;&lt;p:document href=&quot;restore.xsl&quot;/&gt;&lt;/p:input&gt;
+            &lt;p:with-param name=&quot;target-collections&quot; select=&quot;$target-collections&quot;/&gt;
+            &lt;p:with-param name=&quot;collection&quot; select=&quot;$target-collections&quot;/&gt;
+            &lt;p:with-param name=&quot;slug&quot; select=&quot;$slug&quot;/&gt;
+            &lt;p:with-param name=&quot;token&quot; select=&quot;$token&quot;/&gt;
+         &lt;/p:xslt&gt;
+         &lt;p:viewport match=&quot;c:request&quot;&gt;
+            &lt;p:http-request/&gt;
+         &lt;/p:viewport&gt;
+      &lt;/p:viewport&gt;
+   &lt;/p:group&gt;
+&lt;/p:declare-step&gt;         
+      
+</code></pre>
+<p>The referenced XSLT is fairly simple:</p>
+<pre><code>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;
+   xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;
+   exclude-result-prefixes=&quot;xs&quot;
+   version=&quot;2.0&quot;
+   xmlns:c=&quot;http://www.w3.org/ns/xproc-step&quot;
+   xmlns:app=&quot;http://www.w3.org/2007/app&quot;
+   xmlns:atom=&quot;http://www.w3.org/2005/Atom&quot;&gt;
+
+&lt;xsl:param name=&quot;target-collections&quot;/&gt;
+&lt;xsl:param name=&quot;token&quot;/&gt;
+&lt;xsl:param name=&quot;slug&quot;/&gt;
+   
+&lt;xsl:template match=&quot;atom:feed&quot;&gt;
+   &lt;atom:feed&gt;
+   &lt;c:request method=&quot;POST&quot; href=&quot;{$target-collections}&quot; status-only=&quot;true&quot; detailed=&quot;true&quot;&gt;
+      &lt;c:header name=&quot;Authorization&quot; value=&quot;Bearer {$token}&quot;/&gt;
+      &lt;c:header name=&quot;Slug&quot; value=&quot;{$slug}&quot;/&gt;
+      &lt;c:body content-type=&quot;application/atomsvc+xml&quot;&gt;
+         &lt;app:collection&gt;
+            &lt;xsl:copy-of select=&quot;atom:title|atom:category&quot;/&gt;
+         &lt;/app:collection&gt;
+      &lt;/c:body&gt;
+   &lt;/c:request&gt;
+   &lt;xsl:apply-templates select=&quot;atom:entry&quot;/&gt;
+   &lt;/atom:feed&gt;
+&lt;/xsl:template&gt;
+   
+&lt;xsl:template match=&quot;atom:entry&quot;&gt;
+   &lt;c:request method=&quot;POST&quot; href=&quot;{$target-collections}{$slug}/&quot; status-only=&quot;true&quot; detailed=&quot;true&quot;&gt;
+      &lt;c:header name=&quot;Authorization&quot; value=&quot;Bearer {$token}&quot;/&gt;
+      &lt;c:body content-type=&quot;application/atom+xml&quot;&gt;
+         &lt;xsl:copy&gt;
+            &lt;xsl:apply-templates/&gt;
+         &lt;/xsl:copy&gt;
+      &lt;/c:body&gt;
+   &lt;/c:request&gt;
+&lt;/xsl:template&gt;
+   
+&lt;xsl:template match=&quot;atom:link[@rel='edit']|atom:link[@rel='edit-media']&quot;/&gt;
+   
+&lt;xsl:template match=&quot;node()|@*&quot;&gt;
+   &lt;xsl:copy&gt;
+      &lt;xsl:apply-templates select=&quot;@*|node()&quot;/&gt;
+   &lt;/xsl:copy&gt;
+&lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;         
+      
+</code></pre>
+<h3>Why?</h3>
+<p>You might look at this and think: &quot;Why all the complexity?&quot;  The Java code was worse.  In fact, any programming langauge code would be worse. XProc is really good at doing this kind of thing.</p>
+<p>If it wasn't still Saturday night, I might do a better job explaining why.</p>
+
+</article>

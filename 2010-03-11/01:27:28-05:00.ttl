@@ -1,0 +1,9 @@
+@base <http://www.milowski.com/journal/entry/2010-03-11T01:27:28-05:00> .
+@prefix schema: <http://schema.org/> .
+<>
+   a schema:BlogPosting ;
+   schema:headline "WebKit MathML is Progressing" ;
+   schema:datePublished "2010-03-11T01:27:28-05:00" ;
+   schema:dateModified "2010-03-11T01:27:28-05:00" ;
+   schema:isBasedOnUrl "https://raw.githubusercontent.com/alexmilowski/milowski-journal/master/entries/2010-03-11/01:27:28-05:00.html" ;
+   schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

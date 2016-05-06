@@ -1,0 +1,10 @@
+@base <http://www.milowski.com/journal/entry/2014-05-30T22:11:47.972Z> .
+@prefix schema: <http://schema.org/> .
+<>
+   a schema:BlogPosting ;
+   schema:headline "Geospatial Data and KML" ;
+   schema:datePublished "2014-05-30T22:11:47.972Z" ;
+   schema:dateModified "2014-05-30T22:11:47.972Z" ;
+   schema:isBasedOnUrl "https://raw.githubusercontent.com/alexmilowski/milowski-journal/master/entries/2014-05-30/22:11:47.972Z.html" ;
+   schema:keywords "phd","science","PAN","web","opendata","Edinburgh","KML","OGC" ;
+   schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

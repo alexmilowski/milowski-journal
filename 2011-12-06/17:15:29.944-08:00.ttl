@@ -1,0 +1,10 @@
+@base <http://www.milowski.com/journal/entry/2011-12-06T17:15:29.944-08:00> .
+@prefix schema: <http://schema.org/> .
+<>
+   a schema:BlogPosting ;
+   schema:headline "XProc on My Website" ;
+   schema:datePublished "2011-12-06T17:15:29.944-08:00" ;
+   schema:dateModified "2011-12-06T17:15:29.944-08:00" ;
+   schema:isBasedOnUrl "https://raw.githubusercontent.com/alexmilowski/milowski-journal/master/entries/2011-12-06/17:15:29.944-08:00.html" ;
+   schema:keywords "XProc","atomojo","restlet","MarkLogic" ;
+   schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

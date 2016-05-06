@@ -1,0 +1,100 @@
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2012-05-24T09:17:12.327-07:00">
+<script type="application/json+ld">
+{
+"@context" : "http://schema.org/",
+"@id" : "http://www.milowski.com/journal/entry/2012-05-24T09:17:12.327-07:00",
+"headline" : "Using RDFa to Annotate Images",
+"datePublished" : "2012-05-24T09:17:12.327-07:00",
+"dateModified" : "2012-05-24T09:17:12.327-07:00",
+"keywords" : ["rdfa","javascript"],
+"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
+}
+</script>
+<h1>Using RDFa to Annotate Images</h1>
+<h3>The Idea</h3>
+<p>We'll annotate images using <a href="http://www.w3.org/TR/rdfa-lite/">RDFa Lite 1.1</a> and generate the image annotations and semantics on the fly.  As a result, the annotations are part of the document content and can be indexed and processed by search engines.</p>
+<h3>A Working Example</h3>
+<p>The image:</p>
+<img src="California-Slender-Salamander.jpg" typeof="annotated"/>
+<p>The annotation:</p>
+<div class="annotation" resource="California-Slender-Salamander.jpg">
+                    <div property="annotation" typeof="box"> Position: <span property="x">84</span>,<span property="y">114</span> Size: <span property="width">90</span> x <span property="height">75</span> Line Color: <span property="line-color">rgb(255,255,0)</span> Stroke : <span property="line-width">2</span> Description: <span property="description">California Slender Salamander</span> Link: <a href="http://en.wikipedia.org/wiki/California_slender_salamander" property="link"></a>
+                    </div>
+                </div>
+<p>How to try the example:</p>
+<ol>
+<li>If you mouse over the yellow box, you'll see a tool-tip.</li>
+<li>Clicking on the box will open the Wikipedia page for the Salamander.</li>
+</ol>
+<p>None of these semantics (or the yellow box) are in the original page or image. They are just described in the annotation markup above via RDFa. The page is made self-aware by using a library to access the page's own RDFa annotations--some of which could be content hidden from view.</p>
+<h3>How to Add Annotations</h3>
+<ul>
+<li>First add a <code>typeof</code> attribute to an image that is annotated:</li>
+</ul>
+<pre><code>
+    &lt;img src=&quot;California-Slender-Salamander.jpg&quot; typeof=&quot;annotated&quot;/&gt;
+                
+</code></pre>
+<ul>
+<li>Next, somewhere in the document, add an annotation. The above example looks like:</li>
+</ul>
+<pre><code>
+    &lt;div resource=&quot;California-Slender-Salamander.jpg&quot;&gt;
+        &lt;div property=&quot;annotation&quot; typeof=&quot;box&quot;&gt;
+            Position: &lt;span property=&quot;x&quot;&gt;84&lt;/span&gt;,&lt;span property=&quot;y&quot;&gt;114&lt;/span&gt;
+            Size: &lt;span property=&quot;width&quot;&gt;90&lt;/span&gt; x &lt;span property=&quot;height&quot;&gt;75&lt;/span&gt;
+            Line Color: &lt;span property=&quot;line-color&quot;&gt;rgb(255,255,0)&lt;/span&gt; 
+            Stroke : &lt;span property=&quot;line-width&quot;&gt;2&lt;/span&gt;
+            Description: &lt;span property=&quot;description&quot;&gt;California Slender Salamander&lt;/span&gt;
+            Link: &lt;a property=&quot;link&quot; 
+                     href=&quot;http://en.wikipedia.org/wiki/California_slender_salamander&quot;/&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+                
+</code></pre>
+<p>The annotation identifies the image by using the <code>resource</code>  attribute with a value of the URI of the image.  Contained within that parent element can be any number of annotations as long as the are associated with the <code>annotation</code> property relation.</p>
+<p>Note that the annotation can be hidden from view by CSS or just be placed in some part of the document's visible content.</p>
+<ul>
+<li>Include the <code>[RDFa.js](http://code.google.com/p/green-turtle/)</code> JavaScript to enable the RDFa API.</li>
+</ul>
+<ul>
+<li>Include the <code>[image-annotations.js](/resources/ex/image-annotations.js)</code> to invoke the  <code>ImageAnnotator</code> actor.  This script eventually calls:</li>
+</ul>
+<pre><code>
+    var imageAnnotator = new ImageAnnotator();
+    imageAnnotator.process(document);
+                
+</code></pre>
+<h3>How It Works</h3>
+<p>The <code>ImageAnnotator</code> JavaScript uses the <a href="http://www.w3.org/TR/rdfa-api/">RDFa API</a> and queries for annotated images by type to retrieve the <code>img</code> elements:</p>
+<pre><code>
+    var targets = document.getElementsByType(&quot;http://www.milowski.com/O/annotated&quot;);
+                
+</code></pre>
+<p>This returns an array of elements that have been typed via a <code>typeof</code>  attribute. Each typed element image element generates a subject of the URI of the image and each subject has a set of associated annotations in the RDFa data.</p>
+<p>The annotation associates itself with the image resource by using the  <code>resource</code> attribute. The result is a triple like:</p>
+<pre><code>
+    &lt;California-Slender-Salamander.jpg&gt; &lt;http://www.milowski.com/O/annotation&gt; &lt;_:1&gt;
+                
+</code></pre>
+<p>where the <code>_:1</code> is generally a blank node generated by the RDFa processor.</p>
+<p>In the code, the blank node URI is used to get an object called a projection that holds the actual annotation data. This process looks like:</p>
+<pre><code>
+    var annotations = document.data.getValues(
+       targets[0].subject,&quot;http://www.milowski.com/O/annotation&quot;);
+</code></pre>
+<pre><code>
+    for (var i=0; i&lt;annotations.length; i++) {
+       var annotation = document.data.getProjection(annotations[i]);
+       var type = annotation.get(&quot;rdf:type&quot;);
+       if (type==&quot;http://www.milowski.com/O/box&quot;) {
+          var x = parseInt(annotation.get(&quot;http://www.milowski.com/O/x&quot;));
+          var y = parseInt(annotation.get(&quot;http://www.milowski.com/O/y&quot;));
+          ...
+       }
+    }
+                
+</code></pre>
+<p>Notice how the annotation properties are available from the projection and used to construct a type-specific annotation.</p>
+
+</article>

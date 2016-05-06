@@ -1,0 +1,10 @@
+@base <http://www.milowski.com/journal/entry/2013-06-07T15:22:33.26Z> .
+@prefix schema: <http://schema.org/> .
+<>
+   a schema:BlogPosting ;
+   schema:headline "Scientific Measurements in Schema.org" ;
+   schema:datePublished "2013-06-07T15:22:33.26Z" ;
+   schema:dateModified "2013-06-07T15:22:33.26Z" ;
+   schema:isBasedOnUrl "https://raw.githubusercontent.com/alexmilowski/milowski-journal/master/entries/2013-06-07/15:22:33.26Z.html" ;
+   schema:keywords "rdfa","schema.org","science","SI units" ;
+   schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

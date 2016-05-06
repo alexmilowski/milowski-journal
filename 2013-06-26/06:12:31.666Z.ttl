@@ -1,0 +1,10 @@
+@base <http://www.milowski.com/journal/entry/2013-06-26T06:12:31.666Z> .
+@prefix schema: <http://schema.org/> .
+<>
+   a schema:BlogPosting ;
+   schema:headline "Disk Soup: AWS, EBS, RAID, MarkLogic, and Pinch of Salt!" ;
+   schema:datePublished "2013-06-26T06:12:31.666Z" ;
+   schema:dateModified "2013-06-26T06:12:31.666Z" ;
+   schema:isBasedOnUrl "https://raw.githubusercontent.com/alexmilowski/milowski-journal/master/entries/2013-06-26/06:12:31.666Z.html" ;
+   schema:keywords "MarkLogic","AWS","RAID10","EBS" ;
+   schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .
