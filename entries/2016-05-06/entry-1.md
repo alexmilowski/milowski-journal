@@ -14,7 +14,7 @@ keywords: Code for America
 
 Being a bit of a data science geek, I crunched the projects by organization and produced a little slide deck of the activities and technologies used by each project and by year.  For simplicity, I used word clouds rather than graphing the raw data.
 
-<iframe src='activity.html' frameborder="0" scrolling="no"></iframe>
+<div class='embed'><iframe src='activity.html' frameborder="0" scrolling="no"></iframe></div>
 
 What is interesting is to look at the technologies used by project over the years.  Back in 2010, it seems as if the focus was more on getting things onto the Web and you see various technologies circa that time period (or much before).  As time progresses, the technologies used cluster differently until you get to 2016 where there is an myriad of various things in play.
 
