@@ -161,18 +161,23 @@ for dir in dirs:
       html.close()
       turtle.close()
 
-   resources = [f for f in os.listdir(sourceDir) if (not f.endswith('.md')) and os.path.isfile(sourceDir + '/' + f)]
-   
-   for file in resources:
-      
+   work = [f for f in os.listdir(sourceDir) if (not f.endswith('.md'))]
+   for file in work:
       sourceFile = sourceDir + '/' + file
       targetFile = targetDir + '/' + file
-      
-      copyNeeded = args.force or not(os.path.exists(targetFile)) or os.path.getmtime(sourceFile) > os.path.getmtime(targetFile)
+      if os.path.isfile(sourceFile):
+         copyNeeded = args.force or not(os.path.exists(targetFile)) or os.path.getmtime(sourceFile) > os.path.getmtime(targetFile)
          
-      if copyNeeded:
-         print(file + " → " + targetFile)
-         shutil.copyfile(sourceFile,targetFile)
-      
+         if copyNeeded:
+            print(file + " → " + targetFile)
+            shutil.copyfile(sourceFile,targetFile)
+      elif os.path.isdir(sourceFile):
+         if os.path.exists(targetFile):
+            print('sync tree ' + sourceFile)
+            work += [sourceFile + '/' + f for f in os.listdir(sourceFile)]
+         else:
+            print("copy tree " + sourceFile + " → " + targetFile)
+            shutil.copytree(sourceFile,targetFile)
+   
    converter.leave()
 
