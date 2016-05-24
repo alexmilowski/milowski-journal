@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+       <title>Scientific Computing in the Open Web Platform</title>
+       <meta name="copyright" content="Copyright &#169; 2014 R. Alexander Milowski"/>
+       <meta name="holder" content="R. Alexander Milowski"/>
+       <meta name="creator" content="R. Alexander Milowski"/>
+       <meta name="pubdate" content="2014-02-16"/>
+       <link rel="stylesheet" type="text/css" href="slidy.css"/>
+       <link rel="stylesheet" type="text/css" href="theme.css" />
+       <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+       <script type="text/javascript" src="slidy.js"/>
+       <script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js">//</script>
+       <script type="text/javascript" src="animate.js"/>
+       <script type="text/javascript" src="heatmap.js"/>
+       <script type="text/javascript" src="vortex.js"/>
+       <script type="text/javascript" src="RDFa.js"/>
+       <script type="text/javascript" src="mapreduce.js"/>
+       <script type="text/javascript" src="gridavg.js"/>
+       <script type="text/javascript" src="barnes-interpolation.js"/>
+       <script type="text/javascript" src="barnes.js"/>
+       <script type="text/javascript">w3c_slidy.mouse_click_enabled = false;</script>
+    </head>
+    <body>
+       <div class="background">
+          <header><div class="logo" ><img src="crest.gif"/></div></header>
+          <img class="dept" src="ilcc-desc.png"/>
+       </div>
+       <div class="slide cover title">
+          <hgroup>
+             <h1>Scientific Computing in the Open Web Platform</h1>
+             <h2>or</h2>
+             <h3>What I've Been Doing with Henry for the Past 4 Years</h3>
+          </hgroup>
+          <div class="author">
+             <p><a href="http://www.milowski.com/" rel="name">R. Alexander Milowski</a></p>
+             <p><a href="mailto:alex@milowski.com" rel="email">alex@milowski.com</a></p>
+          </div>
+          <div class="author">
+             <p><a href="http://www.ltg.ed.ac.uk/~ht/" rel="name">Henry S. Thompson</a></p>
+             <p><a href="mailto:ht@inf.ed.ac.uk" rel="email">ht@inf.ed.ac.uk</a></p>
+          </div>
+          <div class="dept">
+              <img src="ilcc-desc.png" title="Institute for Language, Cognition and Computation"/>
+          </div>
+       </div>
+       <div class="slide">
+          <h1>The Open Web Platform</h1>
+          <blockquote>
+             <p>The Open Web Platform (OWP) is a platform for innovation, consolidation and cost efficiencies focused on those things happen within or intersect the actions of the Web browser. 
+                <!--This platform is defined by both the shared behavior expected by the publisher and users of content and services- -a type of contract readable by developer and authors alike. The collection of individual recommendations (standards documents), technologies, practical algorithms, APIs, vocabularies, and their interactions make this a cohesive and motivating platform for business and consumers alike.--></p>
+          </blockquote>
+         <h2>It's a contract readable by developers and authors!</h2>
+          <ul>
+             <li>Recommendations, standards, notes, ...</li>
+             <li>Algorithms, technologies, implementations, ...</li>
+             <li>APIs, vocabularies, ...</li>
+             <li>Shared expectations!</li>
+          </ul>
+          <p>And so why doesn't this work for <em>Science</em> on the Web?  Or does it?</p>
+       </div>
+       <div class="slide">
+          <h1>Problem Statement</h1>
+          <div>
+             <blockquote class="large">We want to lower the bar for publishing scientific data on the Web so that we enable the network effect while still retaining some aspect of semantics and interoperability.</blockquote>
+             <div style="margin-top: 3em;">
+                <div style="width: 50%; display: inline-block; margin-left: 5%; margin-right: 2%;">
+                <img src="geoform-chart.png" style="width: 95%"/>
+                <p style="font-size: 0.825em">~500K datasets from data.gov, May 8th, 2012</p>
+                </div>
+                <ul style="display: inline-block; width: 32%; vertical-align: top">
+                   <li>many data sets are tabular</li>
+                   <li>representation formats predate the Web</li>
+                   <li>incompatible with browser technologies</li>
+                   <li>archives of data sets</li>
+                   <li>too large to be processed</li>
+                </ul>
+             </div>
+          </div>
+       </div>
+       <div class="slide">
+          <h1>Changing the Paradigm</h1>
+          <h2>Let's use the Web "as is"</h2>
+          <ol>
+             <li>A methodology for publishing scientific data sets onto the Web so that they are accessible in Web-oriented formats.</li>
+             <li>HTML has table markup so why can't we use it?</li>
+             <li>Name things with URIs! Develop a usable naming strategy for data sets on the Web; identifiable and easily retrievable. </li>
+          </ol>
+          <h2>Why not just use XML?</h2>
+          <ul>
+             <li>The International Virtual Observatory Alliance (IVOA) and others have tried that.</li>
+             <li>Random XML has its limitations (poor support?) on the Web and in the browser.</li>
+             <li>That's a problem.</li>
+          </ul>
+       </div>
+       <div class="slide">
+          <h1>The Three <q>Little</q> Problems</h1>
+          <h2>Once upon a time, there were three little problems...</h2>
+          <p style="margin-bottom: 2em;"><img src="pig-icon.png" style="height: 3em; float: left; padding-right: 1em;"/><b>Too big</b>: Data sets are typically too large to be processed by the typical Open Web Platform (OWP) implementation as one large Web resource.</p>
+          <p style="margin-bottom: 2em;"><img src="pig-icon.png" style="height: 3em; float: left; padding-right: 1em;"/><b>Too dumb</b>: HTML table markup lacks the constructs to convey all the information coded within typical tabular data sets.</p>
+          <p style="margin-bottom: 2em;"><img src="pig-icon.png"
+               style="height: 3em; float: left; padding-right: 1em;" /><b>Too forgetful</b>:
+            Accessing data may require formulating complex queries or URIs which is error prone. Users can request <q>too much</q> data which results in failures or requires
+            paging results. </p>
+          
+          <p>Where's the smart <img src="pig-icon.png" style="height: 3em;"/> with the brick house?</p>
+          <p>Or was he dinner?</p>
+       </div>
+       <div class="slide">
+          <h1>The PAN Methodology</h1>
+          <ol>
+             <li><b>Partition</b> the data set along properties inherent in the data (e.g. time, geospatial coordinates, etc.) into reasonable sized subsets suitable to Web applications.</li>
+             <li><b>Annotate</b> the data according to some ontology and encode in a common syntax (HTML) using RDFa.</li>
+             <li><b>Name</b> each data partition with a unique URI using a consistent naming scheme that can be traced back to your partitioning scheme from (1).</li>
+          </ol>
+          <h2>Seems obvious? Not to some...</h2>
+          <p><em>Simple is good</em> but questions remain:</p>
+          <ul>
+             <li>Partitioning is fixed.  No paging!  No custom queries!</li>
+             <li>Yet, which choices are partitions are correct for your data?</li>
+             <li>Annotations  via RDFa is new!  What is the right way?  Whose ontology?</li>
+             <li>If partitioning is fixed, naming must be stable.</li>
+          </ul>
+       </div>
+       <div class="slide">
+          <h1>PAN Partitions</h1>
+          <img src="pan-method.svg"/>
+       </div>
+       <div class="slide">
+          <h1>Table Annotations</h1>
+          <pre>
+&lt;table <strong>typeof="<span class="type">Table</span>"</strong>>
+&lt;thead>
+&lt;tr>
+...
+  &lt;th <strong>property="<span class="property">column</span>" typeof="<span class="type">Column</span>"</strong>>
+     &lt;span <strong>property="<span class="property">title</span>"</strong>>Temperature&lt;/span>
+     &lt;span <strong>property="<span class="property">property</span>" resource="w:airTemperature"</strong>/>
+     &lt;span <strong>property="<span class="property">valueSpace</span>" typeof="<span class="type">ValueDescription</span>"</strong>>
+        (°&lt;span <strong>property="<span class="property">symbol</span>"</strong>><strong><span class="object">C</span></strong>&lt;/span>)
+        &lt;span <strong>property="<span class="property">datatype</span>" resource="<span class="resource">xsd:double</span>"</strong>/>
+        &lt;span <strong>property="<span class="property">quantity</span>" resource="<span class="resource">quantity:ThermodynamicTemperature</span>"</strong>/>
+        &lt;span <strong>property="<span class="property">unit</span>" resource="<span class="resource">unit:DegreeCelsius</span>"</strong>/>
+     &lt;/span>
+  &lt;/th>
+...
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+   &lt;tr>
+...
+     &lt;td><strong>22.2</strong>&lt;/td>
+...
+   &lt;/tr></pre>
+       </div>
+       <div class="slide">
+          <h1>Partition Annotations</h1>
+          <pre>
+&lt;a <strong>typeof="<span class="type">Partition</span>"</strong> <strong>rel="<span class="property">nearby</span>"</strong> 
+   <strong>href="<span class="resource">http://www.mesonet.info/data/q/5/n/767/2014-02-12T06:00:00Z</span>"</strong>>
+767
+&lt;span <strong>property="<span class="property">range</span>"</strong> <strong>typeof="<span class="type">FacetPartiton</span>"</strong>>
+  &lt;span <strong>property="<span class="property">facet</span>"</strong> <strong>resource="<span class="resource">/data/#latitude</span>"</strong>/>
+  &lt;span <strong>property="<span class="property">facet</span>"</strong> <strong>resource="<span class="resource">/data/#longitude</span>"</strong>/>
+  &lt;span <strong>property="<span class="property">shape</span>"</strong> <strong>typeof="<span class="type">schema:GeoShape</span>"</strong>>
+    &lt;span <strong>property="<span class="property">schema:box</span>"</strong> <strong>content="<span class="object">40 -130 35 -130 35 -125 40 -125</span>"</strong>/>
+  &lt;/span>
+&lt;/span>
+&lt;span <strong>property="<span class="property">range</span>"</strong> <strong>typeof="<span class="type">FacetPartition</span>"</strong>>
+   &lt;span <strong>property="<span class="property">facet</span>"</strong> <strong>resource="<span class="resource">/data/#receivedTime</span>"</strong>>Received&lt;/span>
+   &lt;span <strong>property="<span class="property">valueType</span>"</strong> <strong>resource="<span class="resource">xsd:dateTime</span>"</strong>/>
+   from &lt;span <strong>property="<span class="property">start</span>"</strong>><strong><span class="object">2014-02-12T06:00:00Z</span></strong>&lt;/span> 
+   to &lt;span <strong>property="<span class="property">end</span>"</strong>><strong><span class="object">2014-02-12T06:30:00Z</span></strong>&lt;/span>
+   (&lt;span <strong>property="<span class="property">length</span>"</strong>><strong><span class="object">PT30M</span></strong>&lt;/span>)
+&lt;/span>
+&lt;/a>             
+          </pre>
+       </div>
+       <div class="slide">
+          <h1>PAN in Practice: CWOP &amp; mesonet.info</h1>
+          <ul>
+             <li>CWOP: Citizen Weather Observation Program</li>
+             <li>53.6 million weather reports per month</li>
+             <li>Input: APRS, Output: PAN-enabled Web Pages of tabular data.
+                <pre style="font-size: 0.6em">DW3904>APRS,TCPXX*,qAX,CWOP:@090158z5132.18N/00043.53W_061/000g001t030r000p000P000h87b10389L000.DsVP
+CW1604>APRS,TCPXX*,qAX,CWOP:@090158z4444.70N/06531.17W_204/004g009t027r000p000P000h80b10204.DsVP
+DW6741>APRS,TCPXX*,qAX,CWOP:@090158z3749.55N/08000.08W_296/005g...t036r...p...P008h74b10188.DsVP
+DW6916>APRS,TCPXX*,qAX,CWOP:@090158z4310.23N/10818.40W_238/001g002t027r000p000P000h58b10189.DsVP
+DW6011>APRS,TCPXX*,qAX,CWOP:@090158z4307.07N/08756.60W_261/002g006t028r000p000P000h55b10249.DsVP</pre>
+             </li>
+          </ul>
+          <img src="mesonet-architecture.svg"/>
+       </div>
+       <div class="slide">
+          <h1>Applying a Duality to Web Resources</h1>
+          <p>PAN-enabled Web Resources are:</p>
+          <ol>
+             <li>Pages you can just <a href="http://www.mesonet.info/data/q/5/n/768/2014-02-12T06:00:00Z" target="new">view</a>.</li>
+             <li><strong>Data</strong> you can process.</li>
+          </ol>
+          <p>The <strong>data</strong> is <strong>not</strong>:</p>
+          <ul>
+             <li>Duplicated,</li>
+             <li>Stored in JSON or other alternate formats,</li>
+             <li>unstructured,</li>
+             <li>or scraped via formatting assumptions.</li>
+          </ul>
+          <p>The data is annotated with <strong>RDFa</strong>.</p>
+       </div>
+       <div class="slide">
+          <h1>Building Blocks</h1>
+          <p>For geospatial data, partitioning provides a good baseline for algorithms.</p>
+          <img src="bounding-box-quadrangles.svg" style="float: left; margin-top: 2em; width: 50%; margin-left: 1em"/>
+          <img src="backtrace-algorithm.svg" style="float: right; width: 30%; margin-right: 1em;"/>
+       </div>
+       <div class="slide">
+          <h1>Accesing Tabular Data</h1>
+          <h2><a href="http://code.google.com/p/green-turtle/" target="new">Green Turtle</a> implements <a href="http://www.w3.org/TR/rdfa-api/" target="new">RDFa API - W3C Note - July 2012</a></h2>
+          <img src="accessing-tables.svg"/>
+       </div>
+       <div class="slide">
+          <h1>API Details</h1>
+          <p style="margin-bottom: 0em">Find a table of data:</p>
+          <pre style="font-size: 0.75em; margin-top: 0.25em">// (1) Find the element that holds the partition
+var datasets = document.<strong>getElementsByType</strong>("<span class="curie">pan:Partition</span>");
+
+// (2) Use the subject to find the partition's item subjects
+var items = document.<strong>data.getValues</strong>(datasets[0].<strong>data.id</strong>,"<span class="curie">pan:item</span>");
+
+// (3) Access the first item (a table)
+var table = document.<strong>getElementsBySubject</strong>(items[0])[0];</pre>
+          <p style="margin-bottom: 0em">Find a column:</p>
+          <pre style="font-size: 0.75em; margin-top: 0.25em">var columns = document.data.<strong>getValues</strong>(table.<strong>data.id</strong>,"<span class="curie">pan:column</span>");
+var column = null;  // A variable to hold the subject URI.
+
+for (var i=0; !column &amp;&amp; i&lt;columns.length; i++) {
+  // Find the column labeled with the air temperature property
+  if (document.<strong>data.getValues</strong>(columns[i],"<span class="curie">pan:property</span>")
+        .indexOf("<span class="property">http://mesonet.info/airTemperature</span>")>=0) {
+     column = columns[i];
+  }
+}
+
+// Find the index by finding the column element by subject URI.
+var index = document.<strong>getElementsBySubject</strong>(column)[0].cellIndex;</pre>
+       </div>
+       <div class="slide">
+          <h1>Processing Data with Map / Reduce</h1>
+          <ul>
+             <li>We can map resources containing data to resultants.</li>
+             <li>We can reduce resultants to answers.</li>
+             <li>...and we can do it all in the browser!</li>
+          </ul>
+          <div style="text-align: center; margin-top: 2em;">
+             <div style="display: inline-block; text-align: center; margin-right: 2em">
+             <img src="pig-icon.png"/>
+             <p>The smart pig uses map / reduce!</p>
+             </div>
+             <div style="display: inline-block; text-align: center">
+             <img src="cat-tied-icon.png"/>
+             <p>Query &amp; paging gets you all tied up.</p>
+             </div>
+          </div>   
+             
+       </div>
+       <div class="slide">
+          <h1>Barnes Interpolation</h1>
+          <p>Iterative weighted averages based on observed values:</p>
+          <p><math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+             <mrow>
+                <msubsup>
+                   <mi>g</mi>
+                   <mi>k</mi>
+                   <mn>0</mn>
+                </msubsup>
+                <mfenced>
+                   <mi>x</mi>
+                   <mi>y</mi>
+                </mfenced>
+                <mo>=</mo>
+                <mfrac>
+                   <mrow>
+                      <munderover>
+                         <mo>∑</mo>
+                         <mi>i</mi>
+                         <mi>n</mi>
+                      </munderover>
+                      <msub>
+                         <mi>w</mi>
+                         <mi>i</mi>
+                      </msub>
+                      <msub>
+                         <mi>o</mi>
+                         <mi>i</mi>
+                      </msub>
+                   </mrow>
+                   <mrow>
+                      <munderover>
+                         <mo>∑</mo>
+                         <mi>i</mi>
+                         <mi>n</mi>
+                      </munderover>
+                      <msub>
+                         <mi>w</mi>
+                         <mi>i</mi>
+                      </msub>
+                   </mrow>
+                </mfrac>
+             </mrow>
+             <mo>,</mo>
+             <mspace width="0.5em"/>
+             <mrow>
+                <msubsup>
+                   <mi>g</mi>
+                   <mi>k</mi>
+                   <mn>1</mn>
+                </msubsup>
+                <mfenced>
+                   <mi>x</mi>
+                   <mi>y</mi>
+                </mfenced>
+                <mo>=</mo>
+                <msubsup>
+                   <mi>g</mi>
+                   <mi>k</mi>
+                   <mn>0</mn>
+                </msubsup>
+                <mfenced>
+                   <mi>x</mi>
+                   <mi>y</mi>
+                </mfenced>
+                <mo>+</mo>
+                <mfrac>
+                   <mrow>
+                      <munderover>
+                         <mo maxsize="1.5em">∑</mo>
+                         <mi>i</mi>
+                         <mi>n</mi>
+                      </munderover>
+                      <msub>
+                         <mi>w</mi>
+                         <mi>i</mi>
+                      </msub>
+                      <mfenced>
+                         <mrow>
+                            <msub>
+                               <mi>o</mi>
+                               <mi>i</mi>
+                            </msub>
+                            <mo>-</mo>
+                            <msubsup>
+                               <mi>g</mi>
+                               <mi>i</mi>
+                               <mn>0</mn>
+                            </msubsup>
+                            <mfenced>
+                               <mi>x</mi>
+                               <mi>y</mi>
+                            </mfenced>
+                         </mrow>
+                      </mfenced>
+                   </mrow>
+                   <mrow>
+                      <munderover>
+                         <mo>∑</mo>
+                         <mi>i</mi>
+                         <mi>n</mi>
+                      </munderover>
+                      <msub>
+                         <mi>w</mi>
+                         <mi>i</mi>
+                      </msub>
+                   </mrow>
+                </mfrac>
+             </mrow>
+             <mo>,</mo>
+             <mspace width="0.5em"/>
+             <mtext>...</mtext>
+             <mspace width="0.5em"/>
+             <mo>,</mo>
+             <mrow>
+                <msubsup>
+                   <mi>g</mi>
+                   <mi>k</mi>
+                   <mrow>
+                      <mi>n</mi>
+                      <mo>+</mo>
+                      <mn>1</mn>
+                   </mrow>
+                </msubsup>
+                <mfenced>
+                   <mi>x</mi>
+                   <mi>y</mi>
+                </mfenced>
+                <mo>=</mo>
+                <msubsup>
+                   <mi>g</mi>
+                   <mi>k</mi>
+                   <mi>n</mi>
+                </msubsup>
+                <mfenced>
+                   <mi>x</mi>
+                   <mi>y</mi>
+                </mfenced>
+                <mo>+</mo>
+                <mfrac>
+                   <mrow>
+                      <munderover>
+                         <mo maxsize="1.5em">∑</mo>
+                         <mi>i</mi>
+                         <mi>n</mi>
+                      </munderover>
+                      <msub>
+                         <mi>w</mi>
+                         <mi>i</mi>
+                      </msub>
+                      <mfenced>
+                         <mrow>
+                            <msub>
+                               <mi>o</mi>
+                               <mi>i</mi>
+                            </msub>
+                            <mo>-</mo>
+                            <msubsup>
+                               <mi>g</mi>
+                               <mi>i</mi>
+                               <mi>n</mi>
+                            </msubsup>
+                            <mfenced>
+                               <mi>x</mi>
+                               <mi>y</mi>
+                            </mfenced>
+                         </mrow>
+                      </mfenced>
+                   </mrow>
+                   <mrow>
+                      <munderover>
+                         <mo>∑</mo>
+                         <mi>i</mi>
+                         <mi>n</mi>
+                      </munderover>
+                      <msub>
+                         <mi>w</mi>
+                         <mi>i</mi>
+                      </msub>
+                   </mrow>
+                </mfrac>
+             </mrow>
+          </math></p>
+          <p>where <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+             <msub>
+                <mi>w</mi>
+                <mi>i</mi>
+             </msub>
+             <mo>=</mo>
+             <mtext>exp</mtext>
+             <mfenced>
+                <mfrac>
+                   <mrow>
+                      <mo>-</mo>
+                      <msup>
+                         <msub>
+                            <mi>d</mi>
+                            <mi>i</mi>
+                         </msub>
+                         <mn>2</mn>
+                      </msup>
+                   </mrow>
+                   <mrow>
+                      <msup>
+                         <mi>L</mi>
+                         <mn>2</mn>
+                      </msup>
+                      <mi>C</mi>
+                   </mrow>
+                </mfrac>
+             </mfenced>
+          </math></p>
+          <p><strong>There will be a test later!</strong></p>
+          <p>It produces the typical colored gradient of surfaces for temperature etc. for using in
+            visualizations (e.g. over maps).</p>
+          
+          <h3>Think: the weather report on the 10pm news.</h3>
+       </div>
+       <div class="slide">
+          <h1>Interpolation Process via Map / Reduce</h1>
+          <img src="barnes-gridavg.svg"/>
+       </div>
+       <div class="slide">
+          <h1>Run it Live!</h1>
+          <div id="form">
+             
+             <p>For <select id="preset-regions">
+                   <option value="[40,-125,35,-120]">N. California</option>
+                   <option value="[37.82,-122.52,37.7,-122.35]">San Francisco</option>
+                   <option value="[56.1,-3.5,55.8,-3]">Edinburgh</option>
+                   <option value="[61,-8.2,50,3]">UK</option>
+                   <option value="[50,-125,25,-65]">USA</option>
+                   <option value="[52,12,48,16]">Czech Republic</option>
+                </select>
+                <input id="region" type="text" value="[40,-125,35,-120]" size="20"/> /
+                <input id="resolution" type="text" value="0.1" size="5"/>°</p>
+             <p>at <input id="start" size="30" type="datetime"/> for <input id="duration" size="5"/> minutes 
+             </p>
+             <p>coloring by range (<input id="min" type="text" value="-20" size="3"/>°C,  <input id="max" type="text" value="37" size="3"/>°C)</p>
+             <p>with quadrangle size <input type="text" size="3" value="2.5" id="quadsize"/>°. </p>
+             <p><button id="go">Calculate</button></p>
+             <div id="log">
+             </div>
+          </div>
+          <div id="output">
+          </div>
+       </div>
+       <div class="slide">
+          <h1>Polar Vortex - 2014-01-23</h1>
+          <img src="polar-vortex-2014-01-23-200000Z-PT30M.png" style="width: 80%"/>
+          <h2>22 seconds to render, 13.6 seconds data access.</h2>
+          <h2>240 Partitions</h2>
+       </div>
+       <div class="slide">
+          <h1>Polar Vortex Animation</h1>
+          <p><button id="vortex-controller">Simple Animation</button><button id="vortex-map-controller">Map Animation</button></p>
+          <div id="vortex-animation">
+             <h2 id="vortex-title"></h2>
+             <div id="vortex-status">Loading ...</div>
+             <div id="vortex"/>
+             <div id="map-vortex"/>
+          </div>
+       </div>
+       <div class="slide">
+          <h1>Concluding Remarks</h1>
+          <blockquote style="margin-bottom: 1em; font-size: 1.5em; line-height: 1.2em">
+             <p>One cannot underestimate the value of <q>view source</q> in the development of the Web.</p>
+          </blockquote>
+          <p>We want to extend this to both scientific data:</p>
+          <ul>
+             <li>enables the <q>copy and modify</q> model</li>
+             <li>allows good constructs to <q>go viral</q> on the Web</li>
+          </ul>
+          <p>What will the <q>hacker in the corner</q> will do with scientific data?</p>
+       </div>
+       <script type="text/javascript">
+var vortex = [
+"data/usa-2014-01-01.json",
+"data/usa-2014-01-02.json",
+"data/usa-2014-01-03.json",
+"data/usa-2014-01-04.json",
+"data/usa-2014-01-05.json",
+"data/usa-2014-01-07.json",
+"data/usa-2014-01-08.json",
+"data/usa-2014-01-09.json",
+"data/usa-2014-01-13.json",
+"data/usa-2014-01-14.json",
+"data/usa-2014-01-15.json",
+"data/usa-2014-01-16.json",
+"data/usa-2014-01-17.json",
+"data/usa-2014-01-18.json",
+"data/usa-2014-01-19.json",
+"data/usa-2014-01-20.json",
+"data/usa-2014-01-21.json",
+"data/usa-2014-01-22.json",
+"data/usa-2014-01-23.json",
+"data/usa-2014-01-24.json",
+"data/usa-2014-01-25.json",
+"data/usa-2014-01-26.json",
+"data/usa-2014-01-27.json",
+"data/usa-2014-01-28.json",
+"data/usa-2014-01-29.json",
+"data/usa-2014-01-30.json",
+"data/usa-2014-01-31.json"
+];
+       </script>
+       
+    </body>
+</html>
