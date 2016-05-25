@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+       <title>Semantic Hybridization: Mixing RDFa and JSON-LD</title>
+       <meta name="copyright" content="Copyright &#169; 2015 R. Alexander Miłowski"/>
+       <meta name="holder" content="R. Alexander Miłowski"/>
+       <meta name="creator" content="R. Alexander Miłowski"/>
+       <meta name="pubdate" content="2015-02-14"/>
+       <link rel="stylesheet" type="text/css" href="slidy.css"/>
+       <link rel="stylesheet" type="text/css" href="theme.css" />
+       <script type="text/javascript" src="slidy.js"/>
+       <script type="text/javascript">w3c_slidy.mouse_click_enabled = false;</script>
+       <script type="application/javascript" src="demo/RDFa.js"></script>
+       <script type="application/javascript" src="demo/meditari.js"></script>
+       <link rel="stylesheet" type="text/css" href="demo/meditari.css"/>
+       <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+       <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+       <style type="text/css">
+div.slide .meditari-info {
+}
+div.slide .meditari-photograph img {
+   margin-left: 0em;
+   margin-right: 0em;
+   display: inline;
+}
+       </style>
+    </head>
+    <body>
+       <div class="background">
+          <header><img class="logo" src="ischool-logo.png"/></header>
+          <footer>
+             <p><a href="http://ischool.berkeley.edu/" target="new">School of Information, UC Berkeley</a></p>
+          </footer>
+       </div>
+       <div class="slide cover title">
+          <hgroup>
+             <h1>Semantic Hybridization: Mixing RDFa and JSON-LD</h1>
+             <h3>February 14th, 2015</h3>
+          </hgroup>
+          <div class="author">
+             <p><a href="http://www.milowski.com/" rel="name">R. Alexander Miłowski</a></p>
+             <p><a href="mailto:alex@milowski.com" rel="email">alex@milowski.com</a></p>
+             <p>School of Information, UC Berkeley</p>
+          </div>
+       </div>
+       <div class="slide">
+          <h1>JSON-LD &#x1f498; or &#x1F494; RDFa?</h1>
+          <p>It's a love story of two <q>soul-formats</q> for semantics:</p>
+          <ul>
+             <li>JSON-LD and RDFa operate in the same space of "semantics on the Web",</li>
+             <li>Some of the same people developed both W3C recommendations,</li>
+             <li>JSON-LD is attractive to JavaScript developers and there are a lot of JavaScript developers...</li>
+             <li>There is a lot of HTML markup too and so RDFa is attractive for use in that context.</li>
+          </ul>
+          <blockquote><q>Can't we just all get along?</q></blockquote>
+          <p><b>Yes, we can</b> and so can they...</p>
+          <p>I'm here to be their relationship counselor for the day.</p>
+       </div>
+       <div class="slide">
+          <h1>A simple problem</h1>
+          <p>Encoding a person's contact information on the Web using <a href="http://schema.org/">schema.org</a>:</p>
+          <div class="two-column">
+          <pre>
+Alex Miłowski
+alex@milowski.com
+http://www.milowski.com/
+
+School of Information
+University of California, Berkeley
+http://www.ischool.berkeley.edu/             
+          </pre>
+          <pre class="small">
+@prefix s: &lt;http://schema.org/>
+&lt;http://www.milowski.com/#alex> a s:Person ;
+  s:name         "Alex Miłowski";
+  s:email        "alex@milowski.com";
+  s:url          "http://www.milowski.com/";
+  s:organization &lt;_:1> .
+&lt;_:1> a        s:Organization ;
+  s:name       "University of California, Berkeley" ;
+  s:department &lt;_:2> .
+&lt;_:2> a s:Organization ;
+  s:name "School of Information" ;
+  s:url  "http://www.ischool.berkeley.edu/" .             
+          </pre>
+          </div>
+       </div>
+       <div class="slide">
+          <h1>&#x1f498; RDFa?</h1>
+          <blockquote>RDFa likes to collaborate with others.</blockquote>
+          <div class="two-column">
+             <pre style="width: 50%" class="small">
+&lt;div vocab="http://schema.org/" 
+     resource="http://www.milowski.com/#alex" 
+     typeof="Person">
+&lt;p>&lt;a property="url" href="http://www.milowski.com/">
+      &lt;span <b>resource="http://www.milowski.com/#alex"</b> 
+            property="name">Alex Miłowski&lt;/span>
+   &lt;/a>; 
+   <b>&lt;a property="email" href="mailto:alex@milowski.com" 
+      content="alex@milowski.com">(personal e-mail)&lt;/a></b>;
+&lt;/p>
+&lt;p property="organization" typeof="Organization">
+  &lt;span property="department" typeof="Organization">
+    &lt;span property="name">School of Information&lt;/span>
+    <b>&lt;a property="url" 
+       href="http://www.ischool.berkeley.edu/">(website)&lt;/a></b>
+  &lt;/span>; 
+  &lt;span property="name">
+      University of California, Berkeley&lt;/span>
+&lt;/p>
+&lt;/div>                
+             </pre>
+             <ul style="width: 40%;">
+                <li class='heart'>Some information is naturally represented in the markup.</li>
+                <li class='heart'>Adding a few attributes <q>qualifies</q> that information further with minimal effort.</li>
+                <li class='broken-heart'>Are you listening to me RDFa?</li>
+                <li class='broken-heart'>Sometimes the subject changes inadvertently.</li>
+                <li class='broken-heart'>Details matter and content and syntax do not always match.</li>
+                <li class='broken-heart'>Awkward insertions of markup just to get information into the graph properly.</li>
+             </ul>
+          </div>
+       </div>
+       <div class="slide">
+          <h1>&#x1f498; JSON-LD?</h1>
+          <blockquote>JSON-LD has a hard time relating.</blockquote>
+          <div class="two-column">
+          <pre style="width: 50%" class="small">
+{
+  "@context": "http://schema.org/",
+  "@type" : "Person",
+  <b>"@id"   : "http://www.milowski.com/#alex"</b>,
+  "name"  : "Alex Miłowski",
+  "email" : "alex@milowski.com",
+  "url"   : "http://www.milowski.com",
+  "organization" : {
+     "@type" : "Organization",
+     "name"  : "University of California, Berkeley",
+     "department" : {
+        "@type" : "Organization",
+        "name" : "School of Information",
+        "url"  : "http://www.ischool.berkeley.edu/"
+    }
+  }
+}             
+          </pre>
+          <ul style="width: 40%">
+             <li class='heart'>Compact and direct; easy to understand.</li>
+             <li class='broken-heart'>Sometimes duplicates information and calls that its own.</li>
+             <li class='broken-heart'>Doesn't relate to markup</li>
+             <li class='broken-heart'>Self-absorbed and not concerned about other information resources</li>
+             <li class='broken-heart'>Lacks hypertext</li>
+             <li class='heart'>Easily represents information not normally contained in markup</li>
+          </ul>
+          </div>
+       </div>
+       <div class="slide">
+          <h1>&#x1f498; Soul-formats</h1>
+          <blockquote>RDFa and JSON-LD almost seem made to compliment each other.</blockquote>
+          <ul>
+             <li class='heart'>They both describe a graph of triples.</li>
+             <li class='heart'>RDFa is located on elements and rooted in hypertext.</li>
+             <li class='heart'>JSON-LD is a compact and easy way to represent triples.</li>
+             <li class='heart'>They can make assertions about the same subjects.</li>
+             <li class='heart'>Their union is a union of their triple graphs …<br/><span class="continued">that makes assertions …</span><br/><span class="continued">about resources and hypertext …</span><br/><span class="continued">in context.</span></li>
+          </ul>
+       </div>
+       <div class="slide">
+          <h1>Using the right representation</h1>
+          <blockquote><q>The excellence of grammar as a guide is proportional to the paucity of the
+             inflexions, i.e. to the degree of analysis effected by the language
+             considered.</q> — Bertrand Russell<br/>(in a footnote of Principles of Mathematics)</blockquote>
+          <p>Some of you have seen this from me for years ...</p>
+          <p>Our choice of syntax and format affects how we organize information.</p>
+          <p>By using the right representation we don't force information into to do <q>unnatural acts</q>.</p>
+          <blockquote>Use the right format for the information being represented.</blockquote>
+       </div>
+       <div class="slide">
+          <h1>Strategy for Reuniting JSON-LD and RDFa</h1>
+          <ol>
+             <li>Identify resources in hypertext (HTML) using RDFa.</li>
+             <li>Annotate information in markup without unnecessary intrusions.</li>
+             <li>Augment information using JSON-LD avoiding duplication.</li>
+             <li>Represent the remaining information with JSON-LD.</li>
+          </ol>
+       </div>
+       <div class="slide">
+          <h1>An example of RDFa/JSON-LD love</h1>
+          <div class="two-column">
+          <pre class="small" style="width: 53%">
+&lt;p vocab="http://schema.org/">
+
+&lt;span <b>resource="http://www.milowski.com/#alex"</b> 
+         typeof="Person">
+  &lt;span property="name">Alex Miłowski&lt;/span>
+&lt;/span>
+
+works at 
+&lt;span <b>resource="http://www.berkeley.edu/"</b> 
+      typeof="Organization">
+  &lt;span property="name">
+     University of California, Berkeley&lt;/span>'s
+  &lt;span resource="http://www.ischool.berkeley.edu/" 
+        typeof="Organization" 
+        property="department">
+    &lt;span property="name">School of Information&lt;/span>
+  &lt;/span>
+&lt;/span>
+
+&lt;/p>             
+          </pre>
+             <pre class="small" style="width: 38%">
+&lt;script type="application/ld+json">
+{
+  "@context" : "http://schema.org/",
+  <b>"@id" : "http://www.milowski.com/#alex"</b>,
+  "givenName" : "Raymond",
+  "otherName" : "Alexander",
+  "familyName" : "Miłowski",
+  "email" : "alex@milowski.com",
+  "url" : "http://www.milowski.com/",
+  <b>"organization" : { 
+     "@id": "http://www.berkeley.edu/" 
+   }</b>
+}
+&lt;/script>
+          </pre>
+          </div>
+       </div>
+       <div class="slide">
+          <h1>A Demonstration</h1>
+          <blockquote>We'll use RDFa and JSON-LD to simplify expression of information about media (photographs).</blockquote>
+          <ul>
+             <li class='heart'>minimal markup + RDFa</li>
+             <li class='heart'>simple links to more information in JSON-LD</li>
+             <li class='heart'>all indexable by search engines</li>
+             <li class='heart'>without all the cruft</li>
+          </ul>
+       </div>
+       <div class="slide">
+          <h1>Step #1 — Elegance in RDFa</h1>
+          <p>We encode a gallery of images, annotating each type and resource with RDFa...</p>
+          <pre>
+&lt;div typeof="ImageGallery" vocab="http://schema.org/">
+  &lt;img typeof="Photograph" src="10153548161924517.jpg"/>
+  &lt;img typeof="Photograph" src="10153548161944517.jpg"/>
+  ...
+&lt;/div>
+          </pre>
+       </div>
+       <div class="slide">
+          <h1>Step #2 — Linking to the JSON-LD</h1>
+          <p>Link to additional information in JSON-LD:</p>
+          <pre>
+&lt;script type="application/ld+json" src="10153548161924517.json">&lt;/script>
+&lt;script type="application/ld+json" src="10153548161944517.json">&lt;/script>
+...
+          </pre>
+       </div>
+       <div class="slide">
+          <h1>Step #3 — Add detail with JSON-LD</h1>
+          <pre>
+{
+  "@context" : "http://schema.org/",
+  "<b>@id" : "10153548161924517.jpg"</b>,
+  "@type" : "Photograph",
+  "dateCreated" : "2015-01-18T14::25:29-08:00",
+  "description" : "A crane at China Camp",
+  "contentLocation" : {
+     "@type" : "Place",
+     "geo" : { "@type" : "GeoCoordinates", "latitude" : 38.009463888889, "longitude" : -122.49190555556 }
+   },
+   "comment" : {
+       "text" : "A crane!",
+       "x" : 230, "y": 260,
+       "width": 25, "height": 25
+   }
+}             
+          </pre>
+       </div>
+       <div class="slide">
+          <h1>The Working Demo <a target="new" href="demo/index.xhtml">(source)</a></h1>
+          <script type="application/ld+json" src="demo/10153548161924517.json"></script>
+          <script type="application/ld+json" src="demo/10153548161944517.json"></script>
+          <script type="application/ld+json" src="demo/10153548162529517.json"></script>
+          <script type="application/ld+json" src="demo/10153548166669517.json"></script>
+          <script type="application/ld+json" src="demo/10153548176764517.json"></script>
+          <script type="application/ld+json" src="demo/10153548161929517.json"></script>
+          <script type="application/ld+json" src="demo/10153548161949517.json"></script>
+          <script type="application/ld+json" src="demo/10153548162794517.json"></script>
+          <script type="application/ld+json" src="demo/10153548168304517.json"></script>
+          <script type="application/ld+json" src="demo/10153548161939517.json"></script>
+          <script type="application/ld+json" src="demo/10153548162179517.json"></script>
+          <script type="application/ld+json" src="demo/10153548166029517.json"></script>
+          <script type="application/ld+json" src="demo/10153548170744517.json"></script>
+          <div typeof="ImageGallery" vocab="http://schema.org/">
+             <img typeof="Photograph" src="demo/10153548161924517.jpg"/>
+             <img typeof="Photograph" src="demo/10153548161944517.jpg"/>
+             <img typeof="Photograph" src="demo/10153548162529517.jpg"/>
+             <img typeof="Photograph" src="demo/10153548166669517.jpg"/>
+             <img typeof="Photograph" src="demo/10153548176764517.jpg"/>
+             <img typeof="Photograph" src="demo/10153548161929517.jpg"/>
+             <img typeof="Photograph" src="demo/10153548161949517.jpg"/>
+             <img typeof="Photograph" src="demo/10153548162794517.jpg"/>
+             <img typeof="Photograph" src="demo/10153548168304517.jpg"/>
+             <img typeof="Photograph" src="demo/10153548161939517.jpg"/>
+             <img typeof="Photograph" src="demo/10153548162179517.jpg"/>
+             <img typeof="Photograph" src="demo/10153548166029517.jpg"/>
+             <img typeof="Photograph" src="demo/10153548170744517.jpg"/>   
+          </div>
+       </div>
+       <div class="slide">
+          <h1>Together Again</h1>
+          <div style="text-align: center;">
+          <p style=" font-size: 4em; margin-top: 2em;">RDFa &#x1f498; JSON-LD</p>
+          <p>(with some help from HTML)</p>
+          </div>
+       </div>
+    </body>
+</html>

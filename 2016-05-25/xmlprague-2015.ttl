@@ -1,0 +1,10 @@
+@base <http://www.milowski.com/journal/entry/2016-05-25T11:00-08:00> .
+@prefix schema: <http://schema.org/> .
+<>
+   a schema:BlogPosting ;
+   schema:headline "Retro: Semantic Hybridization" ;
+   schema:datePublished "2016-05-25T11:00-08:00" ;
+   schema:dateModified "2016-05-25T11:00-08:00" ;
+   schema:isBasedOnUrl <http://alexmilowski.github.io/milowski-journal/2016-05-25/xmlprague-2015.html> ;
+   schema:keywords "XML Prague","Web","open data","RDFa","JSON-LD","semantics","Semantic Hybridization","retro" ;
+   schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .
