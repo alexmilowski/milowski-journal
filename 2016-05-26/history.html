@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Directions through my work</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      body { font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif; }
+      h1, h2, h3, h4, h5 {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;;
+        font-weight: normal;
+         color: rgb(50,50,50);
+      }
+      .remark-slide h1 {
+         background-color: #cc6600;
+         margin-top: 0em;
+         padding-top: 0.25em;
+         padding-bottom: 0.25em;
+         font-size: 1.5em;
+      }
+      .small { font-size: 0.75em; }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono';
+       }
+      .remark-slide-content { font-size: 2em; padding: 0em; padding-left: 0.5em;}
+      .remark-slide .remark-slide-content h1 {
+         margin-bottom: 0em;
+         margin-left: -1em;
+      }
+      .remark-slide .normal h1 {
+         padding-left: 1em;
+      }
+      .remark-slide .normal h1 + * {
+        margin-top: 1em;
+      }
+     .remark-slide .normal h1 .range {
+        font-size: 0.75em;
+        padding-left: 1em;
+      }
+      .remark-slide .title {
+         background-color: rgb(210,210,210);
+      }
+      .remark-slide .title h2 {
+         background-color: #cc6600;
+         margin-top: 0em;
+         margin-bottom: 0em;
+      }
+      .remark-slide .title h3 {
+         background-color: #cc6600;
+         margin-top: 0em;
+         margin-bottom: 0em;
+      }
+      .remark-slide .separator {
+         background-color: rgb(210,210,210);
+      }
+      .remark-slide .separator h2 {
+         margin-top: 0em;
+         margin-bottom: 0em;
+         padding-top: 0.125em;
+         padding-bottom: 0.125em;
+      }
+      .remark-slide-content li {
+         margin-bottom: 1em;  
+      }
+     .remark-slide-content p img {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+     }
+#output {
+    width: 40%;
+     float: left;
+     margin-left: 1em;
+}
+
+#output {
+    text-align: center;
+}
+
+#map {
+    height: 500px;
+}
+
+     #form {
+        width: 40%;
+        font-size: 0.5em;
+        float: left;
+        }
+#form input {
+   font-size: 0.5em;
+}
+#log {
+    font-family: monospace;
+    font-size: 10pt;
+    line-height: 1em;
+     max-height: 15em;
+    overflow: scroll;
+}
+
+#log p {
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+
+     .demolink { position: fixed; top: 1em; right: 1em; font-size: 0.5em; }
+     .lefthalf { float: left;  width: 45%; margin-right: 1em; }
+     .rightfixed { position: fixed; top: 4em; right: 1em; }
+     .scale75 img { width: 75%; }
+     .scale50 img { width: 50%; }
+     .small li {
+        margin-bottom: 0.25em;
+     }
+     .indent {
+        margin-left: 2em;
+     }
+     .math {
+        display:block;
+        font-size: 0.8125em;
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+     }
+
+ </style>
+       <script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js">//</script>
+       <script type="text/javascript" src="../2016-05-24/xmlprague-2014/heatmap.js">//</script>
+       <script type="text/javascript" src="../2016-05-24/xmlprague-2014/RDFa.js">//</script>
+       <script type="text/javascript" src="../2016-05-24/xmlprague-2014/mapreduce.js">//</script>
+       <script type="text/javascript" src="../2016-05-24/xmlprague-2014/gridavg.js">//</script>
+       <script type="text/javascript" src="../2016-05-24/xmlprague-2014/barnes-interpolation.js">//</script>
+       <script type="text/javascript" src="../2016-05-24/xmlprague-2014/barnes.js">//</script>
+       <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <body>
+<textarea id="source">
+
+class: title, center, middle
+
+# Directions 
+# through my work
+# R. Alexander Miłowski
+
+---
+
+class: normal
+
+# A brief summary
+
+* ↱ 1990 - 2002 — The Markup Years
+* ↶ 2003 - 2005 — Intermission: Mathematics
+* ↶ 2006 - 2009 — The Open Web Platform (OWP)
+* ↺ 2010 - 2014 — Intermission: Ph.D.
+* ↑ 2015+       — Data Science / Open Data / OWP
+---
+
+class: separator, center, middle
+
+# ↑ Recent Work
+## 2010+
+
+---
+class: separator, center, middle
+
+# ↺ Intermission: PhD
+## 2010 - 2014
+
+
+---
+class: normal
+# ↺ The Web and Data
+
+Early intuition:
+
+* the Web works great for dissemination of written works, B2C commerce, and social media
+* but not so well for scientific data
+* need to put the data on the Web
+* not just accessible from it.
+
+---
+class: normal
+# ↺ data mining data.gov 
+
+> We want to lower the bar for publishing scientific data on the Web so that we enable the network effect while still retaining some aspect of semantics and interoperability.
+
+.lefthalf[![data.gov geo data formats](geoform-chart.png)]
+.lefthalf[.small[
+* many data sets are tabular
+* representation formats predate the Web
+* incompatible with browser technologies
+* archives of data sets
+* too large to be processed
+]
+]
+
+---
+class: normal
+
+# ↱ sharing data = computable
+
+Semantics, linking, and the [Architecture of the Web](http://www.w3.org/TR/webarch/) are key:
+
+* data needs to be annotated,
+* accessible in "Web native" data formats,
+* so users of the OWP can navigate it
+* using standard techniques of the Web
+* and compute over it
+
+---
+class: normal
+
+# ↑ PAN Methodology
+
+.demolink[See [Pantabular](http://www.pantabular.org) ...]
+
+Simple is good:
+
+* **P**artition the data set along properties inherent in the data (e.g. time, geospatial coordinates, etc.) into reasonable sized subsets suitable to Web applications.
+* **A**nnotate the data according to some ontology and encode in a common syntax (HTML) using RDFa.
+* **N**ame each data partition with a unique URI using a consistent naming scheme that can be traced back to your partitioning scheme from (1).
+
+---
+class: normal
+
+# ↑ Partitioning
+
+Partition data is annotated with links between partitions for navigation.
+
+.scale50[![pan partitions](pan-method.svg)]
+---
+class: normal
+
+# ↑ Table Annotations
+
+[RDFa](http://www.w3.org/TR/rdfa-lite/) annotations in HTML guide client applications.
+
+```html
+<table typeof="Table">
+<thead>
+<tr>
+...
+  <th property="column" typeof="Column">
+     <span property="title">Temperature</span>
+     <span property="property" resource="w:airTemperature"/>
+     <span property="valueSpace" typeof="ValueDescription">
+        (°<span property="symbol">C</span>)
+        <span property="datatype" resource="xsd:double"/>
+        <span property="quantity" resource="quantity:ThermodynamicTemperature"/>
+        <span property="unit" resource="unit:DegreeCelsius"/>
+     </span>
+  </th>
+...
+</tr>
+</thead>
+<tbody>
+   <tr>
+...
+     <td>22.2</td>
+...
+   </tr>
+```
+
+---
+class: normal
+
+# ↑ Partition Annotations
+RDFa annotations provide a way to navigate between partitions   
+```html
+<a typeof="Partition" rel="nearby" 
+   href="http://www.mesonet.info/data/q/5/n/767/2014-02-12T06:00:00Z">
+767
+<span property="range" typeof="FacetPartiton">
+  <span property="facet" resource="/data/#latitude"/>
+  <span property="facet" resource="/data/#longitude"/>
+  <span property="shape" typeof="schema:GeoShape">
+    <span property="schema:box" content="40 -130 35 -130 35 -125 40 -125"/>
+  </span>
+</span>
+<span property="range" typeof="FacetPartition">
+   <span property="facet" resource="/data/#receivedTime">Received</span>
+   <span property="valueType" resource="xsd:dateTime"/>
+   from <span property="start">2014-02-12T06:00:00Z</span> 
+   to <span property="end">2014-02-12T06:30:00Z</span>
+   (<span property="length">PT30M</span>)
+</span>
+</a>                
+```
+
+---
+class: normal
+# ↱ Geospatial Partition Algorithms
+
+> Partitioning provides a good basis for algorithms
+
+.indent[
+.lefthalf[
+![Bounding Box and Sequence Numbers](bounding-box-quadrangles.svg)
+Bounding Box / Sequence Numbers
+]
+.lefthalf[
+.indent[
+![Partition Traversal Algorithm](backtrace-algorithm.svg)
+Partition Traversal
+]
+]
+]
+
+---
+class: normal
+# ↑ Accessing Tabular Data
+
+> [Green Turtle](https://github.com/alexmilowski/green-turtle) provides an [RDFa API](http://www.w3.org/TR/rdfa-api/) in JavaScript
+
+![Table Access](accessing-tables.svg)
+
+---
+class: normal
+# ↰ CWOP on the Web
+
+```
+DW3904>APRS,TCPXX*,qAX,CWOP:@090158z5132.18N/00043.53W_061/000g001t030r000p000P000h87b10389L000.DsVP
+CW1604>APRS,TCPXX*,qAX,CWOP:@090158z4444.70N/06531.17W_204/004g009t027r000p000P000h80b10204.DsVP
+```
+.demolink[See [mesonet.info](http://www.mesonet.info) ...]
+
+![mesonet.info architecture](mesonet-architecture.svg)
+
+
+---
+class: normal
+
+# ↰ Barnes Interpolation
+
+.demolink[See [wikipedia](https://en.wikipedia.org/wiki/Barnes_interpolation) ...]
+> .small[An iterative algorithm derived from the premise "an atmospheric variation ... by a Fourier integral representation"]
+
+.math[
+<p><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+             <mrow>
+                <msubsup>
+                   <mi>g</mi>
+                   <mi>k</mi>
+                   <mn>0</mn>
+                </msubsup>
+                <mfenced>
+                   <mi>x</mi>
+                   <mi>y</mi>
+                </mfenced>
+                <mo>=</mo>
+                <mfrac>
+                   <mrow>
+                      <munderover>
+                         <mo>∑</mo>
+                         <mi>i</mi>
+                         <mi>n</mi>
+                      </munderover>
+                      <msub>
+                         <mi>w</mi>
+                         <mi>i</mi>
+                      </msub>
+                      <msub>
+                         <mi>o</mi>
+                         <mi>i</mi>
+                      </msub>
+                   </mrow>
+                   <mrow>
+                      <munderover>
+                         <mo>∑</mo>
+                         <mi>i</mi>
+                         <mi>n</mi>
+                      </munderover>
+                      <msub>
+                         <mi>w</mi>
+                         <mi>i</mi>
+                      </msub>
+                   </mrow>
+                </mfrac>
+             </mrow>
+             <mspace width="0.5em"/>
+</math>
+             <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+             <mrow>
+                <msubsup>
+                   <mi>g</mi>
+                   <mi>k</mi>
+                   <mn>1</mn>
+                </msubsup>
+                <mfenced>
+                   <mi>x</mi>
+                   <mi>y</mi>
+                </mfenced>
+                <mo>=</mo>
+                <msubsup>
+                   <mi>g</mi>
+                   <mi>k</mi>
+                   <mn>0</mn>
+                </msubsup>
+                <mfenced>
+                   <mi>x</mi>
+                   <mi>y</mi>
+                </mfenced>
+                <mo>+</mo>
+                <mfrac>
+                   <mrow>
+                      <munderover>
+                         <mo maxsize="1.5em">∑</mo>
+                         <mi>i</mi>
+                         <mi>n</mi>
+                      </munderover>
+                      <msub>
+                         <mi>w</mi>
+                         <mi>i</mi>
+                      </msub>
+                      <mfenced>
+                         <mrow>
+                            <msub>
+                               <mi>o</mi>
+                               <mi>i</mi>
+                            </msub>
+                            <mo>-</mo>
+                            <msubsup>
+                               <mi>g</mi>
+                               <mi>i</mi>
+                               <mn>0</mn>
+                            </msubsup>
+                            <mfenced>
+                               <mi>x</mi>
+                               <mi>y</mi>
+                            </mfenced>
+                         </mrow>
+                      </mfenced>
+                   </mrow>
+                   <mrow>
+                      <munderover>
+                         <mo>∑</mo>
+                         <mi>i</mi>
+                         <mi>n</mi>
+                      </munderover>
+                      <msub>
+                         <mi>w</mi>
+                         <mi>i</mi>
+                      </msub>
+                   </mrow>
+                </mfrac>
+             </mrow>
+             <mo>,</mo>
+             <mspace width="0.5em"/>
+             <mtext>...</mtext>
+             <mspace width="0.5em"/>
+             <mo>,</mo>
+             </math>
+             <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+             <mrow>
+                <msubsup>
+                   <mi>g</mi>
+                   <mi>k</mi>
+                   <mrow>
+                      <mi>n</mi>
+                      <mo>+</mo>
+                      <mn>1</mn>
+                   </mrow>
+                </msubsup>
+                <mfenced>
+                   <mi>x</mi>
+                   <mi>y</mi>
+                </mfenced>
+                <mo>=</mo>
+                <msubsup>
+                   <mi>g</mi>
+                   <mi>k</mi>
+                   <mi>n</mi>
+                </msubsup>
+                <mfenced>
+                   <mi>x</mi>
+                   <mi>y</mi>
+                </mfenced>
+                <mo>+</mo>
+                <mfrac>
+                   <mrow>
+                      <munderover>
+                         <mo maxsize="1.5em">∑</mo>
+                         <mi>i</mi>
+                         <mi>n</mi>
+                      </munderover>
+                      <msub>
+                         <mi>w</mi>
+                         <mi>i</mi>
+                      </msub>
+                      <mfenced>
+                         <mrow>
+                            <msub>
+                               <mi>o</mi>
+                               <mi>i</mi>
+                            </msub>
+                            <mo>-</mo>
+                            <msubsup>
+                               <mi>g</mi>
+                               <mi>i</mi>
+                               <mi>n</mi>
+                            </msubsup>
+                            <mfenced>
+                               <mi>x</mi>
+                               <mi>y</mi>
+                            </mfenced>
+                         </mrow>
+                      </mfenced>
+                   </mrow>
+                   <mrow>
+                      <munderover>
+                         <mo>∑</mo>
+                         <mi>i</mi>
+                         <mi>n</mi>
+                      </munderover>
+                      <msub>
+                         <mi>w</mi>
+                         <mi>i</mi>
+                      </msub>
+                   </mrow>
+                </mfrac>
+             </mrow>
+          </math> where <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">
+             <msub>
+                <mi>w</mi>
+                <mi>i</mi>
+             </msub>
+             <mo>=</mo>
+             <mtext>exp</mtext>
+             <mfenced>
+                <mfrac>
+                   <mrow>
+                      <mo>-</mo>
+                      <msup>
+                         <msub>
+                            <mi>d</mi>
+                            <mi>i</mi>
+                         </msub>
+                         <mn>2</mn>
+                      </msup>
+                   </mrow>
+                   <mrow>
+                      <msup>
+                         <mi>L</mi>
+                         <mn>2</mn>
+                      </msup>
+                      <mi>C</mi>
+                   </mrow>
+                </mfrac>
+             </mfenced>
+          </math> with <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>L</mi><mo>≈</mo><mn>113.1</mn></math> (1° in km),
+          <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msub><mi>d</mi><mi>i</mi></msub></math> is distance (km) from observed to estimated, and  <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>C</mi><mo>=</mo><mfenced open="[" close="]"><mn>1</mn><mn>0.3</mn></mfenced></math> (i.e., first pass, subsequent pass)
+</p>
+]
+---
+class: normal
+
+# ↑ Interpolation via the Browser
+
+.lefthalf[ Map/reduce implemented in JavaScript using the OWP as a computing platform.]
+          
+.rightfixed[![barnes interpolation](barnes-gridavg.svg)]
+
+---
+class: normal
+
+# ↺ run it live!
+
+
+.demolink[See [Polar Vortex Demo](http://www.milowski.com/journal/entry/2016-05-24T13:25:00-08:00/xmlprague-2014/index.xhtml) but ...]
+<div id="form">
+             
+             <p>For <select id="preset-regions">
+                   <option value="[40,-125,35,-120]">N. California</option>
+                   <option value="[37.82,-122.52,37.7,-122.35]">San Francisco</option>
+                   <option value="[56.1,-3.5,55.8,-3]">Edinburgh</option>
+                   <option value="[61,-8.2,50,3]">UK</option>
+                   <option value="[50,-125,25,-65]">USA</option>
+                   <option value="[52,12,48,16]">Czech Republic</option>
+                </select>
+                <input id="region" type="text" value="[40,-125,35,-120]" size="20"/> /
+                <input id="resolution" type="text" value="0.1" size="5"/>°</p>
+             <p>at <input id="start" size="30" type="datetime"/> for <input id="duration" size="5"/> minutes 
+             </p>
+             <p>coloring by range (<input id="min" type="text" value="-20" size="3"/>°C,  <input id="max" type="text" value="37" size="3"/>°C)</p>
+             <p>with quadrangle size <input type="text" size="3" value="2.5" id="quadsize"/>°. </p>
+             <p><button id="go">Calculate</button></p>
+             <div id="log">
+             </div>
+</div>
+<div id="output">
+</div>
+
+
+
+
+---
+class: normal
+
+# ↺ Ph.D. received 2014
+
+Whew!
+
+[Enabling scientific data on the web](https://www.era.lib.ed.ac.uk/handle/1842/9957), 2014-11-27, Informatics, University of Edinburgh
+
+Advisor: [Henry S. Thompson](https://www.inf.ed.ac.uk/people/staff/Henry_Thompson.html), Professor Web Informatics, Edinburgh University School of Informatics
+---
+class: separator, center, middle
+
+# ↑ Data Science / Open Data / OWP
+## 2015 - present
+
+---
+class: normal
+
+# ↑ OpenNEX
+
+InnoCentive 9933584 - NASA Challenge: New Ways to Use, Visualize, and Analyze OpenNEX Climate and Earth Science Data, Enabling Climate Data on the Web 2014-08 (with Henry S. Thompson)
+
+An implementation of the PAN methodology for climate data computed using Hadoop on AWS EMR + S3 with a hosted web application pulling static data.
+
+* on github: [`https://github.com/alexmilowski/opennex`](https://github.com/alexmilowski/opennex)
+* hosted [web application](http://data.pantabular.org/opennex/) and [demonstration](http://data.pantabular.org/opennex/explore/)
+
+---
+class: normal
+
+#  ↱ Semantic Hybridization
+
+.demolink[See [journal entry](http://www.milowski.com/journal/entry/2016-05-25T11:17:00-08:00/) ...]
+* RDFa and JSON-LD operate in the same space of the Web and annotations
+* RDFa is markup
+* JSON-LD is data
+* Hybridization makes them work together in the same document
+
+---
+class: normal
+# ↺ Science of Data Science
+
+Teaching at UC Berkeley's School of Information led me to formalize a methodology:
+          
+![data science process](data-science.svg)
+
+Data artifacts can get lost; semantic annotation can help keep track of entities.
+
+---
+
+class: separator, center, middle
+
+# ↱ New Directions
+
+---
+class: normal
+# ↱ ER / Semantic Data Lake Architecture
+
+.scale75[![semantic data lake](er-semantic-data-lake.svg)]
+
+---
+class: normal
+# ↰ ML and Semantic Enrichment
+
+In the "ER/semantic data lake" architecture:
+          
+* enrichment is trigger by the lack of semantic components
+* that indicate missing resources for entities
+
+Machine Learning algorithms can:
+
+* be triggered to enhance semantics
+* producing triples that may be resources
+* or cause resources to be retrieved          
+          
+---
+class: normal
+# ↱ duck pond project
+
+.demolink[Runs [my website](http://www.milowski.com/) ...]
+> A miniature semantic data lake (i.e., pond) for content delivery
+          
+![duck pond architecture](duck-pond-architecture.svg)
+
+---
+class: normal
+# ↰ data flow programming
+
+XProc 2.0 is likely defunct; data flow programming is not.
+
+Very good work was put into a new direction:
+
+```
+<metadata.json> → add-property(name='author',value='Alex')
+                → add-property(name='subject',value='data flow')
+                ≫ enhanced
+enhanced ≫ <enhanced-metadata.json>
+enhanced → query-duplicates(href='http://example.io/services/duplicates') ≫ <alternatives.json>
+```
+
+Teasing out semantics so data flows can be specified and compiled into distributed infrastructures.
+
+---
+class: separator, center, middle
+
+# ↱ The Markup Years
+## 1990 - 2002
+
+---
+
+class: normal
+
+# ↱ SGML in practice .range[1991 to 1997]
+
+
+Transformations as the basis for applications:
+
+* SEC/EDGAR System - SGML / Rule driven system for submitting SEC filings
+* Loan Origination - SGML Corpus; rule driven
+* DSSSL transformation engine in Java
+
+---
+
+class: normal
+
+# ↰ Innovating on XML .range[1998 to 2000]
+
+Transitioned to focus on XML-based applications:
+
+* first schema-validating processor in Java (SOX)
+* co-author, [Schema for Object-oriented XML](http://www.w3.org/TR/1998/NOTE-SOX-19980930/) (W3C Note) - parameterized element types - became [XML Schema](http://www.w3.org/TR/xmlschema-1/)
+* author, [XMSG: XML Messaging Specification](http://www.w3.org/TR/xmsg/) (W3C Note)
+* co-author [XSL Formatting Objects 1.0](http://www.w3.org/TR/2001/REC-xsl-20011015/)
+* early XSLT WG participant
+
+
+---
+
+class: normal
+
+# ↑ XML Pipelines .range[2000 - 2002]
+
+* Markup Technologies: Edinburgh + San Jose
+* XML data pipelining startup
+* data flow programming for rich information pipelines to solve enterprise data problems
+
+---
+
+class: separator, center, middle
+
+# ↶ Intermission: Mathematics
+## 2003 - 2005
+
+---
+class: normal
+
+# ↶ M.A. research .range[2003 - 2004]
+
+Notable: Computed K5 gap, demonstrated distributed computing via XMPP-based P2P software
+
+* Computing Irredundant Irreducible Decompositions and Scarf Complexes of Large Scale Monomial Ideals
+* large-scale parallel computations over algebraic ideals for computing integer programming gaps
+* [ISSAC 2004 Paper](http://dl.acm.org/citation.cfm?id=1005320)
+* [Monos Algebra Software](http://www.sigsam.org/issac/2005/software/monos.html)
+
+---
+class: normal
+
+# ↰ bioinformatics .range[2005]
+
+* jhmm - Java implementation of Hidden Markov Models and Baum-Welch training
+* Chaos game fractals for detecting CpG islands
+* The EM Algorithm for Hidden Markov Models (with Ingileif B. Hallgrímsdóttir and R. Josephine Yu), Chapter 12, Algebraic Statistics for Computational Biology
+* [Computing for the Mathematical Sciences with XML, Web Services, and P2P](http://web.archive.org/web/20090226000751/http://www.idealliance.org/proceedings/xml05/ship/148/xml-2005-milowski-docbook.HTML)
+
+---
+class: separator, center, middle
+
+# ↶ The Open Web Platform (OWP)
+## 2006 - 2009
+
+---
+
+class: normal
+# ↶ Back to the Web  .range[2006 - 2009]
+
+* various browser plugins (e.g., [Poster](https://addons.mozilla.org/en-US/firefox/addon/poster/), e-book reader for the blind, Jeteye )
+* various consumer Web startups
+* Open Web Platform as a basis for digital signage
+* MathML in WebKit !
+* co-author, [XProc 1.0](http://www.w3.org/TR/xproc/) - XML data pipelines (data flow programming)
+
+   
+
+</textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
