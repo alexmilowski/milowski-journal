@@ -1,13 +1,16 @@
 title: Thanks for all the Markup + ducks
 author: Alex Miłowski
-published: 2016-05-25T11:17:00-08:00
-updated: 2016-05-25T11:17:00-08:00
+published: 2016-06-17T16:54:00-08:00
+updated: 2016-06-17T16:54:00-08:00
 keywords: Web
                  RDFa
                  JSON-LD
                  semantics
                  Semantic Hybridization
+                 Semantic Data Lakes
                  XML
+                 Markdown
+                 duckpond
 
 My good friend Norm Walsh [recently posted](https://norman.walsh.name/2016/05/28/non-standard) about the state of standards development around XML:
 
