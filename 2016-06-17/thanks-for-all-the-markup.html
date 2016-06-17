@@ -1,0 +1,69 @@
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2016-05-25T11:17:00-08:00">
+<script type="application/json+ld">
+{
+"@context" : "http://schema.org/",
+"@id" : "http://www.milowski.com/journal/entry/2016-05-25T11:17:00-08:00",
+"headline" : "Thanks for all the Markup + ducks",
+"datePublished" : "2016-05-25T11:17:00-08:00",
+"dateModified" : "2016-05-25T11:17:00-08:00",
+"keywords" : ["Web","RDFa","JSON-LD","semantics","Semantic Hybridization","XML"],
+"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
+}
+</script>
+<p>My good friend Norm Walsh <a href="https://norman.walsh.name/2016/05/28/non-standard">recently posted</a> about the state of standards development around XML:</p>
+<blockquote>
+<p>&quot;At the end of the day, I have come to accept the unpalatable truth that there are fewer and fewer organizations interested in continued development of XML standards and a tiny minority of overworked volunteers attempting to accomplish them.&quot;</p>
+</blockquote>
+<p>This post is certainly not as well thought out as Norm's and I encourage you to read his post.</p>
+<p>Previously, we've been working on the same standard (XProc) at the W3C and struggling with the same issues.   I had hoped for a different outcome for XProc but the lack of interest was too easy to see.  I feel the same but my contributions in this space pale in comparison; spending my time on &quot;other things&quot; will hardly be noticed.</p>
+<h2>We're done folks.</h2>
+<p>Over time, technologies fade out of popularity, their use wanes, regardless of how well they do what they were designed to do.  For example, San Francisco still uses <a href="https://en.wikipedia.org/wiki/Fire_alarm_call_box">fire alarm call boxes</a> that uses telegraph to communicate.  The system works well, the infrastructure is there, and they work in situations (disasters) when other things do not.  Your cell phone doesn't use telegraphs but you'll be happy that the fire alarm call box does when an earthquake happens.</p>
+<p>That XML is no longer popular is not a great surprise.  My favorite joke is that we've replaced the letter 'x' with 'j' in the alphabet.  Many of my markup geek friends fail to laugh at that and, instead, order another beer for their tears.</p>
+<p>That said, XML is a good syntax for certain kinds of data: documents.  There are plenty of domains where you just can't do without it, HTML will never suffice, and that's okay.</p>
+<p>By the way, HTML is great and shares a common heritage (SGML).  SGML is also turns 30 years old this year.  That means many people who are using HTML weren't alive to experience its development, see the disruption (and dislike) from those work on SGML applications, or understand how we've had this problem of accepting new syntaxes for markup or data.</p>
+<p>I was there.  I started working with SGML in 1991, young, naive, and willing to try out the &quot;koolaid&quot;.  It didn't kill me and there were plenty of interesting things you could do with it.  At the time, I felt like I joined a revolution.  In retrospect, it was XML that was the revolution and we all contributed to something that got us to where we are today.  It was an essential step.</p>
+<h2>Data or documents?</h2>
+<p>We've been here before.  When we developed XML, it ushered in a whole new paradigm and many took that paradigm a bit too far.  It was going to be the new Remote Procedure Call (RPC) format, it was going to be for system-to-system (B2B, EDI, web services, etc.) exchange, it was going allow us to finally structure our content with &quot;meaningful&quot; markup, ... it was also going to slice bread, make us a sandwich, solve world peace, ... everything was going to be XML.</p>
+<p>Replace &quot;XML&quot; with &quot;JSON&quot; and you've got today.</p>
+<p>I like JSON.  It works well for certain kinds of object-structured data which is not a surprise given the acronym stands for &quot;JavaScript Object Notation&quot;.  If you have objects and need to represent them for data transfer, JSON is a far better choice than XML.</p>
+<p>In contrast, if you have a document and need to convey its structure, you have some choices in format but what you need is a markup language.  XML is a markup language.  HTML is a markup language. JSON is <strong>not</strong> a markup language.</p>
+<p>There is a blurry distinction between &quot;data&quot; and &quot;documents&quot;.  That is where the world gets less clear.  Reality is never easy but I choose to participate in it rather than a fantasy.</p>
+<h2>XML hangovers</h2>
+<p>If you live in that blurry, gray area where things that are &quot;data&quot; are somethings &quot;documents&quot; and &quot;documents&quot; are sometimes &quot;data&quot;, I feel for you.  That's what I always thought we wanted XML to be used for but now that is in serious question.  If investment in XML technologies is coming to a close, where does that leave you?  HTML?</p>
+<p>It isn't all that bad. I think we can get along quite well with a few things in our &quot;back pockets&quot;:</p>
+<ul>
+<li>HTML is pretty good for a lot of things</li>
+<li>RDFa and JSON-LD allow you to annotate your HTML markup and make it more precise.</li>
+<li>Web components allow you to create new markup structures that have operational semantics in the web browser.</li>
+</ul>
+<p>So, the party is over and we still have markup.  It is different, not really as some of us imagined, and that's actually okay.</p>
+<h2>Moving on</h2>
+<p>I really have moved on.  I mostly work on data that isn't XML and I use &quot;other&quot; markup languages for things.  I really like XML and it is something I don't have to think about.  It works well for me but I guess I'm just old school.</p>
+<p>I've been working to expunge &quot;old stuff&quot; that doesn't work (no telegraph fire alarm boxes for me) and replace them with new things that work &quot;better&quot;.  In some cases, I just want to try new things out but, given the limits on my time, I really want things to work better.  I also wanted to write more about technology.</p>
+<p>My website was driven by Atom XML feeds with technology I cooked up in my &quot;Mad XML Scientist&quot; lab.  The three-headed XProc/XQuery/AtomPub monster actually prevented me from writing.  Why? Because I never got around to making it easy enough to use well.  AtomPub was the interface and it was an XML-based protocol.  It worked well but I need better tools and no one was writing them.  Also, when things broke ... well, it was my own doing.</p>
+<p>There had to be a better way.</p>
+<h1>Ducks</h1>
+<p>If I was going to throw out the old, what is the new?  Given my recent research, I knew a few things:</p>
+<ul>
+<li>use RDFa and JSON-LD to enhance my content.</li>
+<li>writing needs to be easy ... markdown kind of easy</li>
+<li>complex things need to be possible</li>
+<li>semantics, semantics, semantics</li>
+<li>drive things by querying semantics (e.g., SPARQL)</li>
+</ul>
+<p>So, that's what I did.  For some of you, I've gone to &quot;the dark side&quot;:</p>
+<ul>
+<li>converted my whole atom feed to Markdown (CommonMark, actually)</li>
+<li>used an extension to encode &quot;metadata&quot;</li>
+<li>converted the whole thing to semantic-hybridized HTML articles</li>
+<li>extracted triples to store in a triple repository</li>
+<li>built a Python Flask web application driven by SPARQL queries to find and display content</li>
+</ul>
+<p>It is based on the idea of semantic data lakes.  But, I have so little &quot;data&quot;, it is more like a pond.  A pond with ducks paddling around in it that I feed every so often.</p>
+<p>You can see my new project on Github (<a href="https://github.com/alexmilowski/duckpond">duckpond</a>).</p>
+<p>What can I say other than:</p>
+<blockquote>
+<p>So long and thanks for all the markup!</p>
+</blockquote>
+
+</article>
