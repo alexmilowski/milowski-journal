@@ -1,10 +1,10 @@
-@base <http://www.milowski.com/journal/entry/2016-05-25T11:17:00-08:00> .
+@base <http://www.milowski.com/journal/entry/2016-06-17T16:54:00-08:00> .
 @prefix schema: <http://schema.org/> .
 <>
    a schema:BlogPosting ;
    schema:headline "Thanks for all the Markup + ducks" ;
-   schema:datePublished "2016-05-25T11:17:00-08:00" ;
-   schema:dateModified "2016-05-25T11:17:00-08:00" ;
+   schema:datePublished "2016-06-17T16:54:00-08:00" ;
+   schema:dateModified "2016-06-17T16:54:00-08:00" ;
    schema:isBasedOnUrl <http://alexmilowski.github.io/milowski-journal/2016-06-17/thanks-for-all-the-markup.html> ;
-   schema:keywords "Web","RDFa","JSON-LD","semantics","Semantic Hybridization","XML" ;
+   schema:keywords "Web","RDFa","JSON-LD","semantics","Semantic Hybridization","Semantic Data Lakes","XML","Markdown","duckpond" ;
    schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .
