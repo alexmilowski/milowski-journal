@@ -1,4 +1,4 @@
-title: Thanks for all the Markup + ducks
+title: Thanks for all the markup + ducks
 author: Alex Miłowski
 published: 2016-06-17T16:54:00-08:00
 updated: 2016-06-17T16:54:00-08:00
@@ -12,7 +12,7 @@ keywords: Web
                  Markdown
                  duckpond
 
-# Thanks for all the Markup + ducks
+# Thanks for all the markup + ducks
 
 My good friend Norm Walsh [recently posted](https://norman.walsh.name/2016/05/28/non-standard) about the state of standards development around XML:
 
