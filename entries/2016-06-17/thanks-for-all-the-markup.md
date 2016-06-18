@@ -48,7 +48,7 @@ There is a blurry distinction between "data" and "documents".  That is where the
 
 ## XML hangovers
 
-If you live in that blurry, gray area where things that are "data" are somethings "documents" and "documents" are sometimes "data", I feel for you.  That's what I always thought we wanted XML to be used for but now that is in serious question.  If investment in XML technologies is coming to a close, where does that leave you?  HTML?
+If you live in that blurry, gray area where things that are "data" are sometimes "documents" and "documents" are sometimes "data", I feel for you.  That is what I always thought we wanted XML to be used for but now that is in serious question.  If investment in XML technologies is coming to a close, where does that leave you?  HTML?
 
 It isn't all that bad. I think we can get along quite well with a few things in our "back pockets":
 
@@ -56,15 +56,15 @@ It isn't all that bad. I think we can get along quite well with a few things in 
  * RDFa and JSON-LD allow you to annotate your HTML markup and make it more precise.
  * Web components allow you to create new markup structures that have operational semantics in the web browser.
 
-So, the party is over and we still have markup.  It is different, not really as some of us imagined, and that's actually okay.
+So, the party is over and we still have markup.  It is different, not really as some of us imagined, and that is actually okay.
 
 ## Moving on
 
 I really have moved on.  I mostly work on data that isn't XML and I use "other" markup languages for things.  I really like XML and it is something I don't have to think about.  It works well for me but I guess I'm just old school.
 
-I've been working to expunge "old stuff" that doesn't work (no telegraph fire alarm boxes for me) and replace them with new things that work "better".  In some cases, I just want to try new things out but, given the limits on my time, I really want things to work better.  I also wanted to write more about technology.
+I've been working to expunge "old stuff" that doesn't work (no telegraph fire alarm boxes for me) and replace them with new things that work "better".  In some cases, I just want to try out new technologies. Given the limits on my time, I really want things to work better.  I also want to write more about technology.
 
-My website was driven by Atom XML feeds with technology I cooked up in my "Mad XML Scientist" lab.  The three-headed XProc/XQuery/AtomPub monster actually prevented me from writing.  Why? Because I never got around to making it easy enough to use well.  AtomPub was the interface and it was an XML-based protocol.  It worked well but I need better tools and no one was writing them.  Also, when things broke ... well, it was my own doing.
+My website was driven by Atom XML feeds with technology I cooked up in my "Mad XML Scientist" lab.  The three-headed XProc/XQuery/AtomPub monster actually prevented me from writing.  Why? Because I never got around to making it easy enough to use well.  AtomPub was the interface and it was an XML-based protocol.  It worked but I need better tools and no one was writing them.  Also, when things broke ... well, it was my own doing.
 
 There had to be a better way.
 
@@ -77,6 +77,7 @@ If I was going to throw out the old, what is the new?  Given my recent research,
  * complex things need to be possible
  * semantics, semantics, semantics
  * drive things by querying semantics (e.g., SPARQL)
+ * did I mention semantics?
 
 So, that's what I did.  For some of you, I've gone to "the dark side":
 
