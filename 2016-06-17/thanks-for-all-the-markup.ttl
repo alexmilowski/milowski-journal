@@ -2,7 +2,7 @@
 @prefix schema: <http://schema.org/> .
 <>
    a schema:BlogPosting ;
-   schema:headline "Thanks for all the Markup + ducks" ;
+   schema:headline "Thanks for all the markup + ducks" ;
    schema:datePublished "2016-06-17T16:54:00-08:00" ;
    schema:dateModified "2016-06-17T16:54:00-08:00" ;
    schema:isBasedOnUrl <http://alexmilowski.github.io/milowski-journal/2016-06-17/thanks-for-all-the-markup.html> ;
