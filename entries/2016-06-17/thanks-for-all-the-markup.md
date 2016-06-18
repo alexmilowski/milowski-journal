@@ -12,11 +12,13 @@ keywords: Web
                  Markdown
                  duckpond
 
+# Thanks for all the Markup + ducks
+
 My good friend Norm Walsh [recently posted](https://norman.walsh.name/2016/05/28/non-standard) about the state of standards development around XML:
 
 >"At the end of the day, I have come to accept the unpalatable truth that there are fewer and fewer organizations interested in continued development of XML standards and a tiny minority of overworked volunteers attempting to accomplish them."
 
-This post is certainly not as well thought out as Norm's and I encourage you to read his post.
+My post is certainly not as well thought out as Norm's and I encourage you to read his post.
 
 Previously, we've been working on the same standard (XProc) at the W3C and struggling with the same issues.   I had hoped for a different outcome for XProc but the lack of interest was too easy to see.  I feel the same but my contributions in this space pale in comparison; spending my time on "other things" will hardly be noticed.
 
@@ -66,7 +68,7 @@ My website was driven by Atom XML feeds with technology I cooked up in my "Mad X
 
 There had to be a better way.
 
-# Ducks
+## Ducks
 
 If I was going to throw out the old, what is the new?  Given my recent research, I knew a few things:
 
