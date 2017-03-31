@@ -1,0 +1,13 @@
+@base <http://www.milowski.com/journal/entry/2017-03-31T15:00:00-08:00> .
+@prefix schema: <http://schema.org/> .
+<>
+   a schema:BlogPosting ;
+   schema:genre "blog";
+   schema:name "new-agenda";
+   schema:headline "New Research Agenda" ;
+   schema:description "I have been rather silent for awhile and environment has everything to do with that.  Many startups work under the guise of secrecy and my day-to-day work kept me quite busy without much opportunity to communicate.  In my new endeavours at [Orange Silicon Valley](http://www.orangesv.com) (really, San Francisco) my role is a communicator of new and interesting things.  As such, keeping this blog up-to-date with what is rolling around in my mind is one aspect of that. " ;
+   schema:datePublished "2017-03-31T15:00:00-08:00" ;
+   schema:dateModified "2017-03-31T15:00:00-08:00" ;
+   schema:isBasedOnUrl "http://alexmilowski.github.io/milowski-journal/2017-03-31/new-agenda.html";
+   schema:keywords "Web","JSON-LD","Microservices","semantics","Semantic Data Lakes","duckpond","analytics","data flow languages","Pipelines","data science","data engineering" ;
+   schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .
