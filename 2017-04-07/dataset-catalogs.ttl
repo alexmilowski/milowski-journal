@@ -1,0 +1,13 @@
+@base <http://www.milowski.com/journal/entry/2017-04-07T15:00:00-07:00> .
+@prefix schema: <http://schema.org/> .
+<>
+   a schema:BlogPosting ;
+   schema:genre "blog";
+   schema:name "dataset-catalogs";
+   schema:headline "Open Data in a Private Context" ;
+   schema:description "> The open data premise is a grand idea which I fully support and need to replicate into other contexts. " ;
+   schema:datePublished "2017-04-07T15:00:00-07:00" ;
+   schema:dateModified "2017-04-07T15:00:00-07:00" ;
+   schema:isBasedOnUrl "http://alexmilowski.github.io/milowski-journal/2017-04-07/dataset-catalogs.html";
+   schema:keywords "Data sets","open data","schema.org","JSON-LD","semantics","Semantic Data Lakes","analytics","data science","data engineering" ;
+   schema:author [ a schema:Person; schema:name "Alex Miłowski" ] .

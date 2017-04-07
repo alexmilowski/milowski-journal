@@ -1,0 +1,108 @@
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2017-04-07T15:00:00-07:00">
+<script type="application/json+ld">
+{
+"@context" : "http://schema.org/",
+"@id" : "http://www.milowski.com/journal/entry/2017-04-07T15:00:00-07:00",
+"genre" : "blog",
+"name" : "dataset-catalogs",
+"headline" : "Open Data in a Private Context",
+"description" : "> The open data premise is a grand idea which I fully support and need to replicate into other contexts. ",
+"datePublished" : "2017-04-07T15:00:00-07:00",
+"dateModified" : "2017-04-07T15:00:00-07:00",
+"keywords" : ["Data sets","open data","schema.org","JSON-LD","semantics","Semantic Data Lakes","analytics","data science","data engineering"],
+"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
+}
+</script>
+<h1>Open Data in a Private Context</h1>
+<blockquote>
+<p>The open data premise is a grand idea which I fully support and need to replicate into other contexts.</p>
+</blockquote>
+<p>There have been a variety of approaches for describing open data via &quot;semantic vocabularies&quot; over the last few years of which a few notable &quot;standards&quot; are:</p>
+<ul>
+<li><a href="http://www.w3.org/TR/vocab-dcat/">Data Catalog Vocabulary</a></li>
+<li><a href="http://www.w3.org/TR/vocab-adms/">Asset Description Metadata Schema</a></li>
+<li><a href="http://www.w3.org/TR/void/">Vocabulary of Interlinked Datasets</a></li>
+<li><a href="http://www.w3.org/TR/vocab-data-cube/">RDF Data Cube Vocabulary</a></li>
+</ul>
+<p>Many of these are predicated on the idea of sharing open data sets.  The primary consumers are government or public agencies who need (want or are required) to disseminate data.  The central premise is that using a Web-friendly syntax like
+<a href="https://www.w3.org/TR/json-ld/">JSON-LD</a> or <a href="https://www.w3.org/TR/rdfa-lite/">RDFa</a>
+enables information to be disseminated via the regular mechanisms of the Web (i.e., a web page or service).</p>
+<p>The open data premise is a grand idea which I fully support and need to replicated into other contexts. In a data science / analytics context, there are similar needs and concerns.  For an analytics backbone to operate, we need more data accessible and discoverable by interested consumers.</p>
+<h2>Producers, Consumers, and Implicit Transfer</h2>
+<blockquote>
+<p>An organization needs to be able to track and audit the use of data to ensure policies are being enforced.</p>
+</blockquote>
+<p>We also need to understand the relationships between data artifacts.  As processes produce new data artifacts by consuming existing ones, a web of relationships is produced.  Over time, the variety of replicated data can become overwhelming.</p>
+<p>The use of data is not explicitly traceable within the context of open data.  Once data is downloaded, whether new data artifacts produced from a data source references it within its metadata is not necessary known.  The quality of that metadata is wholly dependent on the producer.</p>
+<p>In an enterprise context, we can and need to control the provenance of data and record it within its metadata.  Data may have important properties like governance or privacy concerns.  These various properties of the data may be implicitly transferred to the new data artifacts.  An organization needs to be able to track and audit the use of data to ensure policies are being enforced.</p>
+<p>While not necessarily specific to the enterprise, the need to track the use of data is essential in the modern world of analytics and data pipelines.</p>
+<h2>Going Private</h2>
+<blockquote>
+<p>...need to understand ... the graph of producers and consumers of data within context the provenance and governance of the data that flows within.</p>
+</blockquote>
+<p>Within a large enterprise, the same issues of discoverability of data assets exist. Over time, data silos compartmentalize data and gatekeepers within the organization make traversing those silos difficult. Issues of security, provenance, governance, and ownership prevail over sharing; the cross-silo analysis for agile business practices fall to the politics of data fiefdoms.</p>
+<p>From an analytics perspective, any particular data science pipeline may require inputs from a number of data silos.  The speed and success of any such analytics endeavour is dependent upon access to the required data.  Even further, a data scientists and engineers need to understand the data to be able to use it effectively.</p>
+<p>Understand data and the dependencies that ensue requires goes beyond the basics of a simple schema definition. We need to understand the operational semantics of the graph of producers and consumers of data within context the provenance and governance of the data that flows within. In today's world, privacy is fleeting and we need to be careful not to run afoul of regulation and promises to our customers.</p>
+<p>We need to understand:</p>
+<ul>
+<li>the data assets we have</li>
+<li>what processes consume those assets</li>
+<li>what artifacts are produced</li>
+<li>how data is used</li>
+<li>what governance is transferred to new data</li>
+</ul>
+<p>In the end, we want an inventory of everything in one place so we can understand all the relationships within our enterprise; <strong>analytics on analytics</strong>.</p>
+<h2>A Centralized Approach</h2>
+<blockquote>
+<p>Every analytics data pipeline ... must maintain all the essential metadata ...</p>
+</blockquote>
+<p>An approach I am exploring is the idea of a centralized semantic repository of data asset annotations. I imagine this repository as an inventory of various aspects of the data:</p>
+<p>Essential core:</p>
+<ul>
+<li>organizational hierarchy containing</li>
+<li>every data asset</li>
+<li>with the location of data within data silos, infrastructure, etc.</li>
+<li>annotated with essential metadata (e.g., created, updated, titles, etc.)</li>
+<li>identifying provenance, ownership, and governance</li>
+<li>with necessary descriptions of the data for the consumers</li>
+</ul>
+<p>Operational core (programmatic access):</p>
+<ul>
+<li>to navigate/query the repository</li>
+<li>to the data definitions</li>
+<li>to how to access the actual data</li>
+<li>to the format descriptions</li>
+<li>to update/create all of the above</li>
+</ul>
+<p>Every analytics data pipeline in our enterprise must keep this information up-to-date.  It must maintain all the essential metadata about the inputs, outputs, and how to access the results.</p>
+<h2>Tyranny of Choice - Vocabularies</h2>
+<blockquote>
+<p>not a fan of proliferation of prefixes, namespaces, etc. just for the purpose of identification</p>
+</blockquote>
+<p>The essential stumbling block is what vocabulary should be used to describe various data assets:</p>
+<ul>
+<li>As mentioned previously, there are number of competing, overlapping, and complimentary vocabularies for open data.</li>
+<li>No one vocabulary will suffice in the enterprise context as I have described it above.</li>
+<li>We need to describe process, data set relations via those processes, and the relation of the data to various governance and compliance issues.</li>
+<li>Consumers are fickle; too complex and they won't use it.</li>
+</ul>
+<p>There are some choices, cross roads, of which may determine success:</p>
+<ol>
+<li>A single vocabulary with extension mechanisms.</li>
+<li>A mixture of existing and new vocabularies.</li>
+</ol>
+<p>I am not a fan of proliferation of prefixes, namespaces, etc. just for the purpose of identification.  We can use technology to map things internally for those that need it.  As such, (2) is not my personal choice.</p>
+<p>Fortunately, <a href="http://schema.org">schema.org</a> has incorporated (see W3C <a href="https://www.w3.org/wiki/WebSchemas/Datasets">WebSchemas/Datasets</a>) aspects of <a href="http://www.w3.org/TR/vocab-dcat/">DCAT</a>, <a href="http://www.w3.org/TR/vocab-adms/">ADMS</a>, and <a href="http://www.w3.org/TR/void/">VoID</a>.  I believe this is a good starting point as we can reuse other types and properties to describe other aspects (i.e., organization structure, essential metadata, etc.).</p>
+<h2>The Experiment</h2>
+<p>I can take a few steps down this road by:</p>
+<ol>
+<li>Examining the assets I have stored in Hadoop/HDFS that are products of various processes.</li>
+</ol>
+<ul>
+<li>Gathering the history of these assets and produce a semantic description in JSON-LD for each asset.</li>
+<li>Dump all the data into a semantic graph database like <a href="http://allegrograph.com/allegrograph/">AllegroGraph</a>.</li>
+</ul>
+<p>Then I can query the result with SPARQL to see what I know and don't know.  That will help identify new information I need to gather.  Then it is a process of &quot;rinse and repeat&quot; until I feel like I have a good basis.</p>
+<p>I think there will be some new types and properties needed.  Hopefully that will be interesting to the schema.org community.</p>
+
+</article>
