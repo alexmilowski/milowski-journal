@@ -1,17 +1,29 @@
-import CommonMark,re,argparse
+import commonmark,re,argparse
 
-import sys,io,os,shutil
+import sys
+import io
+import os
+import shutil
+import yaml
+import time
+import datetime
 
 from html import escape
 
-META_RE = re.compile(r'^[ ]{0,3}(?P<key>[A-Za-z0-9_-]+):\s*(?P<value>.*)')
-META_MORE_RE = re.compile(r'^[ ]{4,}(?P<value>.*)')
-
+TEXT_MARKDOWN = 'text/markdown'
+TEXT_HTML = 'text/html'
+TEXT_XML = 'text/xml'
 def normalize(s):
    return s.replace('\n',' ')
 
 def literal(s):
    return s.replace('"','\\"')
+
+def isoformat(s):
+   return s if type(s)==str else s.isoformat()
+
+def now():
+   return datetime.datetime.now().astimezone()
 
 class ArticleConverter:
    def __init__(self,weburi,entryuri):
@@ -25,62 +37,32 @@ class ArticleConverter:
       return self.entryuri.pop()
 
    def toArticle(self,base,md,html,triples):
-      glob = io.StringIO()
-      metadata = {}
-      hasMetadata = True
+      metadata = yaml.load(md,Loader=yaml.Loader)
+
+      summary = ''
       hasTitle = False
-      line = md.readline()
-      while hasMetadata:
-         m = META_RE.match(line)
-         if (not(m)):
-            glob.write(line)
-            if not hasTitle and line[0:2]=='# ':
-               hasTitle = True
-            glob.write('\n')
-            hasMetadata = False
-         else:
-            key = m.group('key').lower().strip()
-            value = m.group('value').strip()
-            try:
-               metadata[key].append(value)
-            except KeyError:
-               metadata[key] = [value]
-            continued = True
-            while continued:
-               line = md.readline()
-               more = META_MORE_RE.match(line)
-               if (not(more)):
-                  continued = False
-               else:
-                  metadata[key].append(more.group('value').strip())
-
-      summary = io.StringIO()
-
-      for line in md:
-         if not hasTitle and line[0:2]=='# ':
+      for part in metadata.get('content','').split('\n'):
+         if part[0:2]=='# ':
             hasTitle = True
-         elif line.strip()!='':
-            glob.write(line)
-            summary.write(line)
+            continue
+         if len(part)>0:
+            summary = part
             break
-         glob.write(line)
+      if 'description' not in metadata:
+         metadata['description'] = normalize(summary)
 
-      inSummary = True
-      for line in md:
-         if line.strip()=='':
-            inSummary = False
-         if inSummary:
-            summary.write(line)
-         glob.write(line)
+      if 'updated' not in metadata:
+         metadata['updated'] = now()
 
-      metadata['description'] = [normalize(summary.getvalue())]
+      if 'published' not in metadata:
+         metadata['published'] = metadata['updated']
 
-      self.toHTML(base,glob.getvalue(),metadata,html,generateTitle=not hasTitle)
+      self.toHTML(base,metadata.get('content',''),metadata,html,generateTitle=not hasTitle)
       self.toTurtle(base,metadata,triples)
 
-   def toHTML(self,base,md,metadata,html,generateTitle=False):
+   def toHTML(self,base,content,metadata,html,generateTitle=False):
 
-      uri = self.weburi + metadata['published'][0]
+      uri = self.weburi + isoformat(metadata.get('published',''))
 
       print('<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="{}">'.format(uri),file=html)
 
@@ -89,31 +71,44 @@ class ArticleConverter:
       print('"@id" : "{}",'.format(uri),file=html)
       print('"genre" : "blog",',file=html)
       print('"name" : "{}",'.format(base),file=html)
-      print('"headline" : "{}",'.format(metadata['title'][0]),file=html)
-      print('"description" : "{}",'.format(literal(metadata['description'][0])),file=html)
-      print('"datePublished" : "{}",'.format(metadata['published'][0]),file=html)
-      print('"dateModified" : "{}",'.format(metadata['updated'][0]),file=html)
+      print('"headline" : "{}",'.format(metadata.get('title','')),file=html)
+      print('"description" : "{}",'.format(literal(metadata.get('description',''))),file=html)
+      print('"datePublished" : "{}",'.format(isoformat(metadata.get('published',''))),file=html)
+      print('"dateModified" : "{}",'.format(isoformat(metadata.get('updated',''))),file=html)
       if ("keywords" in metadata):
          print('"keywords" : [{}],'.format(','.join(['"' + m + '"' for m in metadata['keywords']])),file=html)
-      html.write('"author" : [ ')
-      for index,author in enumerate(metadata['author']):
-         if (index>0):
-            html.write(', ')
-         html.write('{{ "@type" : "Person", "name" : "{}" }}'.format(author))
-      html.write(']\n')
+      if 'author' in metadata:
+         html.write('"author" : [ ')
+         authors = metadata.get('author',[])
+         for index,author in enumerate(authors if type(authors)==list else [authors]):
+            if (index>0):
+               html.write(', ')
+            html.write('{{ "@type" : "Person", "name" : "{}" }}'.format(author))
+         html.write(']\n')
       print('}',file=html)
       print('</script>',file=html)
 
       if generateTitle:
-         print("<h1>{}</h1>".format(escape(metadata['title'][0],quote=False)),file=html)
+         print("<h1>{}</h1>".format(escape(metadata['title'],quote=False)),file=html)
 
-      print(CommonMark.commonmark(md),file=html)
+      format = metadata.get('format',TEXT_MARKDOWN)
+      if format==TEXT_MARKDOWN:
+         print(commonmark.commonmark(content),file=html)
+      elif format==TEXT_HTML:
+         html.write(content)
+      elif format==TEXT_XML:
+         self.transformXML(content,html)
+      else:
+         raise ValueError('Unknown format: {}'.format(format))
 
       print('</article>',file=html)
 
+   def transformXML(self,content,output):
+      pass
+
    def toTurtle(self,base,metadata,triples):
 
-      uri = self.weburi + metadata['published'][0]
+      uri = self.weburi + isoformat(metadata['published'])
       basedOn = self.entryuri[-1] + base + '.html'
       #name = base + '.html'
 
@@ -123,24 +118,27 @@ class ArticleConverter:
       print('   a schema:BlogPosting ;',file=triples)
       print('   schema:genre "blog";',file=triples)
       print('   schema:name "{}";'.format(base),file=triples)
-      print('   schema:headline "{}" ;'.format(metadata['title'][0]),file=triples)
-      print('   schema:description "{}" ;'.format(literal(metadata['description'][0])),file=triples)
-      print('   schema:datePublished "{}" ;'.format(metadata['published'][0]),file=triples)
-      print('   schema:dateModified "{}" ;'.format(metadata['updated'][0]),file=triples)
+      print('   schema:headline "{}" ;'.format(metadata['title']),file=triples)
+      print('   schema:description "{}" ;'.format(literal(metadata['description'])),file=triples)
+      print('   schema:datePublished "{}" ;'.format(isoformat(metadata['published'])),file=triples)
+      print('   schema:dateModified "{}" ;'.format(isoformat(metadata['updated'])),file=triples)
       print('   schema:isBasedOnUrl "{}";'.format(basedOn),file=triples)
       #print('   schema:hasPart [ a schema:MediaObject; schema:contentUrl "{0}"; schema:fileFormat "text/html"; schema:name "{1}" ] ;'.format(basedOn,name),file=triples)
       if ("keywords" in metadata):
          print('   schema:keywords {} ;'.format(','.join(['"' + m + '"' for m in metadata['keywords']])),file=triples)
-      triples.write('   schema:author ')
-      for index,author in enumerate(metadata['author']):
-         if (index>0):
-            triples.write(', ')
-         triples.write('[ a schema:Person; schema:name "{}" ]'.format(author))
+      if 'author' in metadata:
+         authors = metadata.get('author',[])
+         triples.write('   schema:author ')
+         for index,author in enumerate(authors if type(authors)==list else [authors]):
+            if (index>0):
+               triples.write(', ')
+            triples.write('[ a schema:Person; schema:name "{}" ]'.format(author))
       triples.write(' .\n')
 
 
 argparser = argparse.ArgumentParser(description='Article HTML and Turtle Generator')
 argparser.add_argument('-f',action='store_true',help='Forces all the files to be regenerated.',dest='force')
+argparser.add_argument('--extension',nargs='?',help='The source file extension',default='md')
 argparser.add_argument('-o',nargs='?',help='The output directory',dest='outdir')
 argparser.add_argument('-w',nargs='?',help='The web uri',dest='weburi',default='http://www.milowski.com/journal/entry/')
 argparser.add_argument('-e',nargs='?',help='The entry uri directory',dest='entryuri',default='http://alexmilowski.github.io/milowski-journal/')
@@ -152,6 +150,9 @@ dirs = [d for d in os.listdir(inDir) if not(d[0]=='.') and os.path.isdir(inDir +
 
 converter = ArticleConverter(args.weburi,args.entryuri)
 
+extension = '.' + args.extension if args.extension[0]!='.' else args.extension
+extension_count = extension.count('.')
+
 for dir in dirs:
 
    sourceDir = inDir + '/' + dir
@@ -162,12 +163,12 @@ for dir in dirs:
 
    converter.enter(dir+'/')
 
-   files = [f for f in os.listdir(sourceDir) if f.endswith('.md') and os.path.isfile(sourceDir + '/' + f)]
+   files = [f for f in os.listdir(sourceDir) if f.endswith(extension) and os.path.isfile(sourceDir + '/' + f)]
 
    for file in files:
 
       targetFile = sourceDir + '/' + file
-      base = file.rsplit('.md',1)[0]
+      base = file.rsplit('.',extension_count)[0]
       htmlFile = targetDir + '/' + base + ".html"
       turtleFile = targetDir + '/' + base + ".ttl"
 
