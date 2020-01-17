@@ -9,7 +9,7 @@ The content for my blog is written in a YAML+Markdown based format (see [yablog]
 ## gh-pages (Github Pages)
 
 I use the gh-pages branch to publish to Github Pages. Then I can use the public
-facing [github.io website](http://alexmilowski.github.io/milowski-journal) to
+facing github.io website (i.e., `http://alexmilowski.github.io/milowski-journal`) to
 pull the post-processed content for various purposes. Typically, I pull that
 content (live or cached) into another system to produce my website's blog.
 
@@ -55,3 +55,5 @@ If you are curious, the process to publish is as follows:
    git commit -m "new entry - yay"
    git push
    ```
+
+Everything is then live shortly there after.
