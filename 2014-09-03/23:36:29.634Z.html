@@ -5,7 +5,7 @@
 "@id" : "http://www.milowski.com/journal/entry/2014-09-03T23:36:29.634000+00:00",
 "genre" : "blog",
 "headline" : "NASA OpenNEX Challenge and Processing HDF5 in Python",
-"description" : "I&#x27;ve recently been playing around a lot with HDF5 data as second part of the [&lt;cite&gt;NASA Challenge: New Ways to Use, Visualize, and Analyze OpenNEX Climate and Earth Science Data&lt;/cite&gt;](https://www.innocentive.com/ar/challenge/9933584) . [Henry Thompson](http://www.ltg.ed.ac.uk/~ht/)  and I won a small award in the first challenge for our proposal to apply the PAN Methodology to the OpenNEX data.  Specifically, we are looking at the [NASA Earth Exchange (NEX) ](https://nex.nasa.gov/nex/static/htdocs/site/extra/opennex/) data sets that are [hosted by Amazon AWS](https://aws.amazon.com/nasa/nex/) that provides climate projects both retrospectively (1950-2005) and prospectively (2006-2099).",
+"description" : "I've recently been playing around a lot with HDF5 data as second part of the [&lt;cite&gt;NASA Challenge: New Ways to Use, Visualize, and Analyze OpenNEX Climate and Earth Science Data&lt;/cite&gt;](https://www.innocentive.com/ar/challenge/9933584) . [Henry Thompson](http://www.ltg.ed.ac.uk/~ht/)  and I won a small award in the first challenge for our proposal to apply the PAN Methodology to the OpenNEX data.  Specifically, we are looking at the [NASA Earth Exchange (NEX) ](https://nex.nasa.gov/nex/static/htdocs/site/extra/opennex/) data sets that are [hosted by Amazon AWS](https://aws.amazon.com/nasa/nex/) that provides climate projects both retrospectively (1950-2005) and prospectively (2006-2099).",
 "datePublished" : "2014-09-03T23:36:29.634000+00:00",
 "dateModified" : "2014-09-03T23:36:29.634000+00:00",
 "keywords" : "OpenNEX,NASA,HDF,Python" ,
@@ -27,14 +27,14 @@
 <pre><code>
 &amp;gt;&amp;gt;&amp;gt; import numpy
 &amp;gt;&amp;gt;&amp;gt; import h5py
-&amp;gt;&amp;gt;&amp;gt; f = h5py.File(&amp;quot;tasmax_quartile75_amon_rcp85_CONUS_202601-203012.nc&amp;quot;,&amp;quot;r&amp;quot;)
-&amp;gt;&amp;gt;&amp;gt; f[&amp;quot;tasmax&amp;quot;]
-&amp;lt;HDF5 dataset &amp;quot;tasmax&amp;quot;: shape (60, 3105, 7025), type &amp;quot;&amp;lt;f4&amp;quot;&amp;gt;
+&amp;gt;&amp;gt;&amp;gt; f = h5py.File(&quot;tasmax_quartile75_amon_rcp85_CONUS_202601-203012.nc&quot;,&quot;r&quot;)
+&amp;gt;&amp;gt;&amp;gt; f[&quot;tasmax&quot;]
+&amp;lt;HDF5 dataset &quot;tasmax&quot;: shape (60, 3105, 7025), type &quot;&amp;lt;f4&quot;&amp;gt;
 &amp;gt;&amp;gt;&amp;gt;
 
 </code></pre>
 <p>The file becomes a hashtable of data sets that are numpy multi-dimensional arrays underneath. You can access the numpy array directly:</p>
-<pre><code>&amp;gt;&amp;gt;&amp;gt; dset = f[&amp;quot;tasmax&amp;quot;].value
+<pre><code>&amp;gt;&amp;gt;&amp;gt; dset = f[&quot;tasmax&quot;].value
 &amp;gt;&amp;gt;&amp;gt; dset
 array([[[  1.00000002e+20,   1.00000002e+20,   1.00000002e+20, ...,
            1.00000002e+20,   1.00000002e+20,   1.00000002e+20],

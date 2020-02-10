@@ -5,7 +5,7 @@
 "@id" : "http://www.milowski.com/journal/entry/2012-06-29T12:26:20.418000-07:00",
 "genre" : "blog",
 "headline" : "Too Much Data and Too Little Memory",
-"description" : "Since my last update, I&#x27;ve made a lot of good progress on my  “big weather data” project.  The goal was always to understand how to organize scientific sensor data like weather reports within a database system like MarkLogic.  Alas, I don&#x27;t currently have access to the hardware to really produce a production quality system that actually stores terabytes of information.  I did want to see how far I could get and what the characteristics of cluster would be to store such large-scale information.",
+"description" : "Since my last update, I've made a lot of good progress on my  “big weather data” project.  The goal was always to understand how to organize scientific sensor data like weather reports within a database system like MarkLogic.  Alas, I don't currently have access to the hardware to really produce a production quality system that actually stores terabytes of information.  I did want to see how far I could get and what the characteristics of cluster would be to store such large-scale information.",
 "datePublished" : "2012-06-29T12:26:20.418000-07:00",
 "dateModified" : "2012-06-29T12:26:20.418000-07:00",
 "keywords" : "MarkLogic,weather,XProc,big data" ,
@@ -34,70 +34,70 @@
 <pre><code>declare variable $date external;
 &amp;lt;starts&amp;gt;
 {
-let $start := xs:dateTime(concat($date,&amp;quot;T00:00:00Z&amp;quot;)),
-    $duration := xs:dayTimeDuration(&amp;quot;PT5M&amp;quot;)
+let $start := xs:dateTime(concat($date,&quot;T00:00:00Z&quot;)),
+    $duration := xs:dayTimeDuration(&quot;PT5M&quot;)
     for $i in (0 to 287)
        return &amp;lt;start&amp;gt;{$start + $i*$duration}&amp;lt;/start&amp;gt;
 }
 &amp;lt;/starts&amp;gt;
 </code></pre>
 <p>The weather reports are also easily deleted by the XQuery:</p>
-<pre><code>declare namespace s=&amp;quot;http://.../V/APRS/&amp;quot;;
+<pre><code>declare namespace s=&quot;http://.../V/APRS/&quot;;
 declare variable $start external;
 declare variable $duration external;
 
 &amp;lt;operation&amp;gt;deleted {$start} for {$duration}{
 let $dstart := xs:dateTime($start),
     $dend := $dstart + xs:dayTimeDuration($duration)
-   for $r in collection(&amp;quot;http://.../weather/&amp;quot;)/s:report[@received&amp;gt;=$dstart and @received&amp;lt;$dend]
+   for $r in collection(&quot;http://.../weather/&quot;)/s:report[@received&amp;gt;=$dstart and @received&amp;lt;$dend]
       return xdmp:document-delete(base-uri($r))
 }
 &amp;lt;/operation&amp;gt;
 
 </code></pre>
 <p>and I can sequence them in XProc as follows:</p>
-<pre><code>&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;
-&amp;lt;p:declare-step xmlns:p=&amp;quot;http://www.w3.org/ns/xproc&amp;quot;
-    xmlns:c=&amp;quot;http://www.w3.org/ns/xproc-step&amp;quot; version=&amp;quot;1.0&amp;quot;
-    xmlns:ml=&amp;quot;http://xmlcalabash.com/ns/extensions/marklogic&amp;quot;
-    xmlns:cx=&amp;quot;http://xmlcalabash.com/ns/extensions&amp;quot;    
+<pre><code>&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;
+&amp;lt;p:declare-step xmlns:p=&quot;http://www.w3.org/ns/xproc&quot;
+    xmlns:c=&quot;http://www.w3.org/ns/xproc-step&quot; version=&quot;1.0&quot;
+    xmlns:ml=&quot;http://xmlcalabash.com/ns/extensions/marklogic&quot;
+    xmlns:cx=&quot;http://xmlcalabash.com/ns/extensions&quot;    
     &amp;gt;
-    &amp;lt;p:option name=&amp;#x27;xdb.user&amp;#x27;/&amp;gt;
-    &amp;lt;p:option name=&amp;#x27;xdb.password&amp;#x27;/&amp;gt;
-    &amp;lt;p:option name=&amp;#x27;xdb.host&amp;#x27;/&amp;gt;
-    &amp;lt;p:option name=&amp;#x27;xdb.port&amp;#x27;/&amp;gt;
-    &amp;lt;p:option name=&amp;quot;day&amp;quot;/&amp;gt;
-    &amp;lt;p:output port=&amp;quot;result&amp;quot;/&amp;gt;
+    &amp;lt;p:option name='xdb.user'/&amp;gt;
+    &amp;lt;p:option name='xdb.password'/&amp;gt;
+    &amp;lt;p:option name='xdb.host'/&amp;gt;
+    &amp;lt;p:option name='xdb.port'/&amp;gt;
+    &amp;lt;p:option name=&quot;day&quot;/&amp;gt;
+    &amp;lt;p:output port=&quot;result&quot;/&amp;gt;
 
-    &amp;lt;p:import href=&amp;quot;http://xmlcalabash.com/extension/steps/library-1.0.xpl&amp;quot;/&amp;gt;
+    &amp;lt;p:import href=&quot;http://xmlcalabash.com/extension/steps/library-1.0.xpl&quot;/&amp;gt;
 
     &amp;lt;!-- generate the start times --&amp;gt;
 
     &amp;lt;p:xquery&amp;gt;
-        &amp;lt;p:with-param name=&amp;quot;date&amp;quot; select=&amp;quot;$day&amp;quot;/&amp;gt;
-        &amp;lt;p:input port=&amp;quot;source&amp;quot;&amp;gt;&amp;lt;p:inline&amp;gt;&amp;lt;doc/&amp;gt;&amp;lt;/p:inline&amp;gt;&amp;lt;/p:input&amp;gt;
-        &amp;lt;p:input port=&amp;quot;query&amp;quot;&amp;gt;
-            &amp;lt;p:data wrapper=&amp;quot;c:data&amp;quot; href=&amp;quot;generate-start.xq&amp;quot; content-type=&amp;quot;text/plain&amp;quot;/&amp;gt;
+        &amp;lt;p:with-param name=&quot;date&quot; select=&quot;$day&quot;/&amp;gt;
+        &amp;lt;p:input port=&quot;source&quot;&amp;gt;&amp;lt;p:inline&amp;gt;&amp;lt;doc/&amp;gt;&amp;lt;/p:inline&amp;gt;&amp;lt;/p:input&amp;gt;
+        &amp;lt;p:input port=&quot;query&quot;&amp;gt;
+            &amp;lt;p:data wrapper=&quot;c:data&quot; href=&quot;generate-start.xq&quot; content-type=&quot;text/plain&quot;/&amp;gt;
         &amp;lt;/p:input&amp;gt;
     &amp;lt;/p:xquery&amp;gt;
 
     &amp;lt;!-- iterate over the start times and delete reports from the database --&amp;gt;
 
-    &amp;lt;p:viewport match=&amp;quot;/starts/start&amp;quot;&amp;gt;
+    &amp;lt;p:viewport match=&quot;/starts/start&quot;&amp;gt;
 
         &amp;lt;cx:message&amp;gt;
-            &amp;lt;p:with-option name=&amp;quot;message&amp;quot; select=&amp;quot;concat(&amp;#x27;Processing &amp;#x27;,/start)&amp;quot;/&amp;gt;
+            &amp;lt;p:with-option name=&quot;message&quot; select=&quot;concat('Processing ',/start)&quot;/&amp;gt;
         &amp;lt;/cx:message&amp;gt;
 
         &amp;lt;ml:adhoc-query&amp;gt;
-            &amp;lt;p:with-option name=&amp;#x27;user&amp;#x27; select=&amp;#x27;$xdb.user&amp;#x27;/&amp;gt;
-            &amp;lt;p:with-option name=&amp;#x27;password&amp;#x27; select=&amp;#x27;$xdb.password&amp;#x27;/&amp;gt;
-            &amp;lt;p:with-option name=&amp;#x27;host&amp;#x27; select=&amp;#x27;$xdb.host&amp;#x27;/&amp;gt;
-            &amp;lt;p:with-option name=&amp;#x27;port&amp;#x27; select=&amp;#x27;$xdb.port&amp;#x27;/&amp;gt;
-            &amp;lt;p:with-param name=&amp;quot;start&amp;quot; select=&amp;quot;string(/start)&amp;quot;/&amp;gt;
-            &amp;lt;p:with-param name=&amp;quot;duration&amp;quot; select=&amp;quot;&amp;#x27;PT5M&amp;#x27;&amp;quot;/&amp;gt;
-            &amp;lt;p:input port=&amp;quot;source&amp;quot;&amp;gt;
-                &amp;lt;p:data wrapper=&amp;quot;c:query&amp;quot; href=&amp;quot;delete-report-duration.xq&amp;quot; content-type=&amp;quot;text/plain&amp;quot;/&amp;gt;
+            &amp;lt;p:with-option name='user' select='$xdb.user'/&amp;gt;
+            &amp;lt;p:with-option name='password' select='$xdb.password'/&amp;gt;
+            &amp;lt;p:with-option name='host' select='$xdb.host'/&amp;gt;
+            &amp;lt;p:with-option name='port' select='$xdb.port'/&amp;gt;
+            &amp;lt;p:with-param name=&quot;start&quot; select=&quot;string(/start)&quot;/&amp;gt;
+            &amp;lt;p:with-param name=&quot;duration&quot; select=&quot;'PT5M'&quot;/&amp;gt;
+            &amp;lt;p:input port=&quot;source&quot;&amp;gt;
+                &amp;lt;p:data wrapper=&quot;c:query&quot; href=&quot;delete-report-duration.xq&quot; content-type=&quot;text/plain&quot;/&amp;gt;
             &amp;lt;/p:input&amp;gt;
         &amp;lt;/ml:adhoc-query&amp;gt;
 

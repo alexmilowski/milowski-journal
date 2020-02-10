@@ -34,22 +34,22 @@
 <li>First add a <code>typeof</code> attribute to an image that is annotated:</li>
 </ul>
 <pre><code>
-    &amp;lt;img src=&amp;quot;California-Slender-Salamander.jpg&amp;quot; typeof=&amp;quot;annotated&amp;quot;/&amp;gt;
+    &amp;lt;img src=&quot;California-Slender-Salamander.jpg&quot; typeof=&quot;annotated&quot;/&amp;gt;
 
 </code></pre>
 <ul>
 <li>Next, somewhere in the document, add an annotation. The above example looks like:</li>
 </ul>
 <pre><code>
-    &amp;lt;div resource=&amp;quot;California-Slender-Salamander.jpg&amp;quot;&amp;gt;
-        &amp;lt;div property=&amp;quot;annotation&amp;quot; typeof=&amp;quot;box&amp;quot;&amp;gt;
-            Position: &amp;lt;span property=&amp;quot;x&amp;quot;&amp;gt;84&amp;lt;/span&amp;gt;,&amp;lt;span property=&amp;quot;y&amp;quot;&amp;gt;114&amp;lt;/span&amp;gt;
-            Size: &amp;lt;span property=&amp;quot;width&amp;quot;&amp;gt;90&amp;lt;/span&amp;gt; x &amp;lt;span property=&amp;quot;height&amp;quot;&amp;gt;75&amp;lt;/span&amp;gt;
-            Line Color: &amp;lt;span property=&amp;quot;line-color&amp;quot;&amp;gt;rgb(255,255,0)&amp;lt;/span&amp;gt;
-            Stroke : &amp;lt;span property=&amp;quot;line-width&amp;quot;&amp;gt;2&amp;lt;/span&amp;gt;
-            Description: &amp;lt;span property=&amp;quot;description&amp;quot;&amp;gt;California Slender Salamander&amp;lt;/span&amp;gt;
-            Link: &amp;lt;a property=&amp;quot;link&amp;quot;
-                     href=&amp;quot;http://en.wikipedia.org/wiki/California_slender_salamander&amp;quot;/&amp;gt;
+    &amp;lt;div resource=&quot;California-Slender-Salamander.jpg&quot;&amp;gt;
+        &amp;lt;div property=&quot;annotation&quot; typeof=&quot;box&quot;&amp;gt;
+            Position: &amp;lt;span property=&quot;x&quot;&amp;gt;84&amp;lt;/span&amp;gt;,&amp;lt;span property=&quot;y&quot;&amp;gt;114&amp;lt;/span&amp;gt;
+            Size: &amp;lt;span property=&quot;width&quot;&amp;gt;90&amp;lt;/span&amp;gt; x &amp;lt;span property=&quot;height&quot;&amp;gt;75&amp;lt;/span&amp;gt;
+            Line Color: &amp;lt;span property=&quot;line-color&quot;&amp;gt;rgb(255,255,0)&amp;lt;/span&amp;gt;
+            Stroke : &amp;lt;span property=&quot;line-width&quot;&amp;gt;2&amp;lt;/span&amp;gt;
+            Description: &amp;lt;span property=&quot;description&quot;&amp;gt;California Slender Salamander&amp;lt;/span&amp;gt;
+            Link: &amp;lt;a property=&quot;link&quot;
+                     href=&quot;http://en.wikipedia.org/wiki/California_slender_salamander&quot;/&amp;gt;
         &amp;lt;/div&amp;gt;
     &amp;lt;/div&amp;gt;
 
@@ -72,7 +72,7 @@
 <h3>How It Works</h3>
 <p>The <code>ImageAnnotator</code> JavaScript uses the <a href="http://www.w3.org/TR/rdfa-api/">RDFa API</a> and queries for annotated images by type to retrieve the <code>img</code> elements:</p>
 <pre><code>
-    var targets = document.getElementsByType(&amp;quot;http://www.milowski.com/O/annotated&amp;quot;);
+    var targets = document.getElementsByType(&quot;http://www.milowski.com/O/annotated&quot;);
 
 </code></pre>
 <p>This returns an array of elements that have been typed via a <code>typeof</code>  attribute. Each typed element image element generates a subject of the URI of the image and each subject has a set of associated annotations in the RDFa data.</p>
@@ -85,15 +85,15 @@
 <p>In the code, the blank node URI is used to get an object called a projection that holds the actual annotation data. This process looks like:</p>
 <pre><code>
     var annotations = document.data.getValues(
-       targets[0].subject,&amp;quot;http://www.milowski.com/O/annotation&amp;quot;);
+       targets[0].subject,&quot;http://www.milowski.com/O/annotation&quot;);
 </code></pre>
 <pre><code>
     for (var i=0; i&amp;lt;annotations.length; i++) {
        var annotation = document.data.getProjection(annotations[i]);
-       var type = annotation.get(&amp;quot;rdf:type&amp;quot;);
-       if (type==&amp;quot;http://www.milowski.com/O/box&amp;quot;) {
-          var x = parseInt(annotation.get(&amp;quot;http://www.milowski.com/O/x&amp;quot;));
-          var y = parseInt(annotation.get(&amp;quot;http://www.milowski.com/O/y&amp;quot;));
+       var type = annotation.get(&quot;rdf:type&quot;);
+       if (type==&quot;http://www.milowski.com/O/box&quot;) {
+          var x = parseInt(annotation.get(&quot;http://www.milowski.com/O/x&quot;));
+          var y = parseInt(annotation.get(&quot;http://www.milowski.com/O/y&quot;));
           ...
        }
     }

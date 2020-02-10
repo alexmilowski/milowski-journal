@@ -23,17 +23,17 @@
    public Restlet createRoot() {
        Router router = new Router(getContext());
 
-       router.attach(&amp;quot;/hello&amp;quot;,new Restlet(getContext()) {
+       router.attach(&quot;/hello&quot;,new Restlet(getContext()) {
            public void handle(Request request, Response response) {
                 response.setStatus(Status.SUCCESS_OK);
-                response.setEntity(new StringRepresentation(&amp;quot;Hello World!&amp;quot;,MediaType.TEXT_PLAIN);
+                response.setEntity(new StringRepresentation(&quot;Hello World!&quot;,MediaType.TEXT_PLAIN);
            }
        });
 
-       router.attach(&amp;quot;/goodbye&amp;quot;,new Restlet(getContext()) {
+       router.attach(&quot;/goodbye&quot;,new Restlet(getContext()) {
            public void handle(Request request, Response response) {
                 response.setStatus(Status.SUCCESS_OK);
-                response.setEntity(new StringRepresentation(&amp;quot;Goodbye Cruel World!&amp;quot;,MediaType.TEXT_PLAIN);
+                response.setEntity(new StringRepresentation(&quot;Goodbye Cruel World!&quot;,MediaType.TEXT_PLAIN);
            }
        });       return router;
    }

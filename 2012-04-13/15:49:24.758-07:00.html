@@ -5,7 +5,7 @@
 "@id" : "http://www.milowski.com/journal/entry/2012-04-13T15:49:24.758000-07:00",
 "genre" : "blog",
 "headline" : "Experiments with Big Weather Data in MarkLogic - Doomed Approach",
-"description" : "The [ “Naive Approach” ](http://www.milowski.com/journal/entry/2012-04-11T11:08:29.62-07:00/) of just importing the weather reports verbatim works if all you want to do is enumerate a particular weather report&#x27;s data by segments of time.  That is, this expression works really well:",
+"description" : "The [ “Naive Approach” ](http://www.milowski.com/journal/entry/2012-04-11T11:08:29.62-07:00/) of just importing the weather reports verbatim works if all you want to do is enumerate a particular weather report's data by segments of time.  That is, this expression works really well:",
 "datePublished" : "2012-04-13T15:49:24.758000-07:00",
 "dateModified" : "2012-04-13T15:49:24.758000-07:00",
 "keywords" : "MarkLogic,big data,weather" ,
@@ -14,7 +14,7 @@
 </script>
 <h1>Experiments with Big Weather Data in MarkLogic - Doomed Approach</h1>
 <p>The <a href="http://www.milowski.com/journal/entry/2012-04-11T11:08:29.62-07:00/"> “Naive Approach” </a> of just importing the weather reports verbatim works if all you want to do is enumerate a particular weather report's data by segments of time.  That is, this expression works really well:</p>
-<pre><code>/s:aprs/s:report[@from=&amp;#x27;DW8568&amp;#x27; and @received&amp;gt;$start and @received&amp;lt;$end]
+<pre><code>/s:aprs/s:report[@from='DW8568' and @received&amp;gt;$start and @received&amp;lt;$end]
 </code></pre>
 <p>If you look at the results <code>xdmp:plan</code> , you'll see the query plan hits all the indices.  I've compared that simple expression with more complicated expressions that use <code>cts:search</code> and the results are effectively the same.  That's good as that means the query optimizer is doing its job.</p>
 <p>Unfortunately, there are other queries where this approach fails to perform.  Before I get into that, I need to say what I mean by  “performance.” My goal is to produce small segments of data as web resources that match certain criteria (e.g. weather reports for the last hour within a geospatial region).  Those resources need to be produced in a reasonably short and constant amount of time; reasonable short means a few seconds--but less is always better.  To scope this a big more, if you ask for too large of a time period or too large of a geospatial region, then you've made an unreasonable request.  Further, as the number of reports increases over time, I want the query time to be constant.</p>
@@ -24,7 +24,7 @@
 </code></pre>
 <p>Unfortunately, even though there is an index on <code>s:report/@from</code> , it isn't used in that expression and the performance is terrible.</p>
 <p>It is easy to fix that problem by using <code>cts:element-attribute-values(),</code> but what you really want to do is summarize each station something like this:</p>
-<pre><code>for $id in cts:element-attribute-values( xs:QName(&amp;quot;s:report&amp;quot;), xs:QName(&amp;quot;from&amp;quot;),&amp;quot;&amp;quot;,&amp;quot;item-frequency&amp;quot;)
+<pre><code>for $id in cts:element-attribute-values( xs:QName(&quot;s:report&quot;), xs:QName(&quot;from&quot;),&quot;&quot;,&quot;item-frequency&quot;)
     let $last := (for $r in /s:aprs/s:report[@from=$id] order by $r/@received return $r)[1],
         $location := (for $r in /s:aprs/s:report[@from=$id][@latitude and @longitude] order by $r/@received return $r)[1]
     return element s:station {
@@ -39,11 +39,11 @@
 </code></pre>
 <p>where we retrieve the last weather report received from the station.  This query doesn't perform very well at all.  As the number of reports in the database increases, searching for the last report for each station identifier just isn't efficient as specified.  From this you can start to see how the <a href="http://www.milowski.com/journal/entry/2012-04-11T11:08:29.62-07:00/">Naive Approach</a> starts to fall apart.</p>
 <p>The second problem relates to geospatial queries and suffers from the same issues as the number of reports increases.  Since there is a geospatial index on the <code>s:report/@latitude</code> and <code>s:report/@longitude</code> attribute pair, we'd like to be able to search within a certain geospatial region for recent reports.  That query looks something like this:</p>
-<pre><code>let $now := current-dateTime(), $start := $now - xs:dayTimeDuration(&amp;quot;PT1H&amp;quot;)
+<pre><code>let $now := current-dateTime(), $start := $now - xs:dayTimeDuration(&quot;PT1H&quot;)
    for $r in
       cts:search(/s:aprs/s:report[@received &amp;gt; $start],
-        cts:element-attribute-pair-geospatial-query(xs:QName(&amp;quot;s:report&amp;quot;),
-          xs:QName(&amp;quot;latitude&amp;quot;), xs:QName(&amp;quot;longitude&amp;quot;), cts:circle(5, cts:point(37,-122))))
+        cts:element-attribute-pair-geospatial-query(xs:QName(&quot;s:report&quot;),
+          xs:QName(&quot;latitude&quot;), xs:QName(&quot;longitude&quot;), cts:circle(5, cts:point(37,-122))))
       order by $r/@received
       return $r
 </code></pre>
@@ -55,10 +55,10 @@
 <p>One recommendation was, for the above queries, to keep a separate collection with up-to-date station summaries of each station.  While the database contains many millions of weather reports that will grow significantly, there are only about 10,000 stations right now.  The number of stations is unlikely to grow very fast in comparison to the number of reports.  As the weather reports are imported, keep a separate set of station summary documents, in a separate collection, for each of the 10,000 stations, and these problems should go away.  The problems did go away and the query times became constant and fast.  So, the solution was to normalize your data!</p>
 <p>In relational databases, you often denormalize your data to improve performance.  In this case, the solution was to actually normalize your data.  That isn't a ground shaking revelation.  You wouldn't want only one large table of reports in a relational database either.  The difference is that you can get away with a lot within MarkLogic without having to think about information organization.  That is, until things go wrong.</p>
 <p>The nice bit about this change is that in the cts:search queries, only the target nodes have to change:</p>
-<pre><code>collection(&amp;quot;http://weather.milowski.com/stations/&amp;quot;)//s:position
+<pre><code>collection(&quot;http://weather.milowski.com/stations/&quot;)//s:position
 </code></pre>
 <p>and the enumeration of stations becomes a document enumeration:</p>
-<pre><code>collection(&amp;quot;http://weather.milowski.com/stations/&amp;quot;)/s:station/@id
+<pre><code>collection(&quot;http://weather.milowski.com/stations/&quot;)/s:station/@id
 
 </code></pre>
 <p>Best of all, this was an easy change to implement.  Why?  I'm using <a href="http://www.w3.org/TR/xproc">XProc</a> and all I had to do was make a simple change to my import pipeline.  I'll post that bit next.</p>
