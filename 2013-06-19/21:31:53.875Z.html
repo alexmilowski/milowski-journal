@@ -1,12 +1,14 @@
-<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2013-06-19T21:31:53.875Z">
-<script type="application/json+ld">
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2013-06-19T21:31:53.875000+00:00">
+<script type="application/ld+json">
 {
 "@context" : "http://schema.org/",
-"@id" : "http://www.milowski.com/journal/entry/2013-06-19T21:31:53.875Z",
+"@id" : "http://www.milowski.com/journal/entry/2013-06-19T21:31:53.875000+00:00",
+"genre" : "blog",
 "headline" : "Managing Documents in MarkLogic with XProc",
-"datePublished" : "2013-06-19T21:31:53.875Z",
-"dateModified" : "2013-06-19T21:31:53.875Z",
-"keywords" : ["XProc","MarkLogic","XQuery","big data","Calabash","MLD Approach"],
+"description" : "### Summary",
+"datePublished" : "2013-06-19T21:31:53.875000+00:00",
+"dateModified" : "2013-06-19T21:31:53.875000+00:00",
+"keywords" : "XProc,MarkLogic,XQuery,big data,Calabash,MLD Approach" ,
 "author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
 }
 </script>
@@ -23,10 +25,10 @@
 </ul>
 <p>Also, because of the experimental nature of my research, I don't intend on keeping a full archive of the <a href="http://wxqa.com/">CWOP weather data</a> and the time has come to cull months from the database that I don't need and can't afford to store.  In general, my server can support 3-4 months of data before I need more disk space or possibly more memory.</p>
 <p>So, the task at hand is to delete several months worth of data.  Sounds simple, right?  Remember, each month represents 45 million documents whose access by URI isn't preferred.  As such, finding and deleting weather report document by a simple query can be expensive:</p>
-<pre><code>declare namespace s=&quot;http://weather.milowski.com/V/APRS/&quot;;
-let $dtstart := xs:dateTime(&quot;2013-01-01T00:00:00Z&quot;),
-    $dtend := xs:dateTime(&quot;2013-02-01T00:00:00Z&quot;)
-   for $r in collection(&quot;http://weather.milowski.com/weather/&quot;)/s:report[@received&gt;=$dtstart and @received&lt;$dtend]
+<pre><code>declare namespace s=&amp;quot;http://weather.milowski.com/V/APRS/&amp;quot;;
+let $dtstart := xs:dateTime(&amp;quot;2013-01-01T00:00:00Z&amp;quot;),
+    $dtend := xs:dateTime(&amp;quot;2013-02-01T00:00:00Z&amp;quot;)
+   for $r in collection(&amp;quot;http://weather.milowski.com/weather/&amp;quot;)/s:report[@received&amp;gt;=$dtstart and @received&amp;lt;$dtend]
       return xdmp:document-delete(base-uri($r))
 
 </code></pre>
@@ -45,103 +47,103 @@ let $dtstart := xs:dateTime(&quot;2013-01-01T00:00:00Z&quot;),
 </ul>
 <p>The input can be embedded within the pipeline to make it easier to run.  We'll also pass in all the server information as parameters.  The pipeline starts as follows:</p>
 <pre><code>
-&lt;p:declare-step 
-   xmlns:p=&quot;http://www.w3.org/ns/xproc&quot;
-   xmlns:c=&quot;http://www.w3.org/ns/xproc-step&quot; 
-   xmlns:ml=&quot;http://xmlcalabash.com/ns/extensions/marklogic&quot;
-   xmlns:cx=&quot;http://xmlcalabash.com/ns/extensions&quot;    
-   version=&quot;1.0&quot;&gt;
-   &lt;p:option name='xdb.user'/&gt;
-   &lt;p:option name='xdb.password'/&gt;
-   &lt;p:option name='xdb.host'/&gt;
-   &lt;p:option name='xdb.port'/&gt;
-   &lt;p:input port=&quot;source&quot;&gt;
-      &lt;p:inline&gt;
-         &lt;request month=&quot;2013-01&quot; start=&quot;1&quot; end=&quot;31&quot;/&gt;
-      &lt;/p:inline&gt;
-   &lt;/p:input&gt;
-   &lt;p:output port=&quot;result&quot;/&gt;
-   &lt;p:import href=&quot;http://xmlcalabash.com/extension/steps/library-1.0.xpl&quot;/&gt;
+&amp;lt;p:declare-step
+   xmlns:p=&amp;quot;http://www.w3.org/ns/xproc&amp;quot;
+   xmlns:c=&amp;quot;http://www.w3.org/ns/xproc-step&amp;quot;
+   xmlns:ml=&amp;quot;http://xmlcalabash.com/ns/extensions/marklogic&amp;quot;
+   xmlns:cx=&amp;quot;http://xmlcalabash.com/ns/extensions&amp;quot;    
+   version=&amp;quot;1.0&amp;quot;&amp;gt;
+   &amp;lt;p:option name=&amp;#x27;xdb.user&amp;#x27;/&amp;gt;
+   &amp;lt;p:option name=&amp;#x27;xdb.password&amp;#x27;/&amp;gt;
+   &amp;lt;p:option name=&amp;#x27;xdb.host&amp;#x27;/&amp;gt;
+   &amp;lt;p:option name=&amp;#x27;xdb.port&amp;#x27;/&amp;gt;
+   &amp;lt;p:input port=&amp;quot;source&amp;quot;&amp;gt;
+      &amp;lt;p:inline&amp;gt;
+         &amp;lt;request month=&amp;quot;2013-01&amp;quot; start=&amp;quot;1&amp;quot; end=&amp;quot;31&amp;quot;/&amp;gt;
+      &amp;lt;/p:inline&amp;gt;
+   &amp;lt;/p:input&amp;gt;
+   &amp;lt;p:output port=&amp;quot;result&amp;quot;/&amp;gt;
+   &amp;lt;p:import href=&amp;quot;http://xmlcalabash.com/extension/steps/library-1.0.xpl&amp;quot;/&amp;gt;
   ...
 
 </code></pre>
 <p>Note how we are importing the Calabash extension steps and using declaring the namespace for the MarkLogic steps.  We'll use that later.</p>
 <p>Next, we use the local XQuery processor to generate each day as a separate <code>group</code> element:</p>
 <pre><code>
-   &lt;p:xquery&gt;
-      &lt;p:input port=&quot;parameters&quot;&gt;&lt;p:inline&gt;&lt;c:param-set/&gt;&lt;/p:inline&gt;&lt;/p:input&gt;
-      &lt;p:input port=&quot;query&quot;&gt;
-         &lt;p:inline&gt;
-            &lt;c:query&gt;
+   &amp;lt;p:xquery&amp;gt;
+      &amp;lt;p:input port=&amp;quot;parameters&amp;quot;&amp;gt;&amp;lt;p:inline&amp;gt;&amp;lt;c:param-set/&amp;gt;&amp;lt;/p:inline&amp;gt;&amp;lt;/p:input&amp;gt;
+      &amp;lt;p:input port=&amp;quot;query&amp;quot;&amp;gt;
+         &amp;lt;p:inline&amp;gt;
+            &amp;lt;c:query&amp;gt;
                element groups {
                   let $month := xs:string(/request/@month)
                      for $day in (xs:int(/request/@start) to xs:int(/request/@end))
-                        let $date := concat($month,&quot;-&quot;,if ($day &amp;lt; 10) then concat(&quot;0&quot;,$day) else $day),
-                            $start := xs:dateTime(concat($date,&quot;T00:00:00Z&quot;))
+                        let $date := concat($month,&amp;quot;-&amp;quot;,if ($day &amp;amp;lt; 10) then concat(&amp;quot;0&amp;quot;,$day) else $day),
+                            $start := xs:dateTime(concat($date,&amp;quot;T00:00:00Z&amp;quot;))
                            for $h in (0 to 23)
-                              let $hstart := $start + xs:dayTimeDuration(concat(&quot;PT&quot;,$h,&quot;H&quot;)),
-                                  $hend := $hstart + xs:dayTimeDuration(&quot;PT1H&quot;)
+                              let $hstart := $start + xs:dayTimeDuration(concat(&amp;quot;PT&amp;quot;,$h,&amp;quot;H&amp;quot;)),
+                                  $hend := $hstart + xs:dayTimeDuration(&amp;quot;PT1H&amp;quot;)
                                   return element group {
                                      attribute date { $date },
                                      attribute start { $hstart },
                                      attribute end { $hend }
                                   }
                }
-         &lt;/c:query&gt;
-         &lt;/p:inline&gt;
-      &lt;/p:input&gt;
-   &lt;/p:xquery&gt;
+         &amp;lt;/c:query&amp;gt;
+         &amp;lt;/p:inline&amp;gt;
+      &amp;lt;/p:input&amp;gt;
+   &amp;lt;/p:xquery&amp;gt;
 
 </code></pre>
 <p>Now we just use the viewporting mechanism of XProc to handle each group separately:</p>
 <pre><code>
-   &lt;p:viewport match=&quot;/groups/group&quot;&gt;
-      &lt;!-- output a message to the console --&gt;
-      &lt;cx:message&gt;
-         &lt;p:with-option name=&quot;message&quot; 
-                        select=&quot;concat('Processing ',/group/@date,' from ',/group/@start,' to ',/group/@end)&quot;/&gt;
-      &lt;/cx:message&gt;
-      &lt;!-- generate the query to send --&gt;
-      &lt;p:template&gt;
-         &lt;p:input port=&quot;parameters&quot;&gt;&lt;p:inline&gt;&lt;c:param-set/&gt;&lt;/p:inline&gt;&lt;/p:input&gt;
-         &lt;p:input port=&quot;template&quot;&gt;
-            &lt;p:inline&gt;
-               &lt;c:query&gt;
-                  declare namespace s=&quot;http://weather.milowski.com/V/APRS/&quot;;
+   &amp;lt;p:viewport match=&amp;quot;/groups/group&amp;quot;&amp;gt;
+      &amp;lt;!-- output a message to the console --&amp;gt;
+      &amp;lt;cx:message&amp;gt;
+         &amp;lt;p:with-option name=&amp;quot;message&amp;quot;
+                        select=&amp;quot;concat(&amp;#x27;Processing &amp;#x27;,/group/@date,&amp;#x27; from &amp;#x27;,/group/@start,&amp;#x27; to &amp;#x27;,/group/@end)&amp;quot;/&amp;gt;
+      &amp;lt;/cx:message&amp;gt;
+      &amp;lt;!-- generate the query to send --&amp;gt;
+      &amp;lt;p:template&amp;gt;
+         &amp;lt;p:input port=&amp;quot;parameters&amp;quot;&amp;gt;&amp;lt;p:inline&amp;gt;&amp;lt;c:param-set/&amp;gt;&amp;lt;/p:inline&amp;gt;&amp;lt;/p:input&amp;gt;
+         &amp;lt;p:input port=&amp;quot;template&amp;quot;&amp;gt;
+            &amp;lt;p:inline&amp;gt;
+               &amp;lt;c:query&amp;gt;
+                  declare namespace s=&amp;quot;http://weather.milowski.com/V/APRS/&amp;quot;;
                   element collection-set {{
-                     attribute date {{ &quot;{string(/group/@date)}&quot; }},
-                     let $dtstart := xs:dateTime(&quot;{string(/group/@start)}&quot;),
-                         $dtend := xs:dateTime(&quot;{string(/group/@end)}&quot;),
+                     attribute date {{ &amp;quot;{string(/group/@date)}&amp;quot; }},
+                     let $dtstart := xs:dateTime(&amp;quot;{string(/group/@start)}&amp;quot;),
+                         $dtend := xs:dateTime(&amp;quot;{string(/group/@end)}&amp;quot;),
                          $count := xdmp:estimate(
-                             collection(&quot;http://weather.milowski.com/weather/&quot;)
-                                /s:report[@received &gt;= $dtstart and @received &amp;lt;$dtend]),
-                         $set := collection(&quot;http://weather.milowski.com/weather/&quot;)
-                                    /s:report[@received &gt;= $dtstart and @received &amp;lt;$dtend]
+                             collection(&amp;quot;http://weather.milowski.com/weather/&amp;quot;)
+                                /s:report[@received &amp;gt;= $dtstart and @received &amp;amp;lt;$dtend]),
+                         $set := collection(&amp;quot;http://weather.milowski.com/weather/&amp;quot;)
+                                    /s:report[@received &amp;gt;= $dtstart and @received &amp;amp;lt;$dtend]
                          return (
-                           attribute start {{ &quot;{string(/group/@start)}&quot; }},
-                           attribute end {{ &quot;{string(/group/@end)}&quot; }},
+                           attribute start {{ &amp;quot;{string(/group/@start)}&amp;quot; }},
+                           attribute end {{ &amp;quot;{string(/group/@end)}&amp;quot; }},
                            attribute count {{ $count }},
                            for $d in $set
-                              return 
+                              return
                                  xdmp:document-add-collections(
                                     base-uri($d),
-                                    (&quot;http://weather.milowski.com/weather/{string(/group/@month)}&quot;,
-                                     &quot;http://weather.milowski.com/weather/{string(/group/@date)}&quot;)) 
+                                    (&amp;quot;http://weather.milowski.com/weather/{string(/group/@month)}&amp;quot;,
+                                     &amp;quot;http://weather.milowski.com/weather/{string(/group/@date)}&amp;quot;))
                         )
                   }}
-               &lt;/c:query&gt;
-            &lt;/p:inline&gt;
-         &lt;/p:input&gt;
-      &lt;/p:template&gt;
-      &lt;!-- send the query to the server --&gt;
-      &lt;ml:adhoc-query&gt;
-         &lt;p:with-option name='user' select='$xdb.user'/&gt;
-         &lt;p:with-option name='password' select='$xdb.password'/&gt;
-         &lt;p:with-option name='host' select='$xdb.host'/&gt;
-         &lt;p:with-option name='port' select='$xdb.port'/&gt;
-         &lt;p:input port=&quot;parameters&quot;&gt;&lt;p:inline&gt;&lt;c:param-set/&gt;&lt;/p:inline&gt;&lt;/p:input&gt;
-      &lt;/ml:adhoc-query&gt;
-   &lt;/p:viewport&gt;
+               &amp;lt;/c:query&amp;gt;
+            &amp;lt;/p:inline&amp;gt;
+         &amp;lt;/p:input&amp;gt;
+      &amp;lt;/p:template&amp;gt;
+      &amp;lt;!-- send the query to the server --&amp;gt;
+      &amp;lt;ml:adhoc-query&amp;gt;
+         &amp;lt;p:with-option name=&amp;#x27;user&amp;#x27; select=&amp;#x27;$xdb.user&amp;#x27;/&amp;gt;
+         &amp;lt;p:with-option name=&amp;#x27;password&amp;#x27; select=&amp;#x27;$xdb.password&amp;#x27;/&amp;gt;
+         &amp;lt;p:with-option name=&amp;#x27;host&amp;#x27; select=&amp;#x27;$xdb.host&amp;#x27;/&amp;gt;
+         &amp;lt;p:with-option name=&amp;#x27;port&amp;#x27; select=&amp;#x27;$xdb.port&amp;#x27;/&amp;gt;
+         &amp;lt;p:input port=&amp;quot;parameters&amp;quot;&amp;gt;&amp;lt;p:inline&amp;gt;&amp;lt;c:param-set/&amp;gt;&amp;lt;/p:inline&amp;gt;&amp;lt;/p:input&amp;gt;
+      &amp;lt;/ml:adhoc-query&amp;gt;
+   &amp;lt;/p:viewport&amp;gt;
 
 </code></pre>
 <p>If you've stuck with me this far, you've just seen a whole lot of XProc but understanding the steps isn't that bad once you get used to it:</p>
@@ -155,71 +157,70 @@ let $dtstart := xs:dateTime(&quot;2013-01-01T00:00:00Z&quot;),
 <h3>Back to Deleting Those Documents!</h3>
 <p>The delete of data by month is accomplished via XProc in a similar way.  The full pipeline is listed below:</p>
 <pre><code>
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;p:declare-step 
-   xmlns:p=&quot;http://www.w3.org/ns/xproc&quot;
-   xmlns:c=&quot;http://www.w3.org/ns/xproc-step&quot; 
-   xmlns:ml=&quot;http://xmlcalabash.com/ns/extensions/marklogic&quot;
-   version=&quot;1.0&quot;&gt;
-   &lt;p:option name='xdb.user'/&gt;
-   &lt;p:option name='xdb.password'/&gt;
-   &lt;p:option name='xdb.host'/&gt;
-   &lt;p:option name='xdb.port'/&gt;
-   &lt;p:input port=&quot;source&quot;&gt;
-      &lt;p:inline&gt;
-         &lt;request month=&quot;2013-01&quot; start=&quot;1&quot; end=&quot;31&quot;/&gt;
-      &lt;/p:inline&gt;
-   &lt;/p:input&gt;
-   &lt;p:output port=&quot;result&quot;/&gt;
-   &lt;p:import href=&quot;http://xmlcalabash.com/extension/steps/library-1.0.xpl&quot;/&gt;
-   
-   &lt;p:xquery&gt;
-      &lt;p:input port=&quot;parameters&quot;&gt;&lt;p:inline&gt;&lt;c:param-set/&gt;&lt;/p:inline&gt;&lt;/p:input&gt;
-      &lt;p:input port=&quot;query&quot;&gt;
-         &lt;p:inline&gt;
-            &lt;c:query&gt;
+&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;
+&amp;lt;p:declare-step
+   xmlns:p=&amp;quot;http://www.w3.org/ns/xproc&amp;quot;
+   xmlns:c=&amp;quot;http://www.w3.org/ns/xproc-step&amp;quot;
+   xmlns:ml=&amp;quot;http://xmlcalabash.com/ns/extensions/marklogic&amp;quot;
+   version=&amp;quot;1.0&amp;quot;&amp;gt;
+   &amp;lt;p:option name=&amp;#x27;xdb.user&amp;#x27;/&amp;gt;
+   &amp;lt;p:option name=&amp;#x27;xdb.password&amp;#x27;/&amp;gt;
+   &amp;lt;p:option name=&amp;#x27;xdb.host&amp;#x27;/&amp;gt;
+   &amp;lt;p:option name=&amp;#x27;xdb.port&amp;#x27;/&amp;gt;
+   &amp;lt;p:input port=&amp;quot;source&amp;quot;&amp;gt;
+      &amp;lt;p:inline&amp;gt;
+         &amp;lt;request month=&amp;quot;2013-01&amp;quot; start=&amp;quot;1&amp;quot; end=&amp;quot;31&amp;quot;/&amp;gt;
+      &amp;lt;/p:inline&amp;gt;
+   &amp;lt;/p:input&amp;gt;
+   &amp;lt;p:output port=&amp;quot;result&amp;quot;/&amp;gt;
+   &amp;lt;p:import href=&amp;quot;http://xmlcalabash.com/extension/steps/library-1.0.xpl&amp;quot;/&amp;gt;
+
+   &amp;lt;p:xquery&amp;gt;
+      &amp;lt;p:input port=&amp;quot;parameters&amp;quot;&amp;gt;&amp;lt;p:inline&amp;gt;&amp;lt;c:param-set/&amp;gt;&amp;lt;/p:inline&amp;gt;&amp;lt;/p:input&amp;gt;
+      &amp;lt;p:input port=&amp;quot;query&amp;quot;&amp;gt;
+         &amp;lt;p:inline&amp;gt;
+            &amp;lt;c:query&amp;gt;
                element days {
                   let $month := xs:string(/request/@month)
                      for $n in reverse(xs:int(/request/@start) to xs:int(/request/@end))
-                        return element day { 
+                        return element day {
                            attribute month { $month },
-                           attribute day { if ($n &amp;lt; 10) then concat(&quot;0&quot;,$n) else $n }
+                           attribute day { if ($n &amp;amp;lt; 10) then concat(&amp;quot;0&amp;quot;,$n) else $n }
                         }
                }
-         &lt;/c:query&gt;
-         &lt;/p:inline&gt;
-      &lt;/p:input&gt;
-   &lt;/p:xquery&gt;
-   &lt;p:viewport match=&quot;/days/day&quot;&gt;
-      &lt;p:template&gt;
-         &lt;p:input port=&quot;parameters&quot;&gt;&lt;p:inline&gt;&lt;c:param-set/&gt;&lt;/p:inline&gt;&lt;/p:input&gt;
-         &lt;p:input port=&quot;template&quot;&gt;
-            &lt;p:inline&gt;
-            &lt;c:query&gt;
-               declare namespace s=&quot;http://weather.milowski.com/V/APRS/&quot;;
-               let $date :=  &quot;{string(/day/@month)}-{string(/day/@day)}&quot;,
-                   $collection := concat(&quot;http://weather.milowski.com/weather/&quot;,$date)
+         &amp;lt;/c:query&amp;gt;
+         &amp;lt;/p:inline&amp;gt;
+      &amp;lt;/p:input&amp;gt;
+   &amp;lt;/p:xquery&amp;gt;
+   &amp;lt;p:viewport match=&amp;quot;/days/day&amp;quot;&amp;gt;
+      &amp;lt;p:template&amp;gt;
+         &amp;lt;p:input port=&amp;quot;parameters&amp;quot;&amp;gt;&amp;lt;p:inline&amp;gt;&amp;lt;c:param-set/&amp;gt;&amp;lt;/p:inline&amp;gt;&amp;lt;/p:input&amp;gt;
+         &amp;lt;p:input port=&amp;quot;template&amp;quot;&amp;gt;
+            &amp;lt;p:inline&amp;gt;
+            &amp;lt;c:query&amp;gt;
+               declare namespace s=&amp;quot;http://weather.milowski.com/V/APRS/&amp;quot;;
+               let $date :=  &amp;quot;{string(/day/@month)}-{string(/day/@day)}&amp;quot;,
+                   $collection := concat(&amp;quot;http://weather.milowski.com/weather/&amp;quot;,$date)
                   return
                      element deleted {{
                         attribute date {{ $date }},
                         attribute count {{ xdmp:estimate(collection($collection)/s:report) }},
                         xdmp:collection-delete($collection)
                      }}
-            &lt;/c:query&gt;
-            &lt;/p:inline&gt;
-         &lt;/p:input&gt;
-      &lt;/p:template&gt;
-      &lt;ml:adhoc-query&gt;
-         &lt;p:with-option name='user' select='$xdb.user'/&gt;
-         &lt;p:with-option name='password' select='$xdb.password'/&gt;
-         &lt;p:with-option name='host' select='$xdb.host'/&gt;
-         &lt;p:with-option name='port' select='$xdb.port'/&gt;
-         &lt;p:input port=&quot;parameters&quot;&gt;&lt;p:inline&gt;&lt;c:param-set/&gt;&lt;/p:inline&gt;&lt;/p:input&gt;
-      &lt;/ml:adhoc-query&gt;
-   &lt;/p:viewport&gt;
-   
-&lt;/p:declare-step&gt;
+            &amp;lt;/c:query&amp;gt;
+            &amp;lt;/p:inline&amp;gt;
+         &amp;lt;/p:input&amp;gt;
+      &amp;lt;/p:template&amp;gt;
+      &amp;lt;ml:adhoc-query&amp;gt;
+         &amp;lt;p:with-option name=&amp;#x27;user&amp;#x27; select=&amp;#x27;$xdb.user&amp;#x27;/&amp;gt;
+         &amp;lt;p:with-option name=&amp;#x27;password&amp;#x27; select=&amp;#x27;$xdb.password&amp;#x27;/&amp;gt;
+         &amp;lt;p:with-option name=&amp;#x27;host&amp;#x27; select=&amp;#x27;$xdb.host&amp;#x27;/&amp;gt;
+         &amp;lt;p:with-option name=&amp;#x27;port&amp;#x27; select=&amp;#x27;$xdb.port&amp;#x27;/&amp;gt;
+         &amp;lt;p:input port=&amp;quot;parameters&amp;quot;&amp;gt;&amp;lt;p:inline&amp;gt;&amp;lt;c:param-set/&amp;gt;&amp;lt;/p:inline&amp;gt;&amp;lt;/p:input&amp;gt;
+      &amp;lt;/ml:adhoc-query&amp;gt;
+   &amp;lt;/p:viewport&amp;gt;
+
+&amp;lt;/p:declare-step&amp;gt;
 </code></pre>
 <p>Enough XProc for you?  I've got more...</p>
-
 </article>

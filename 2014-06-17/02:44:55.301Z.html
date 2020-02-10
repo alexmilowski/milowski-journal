@@ -1,12 +1,14 @@
-<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2014-06-17T02:44:55.301Z">
-<script type="application/json+ld">
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2014-06-17T02:44:55.301000+00:00">
+<script type="application/ld+json">
 {
 "@context" : "http://schema.org/",
-"@id" : "http://www.milowski.com/journal/entry/2014-06-17T02:44:55.301Z",
+"@id" : "http://www.milowski.com/journal/entry/2014-06-17T02:44:55.301000+00:00",
+"genre" : "blog",
 "headline" : "Do Elements have URIs?",
-"datePublished" : "2014-06-17T02:44:55.301Z",
-"dateModified" : "2014-06-17T02:44:55.301Z",
-"keywords" : ["RDFa","Web","Green Turtle","MarkLogic","XPointer","RDFa API"],
+"description" : "I was discussing a problem with triples generated from RDFa and the in-browser applications I have developed using [Green Turtle](https://github.com/alexmilowski/green-turtle)  with a learned colleague of mine whose opinions I value greatly. In short, I wanted to duplicate the kinds of processing I&#x27;m doing in the browser so I can run it through XProc and do more complicated processing of the documents. Yet, I rely on the *origin of triples*  in the document for my application to work.",
+"datePublished" : "2014-06-17T02:44:55.301000+00:00",
+"dateModified" : "2014-06-17T02:44:55.301000+00:00",
+"keywords" : "RDFa,Web,Green Turtle,MarkLogic,XPointer,RDFa API" ,
 "author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
 }
 </script>
@@ -38,5 +40,4 @@
 <p>I don't have a solution to do this right now.  I'm tempted to use <a href="http://phantomjs.org">PhantomJS</a> or <a href="http://nodejs.org">node.js</a> to run my application as if it was in the browser and then process the output with <a href="http://www.w3.org/TR/XProc">XProc</a> .  This would satisfy my main use case of post-processing the results into static variants for various purposes.</p>
 <p>I would like to put this content into <a href="http://www.marklogic.com/">MarkLogic</a> and run some of the processing there, but they don't support RDFa and they don't have a notion of an origin of a triple.  It would be ideal to have this within the context of a database because the origin is a node and storing an internal reference should be straightforward (but I'm guessing).  I bet I could hack up <a href="http://www.exist-db.org/exist/apps/homepage/index.html">eXist</a> and make it do this for me too.</p>
 <p>Right now, I have too much to do.  The applications work in the browser and I'll let the dust settle for the rest of it.  Maybe I'll find a clever solution somewhere in the near future.</p>
-
 </article>

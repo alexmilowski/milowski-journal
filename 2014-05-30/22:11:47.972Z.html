@@ -1,17 +1,19 @@
-<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2014-05-30T22:11:47.972Z">
-<script type="application/json+ld">
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2014-05-30T22:11:47.972000+00:00">
+<script type="application/ld+json">
 {
 "@context" : "http://schema.org/",
-"@id" : "http://www.milowski.com/journal/entry/2014-05-30T22:11:47.972Z",
+"@id" : "http://www.milowski.com/journal/entry/2014-05-30T22:11:47.972000+00:00",
+"genre" : "blog",
 "headline" : "Geospatial Data and KML",
-"datePublished" : "2014-05-30T22:11:47.972Z",
-"dateModified" : "2014-05-30T22:11:47.972Z",
-"keywords" : ["phd","science","PAN","web","opendata","Edinburgh","KML","OGC"],
+"description" : "This is the third entry in my series on my PhD dissertation titled &lt;cite&gt;Enabling Scientific Data on the Web&lt;/cite&gt;.  In this entry, we will explore KML and how can (or can&#x27;t) be used to disseminate geospatial scientific data.",
+"datePublished" : "2014-05-30T22:11:47.972000+00:00",
+"dateModified" : "2014-05-30T22:11:47.972000+00:00",
+"keywords" : "phd,science,PAN,web,opendata,Edinburgh,KML,OGC" ,
 "author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
 }
 </script>
 <h1>Geospatial Data and KML</h1>
-<p>This is the third entry in my series on my PhD dissertation titled <cite>Enabling Scientific Data on the Web</cite>.  In this entry, we will explore KML and how can (or can't) be used to disseminate geospatial scientific data.</p>
+<p>This is the third entry in my series on my PhD dissertation titled &lt;cite&gt;Enabling Scientific Data on the Web&lt;/cite&gt;.  In this entry, we will explore KML and how can (or can't) be used to disseminate geospatial scientific data.</p>
 <h3>What is KML?</h3>
 <p>In their own words:</p>
 <p>Keyhole Markup Language (KML) is the markup language read by the Google Earth browser and technology that they acquired from Keyhole, Inc. in 2004 (no surprise there). In 2008, Google submitted KML to the <a href="http://www.opengeospatial.org">Open Geospatial Consortium (OGC) </a> for standardization and it was <a href="http://www.opengeospatial.org/node/857">approved</a> , largely unchanged.</p>
@@ -19,46 +21,46 @@
 <h3>Using KML for Data</h3>
 <p>My primary criticism of KML (and other such formats) is that it is focused on the map feature and not on the data that might be associated with it. In KML, data representations via the <code>ExtendedData</code> element feel like an afterthought. Even the  <code>description</code> element is just a plain string and HTML is encoded as escaped markup; an architectural limitation and poor design decision.</p>
 <p>For example, here is the first <code>Placemark</code> element for <a href="http://www.srh.noaa.gov/gis/kml/">snow readings from the NOAA</a> :</p>
-<pre><code>&lt;Placemark&gt;&lt;description&gt;&lt;![CDATA[&lt;b&gt;&lt;font size=&quot;+2&quot;&gt;
-41P07S: American Creek&lt;/font&gt;&lt;/b&gt;&lt;hr&gt;&lt;/hr&gt;
-&lt;table cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; width=&quot;400&quot;&gt;
-&lt;tr&gt;&lt;td&gt;Elev: 1050 feet&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;Snow Water Equivalent: 0 inches&lt;/td&gt;
-&lt;td&gt;Snow Water Equivalent: -99.9 pct norm&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;Water Year Precipitation: 4.2 inches&lt;/td&gt;
-&lt;td&gt;Water Year Precipitation: -99.9 pct norm&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;Snow Depth: 0 inches&lt;/td&gt;&lt;td&gt;Snow Density: -99.9 percent&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;a href=&quot;http://www.wcc.nrcs.usda.gov/cgibin/wygraph-multi.pl?state=AK&amp;amp;wateryear=current&amp;amp;stationidname=41P07S&quot;&gt;Time Series Chart&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;&lt;a href=&quot;http://www.wcc.nrcs.usda.gov/nwcc/site?sitenum=1189&quot;&gt;Site Info&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;a href=&quot;http://www.wcc.nrcs.usda.gov/siteimages/1189.jpg&quot;&gt;&lt;img width=&quot;400&quot; alt=&quot;img not available&quot; src=&quot;http://www.wcc.nrcs.usda.gov/siteimages/1189.jpg&quot;/&gt;&lt;/a&gt;&lt;hr&gt;&lt;/hr&gt;
-Generated: 30 May 2014]]&gt;&lt;/description&gt;&lt;Snippet&gt;&lt;/Snippet&gt;&lt;name&gt;American Creek&lt;/name&gt;&lt;LookAt&gt;&lt;longitude&gt;
+<pre><code>&amp;lt;Placemark&amp;gt;&amp;lt;description&amp;gt;&amp;lt;![CDATA[&amp;lt;b&amp;gt;&amp;lt;font size=&amp;quot;+2&amp;quot;&amp;gt;
+41P07S: American Creek&amp;lt;/font&amp;gt;&amp;lt;/b&amp;gt;&amp;lt;hr&amp;gt;&amp;lt;/hr&amp;gt;
+&amp;lt;table cellspacing=&amp;quot;0&amp;quot; cellpadding=&amp;quot;0&amp;quot; width=&amp;quot;400&amp;quot;&amp;gt;
+&amp;lt;tr&amp;gt;&amp;lt;td&amp;gt;Elev: 1050 feet&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;
+&amp;lt;tr&amp;gt;&amp;lt;td&amp;gt;Snow Water Equivalent: 0 inches&amp;lt;/td&amp;gt;
+&amp;lt;td&amp;gt;Snow Water Equivalent: -99.9 pct norm&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;
+&amp;lt;tr&amp;gt;&amp;lt;td&amp;gt;Water Year Precipitation: 4.2 inches&amp;lt;/td&amp;gt;
+&amp;lt;td&amp;gt;Water Year Precipitation: -99.9 pct norm&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;
+&amp;lt;tr&amp;gt;&amp;lt;td&amp;gt;Snow Depth: 0 inches&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;Snow Density: -99.9 percent&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;
+&amp;lt;tr&amp;gt;&amp;lt;td&amp;gt;&amp;lt;a href=&amp;quot;http://www.wcc.nrcs.usda.gov/cgibin/wygraph-multi.pl?state=AK&amp;amp;amp;wateryear=current&amp;amp;amp;stationidname=41P07S&amp;quot;&amp;gt;Time Series Chart&amp;lt;/a&amp;gt;&amp;lt;/td&amp;gt;
+&amp;lt;td&amp;gt;&amp;lt;a href=&amp;quot;http://www.wcc.nrcs.usda.gov/nwcc/site?sitenum=1189&amp;quot;&amp;gt;Site Info&amp;lt;/a&amp;gt;&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;&amp;lt;/table&amp;gt;
+&amp;lt;a href=&amp;quot;http://www.wcc.nrcs.usda.gov/siteimages/1189.jpg&amp;quot;&amp;gt;&amp;lt;img width=&amp;quot;400&amp;quot; alt=&amp;quot;img not available&amp;quot; src=&amp;quot;http://www.wcc.nrcs.usda.gov/siteimages/1189.jpg&amp;quot;/&amp;gt;&amp;lt;/a&amp;gt;&amp;lt;hr&amp;gt;&amp;lt;/hr&amp;gt;
+Generated: 30 May 2014]]&amp;gt;&amp;lt;/description&amp;gt;&amp;lt;Snippet&amp;gt;&amp;lt;/Snippet&amp;gt;&amp;lt;name&amp;gt;American Creek&amp;lt;/name&amp;gt;&amp;lt;LookAt&amp;gt;&amp;lt;longitude&amp;gt;
 -141.225
-&lt;/longitude&gt;&lt;latitude&gt;
+&amp;lt;/longitude&amp;gt;&amp;lt;latitude&amp;gt;
   64.795
- &lt;/latitude&gt;&lt;range&gt;10000&lt;/range&gt;&lt;tilt&gt;35.0&lt;/tilt&gt;&lt;heading&gt;0.0&lt;/heading&gt;
-&lt;/LookAt&gt;&lt;visibility&gt;1&lt;/visibility&gt;
-&lt;styleUrl&gt;#blackdot&lt;/styleUrl&gt;
-&lt;MultiGeometry&gt;&lt;Point&gt;&lt;coordinates&gt;
--141.225,64.795,0&lt;/coordinates&gt;&lt;/Point&gt;&lt;LineString&gt;&lt;coordinates&gt;
--141.23,64.8,0 -141.23,64.79,0 -141.22,64.79,0 -141.22,64.8,0 -141.23,64.8,0 &lt;/coordinates&gt;&lt;/LineString&gt;
-&lt;/MultiGeometry&gt;
-&lt;/Placemark&gt;
+ &amp;lt;/latitude&amp;gt;&amp;lt;range&amp;gt;10000&amp;lt;/range&amp;gt;&amp;lt;tilt&amp;gt;35.0&amp;lt;/tilt&amp;gt;&amp;lt;heading&amp;gt;0.0&amp;lt;/heading&amp;gt;
+&amp;lt;/LookAt&amp;gt;&amp;lt;visibility&amp;gt;1&amp;lt;/visibility&amp;gt;
+&amp;lt;styleUrl&amp;gt;#blackdot&amp;lt;/styleUrl&amp;gt;
+&amp;lt;MultiGeometry&amp;gt;&amp;lt;Point&amp;gt;&amp;lt;coordinates&amp;gt;
+-141.225,64.795,0&amp;lt;/coordinates&amp;gt;&amp;lt;/Point&amp;gt;&amp;lt;LineString&amp;gt;&amp;lt;coordinates&amp;gt;
+-141.23,64.8,0 -141.23,64.79,0 -141.22,64.79,0 -141.22,64.8,0 -141.23,64.8,0 &amp;lt;/coordinates&amp;gt;&amp;lt;/LineString&amp;gt;
+&amp;lt;/MultiGeometry&amp;gt;
+&amp;lt;/Placemark&amp;gt;
 </code></pre>
-<p>Looks like markup you can parse, right? Look closer.  See that   “<code>&lt;![CDATA[</code> ” inside the <code>description</code> element? Good luck!</p>
+<p>Looks like markup you can parse, right? Look closer.  See that   “<code>&amp;lt;![CDATA[</code> ” inside the <code>description</code> element? Good luck!</p>
 <p>Of many of the examples that I've surveyed, this is very common.  The data is stuffed inside escaped markup in the description so that it looks good in an Earth browser.  Little consideration is given to whether you can actually get the data (elevation, snow measurement, etc.).   Only the geospatial feature is easily discovered (i.e., a point at 64.795, -141.225).</p>
 <p>For the NOAA, you can get this data through other means. This requires applying for an account to get access to their data in a non-Web format (NetCDF) and then pulling it using their APIs. In essence, unless you really want it, it isn't readily available and doesn't meet my criteria for open data (e.g. open Web formats and protocols).</p>
 <p>The NOAA could have provided this via the ExtendedData element but to do so they would have to duplicate the information they provide in the description.  That is, in addition to having the description element show the values via escaped HTML, they would need to put it in <code>Data</code> elements as shown:</p>
 <pre><code>
-         &lt;ExtendedData&gt;
-            &lt;Data name=&quot;elevation&quot;&gt;
-               &lt;value&gt;1050&lt;/value&gt;
-            &lt;/Data&gt;
-            &lt;Data name=&quot;snow&quot;&gt;
-               &lt;value&gt;0&lt;/value&gt;
-            &lt;/Data&gt;
+         &amp;lt;ExtendedData&amp;gt;
+            &amp;lt;Data name=&amp;quot;elevation&amp;quot;&amp;gt;
+               &amp;lt;value&amp;gt;1050&amp;lt;/value&amp;gt;
+            &amp;lt;/Data&amp;gt;
+            &amp;lt;Data name=&amp;quot;snow&amp;quot;&amp;gt;
+               &amp;lt;value&amp;gt;0&amp;lt;/value&amp;gt;
+            &amp;lt;/Data&amp;gt;
             ...
-         &lt;/ExtendedData&gt;
-      
+         &amp;lt;/ExtendedData&amp;gt;
+
 </code></pre>
 <p>While some Earth browsers support rendering this information for the place marker, it is unclear whether all would do so.  Thus, information would likely need to be duplicated between the human readable description and the tool processable <code>ExtendedData</code>  element.  That is certainly not an optimal design.</p>
 <p>Of course, given my preference for RDFa, I'd rather we:</p>
@@ -67,19 +69,19 @@ Generated: 30 May 2014]]&gt;&lt;/description&gt;&lt;Snippet&gt;&lt;/Snippet&gt;&
 <li>Use RDFa annotations to avoid duplications or verbose markup.</li>
 </ul>
 <p>Such an approach might be:</p>
-<pre><code>&lt;Placemark&gt;
-&lt;description&gt;
-&lt;div vocab=&quot;http://noaa.gov/&quot; typeof=&quot;Observation&quot;&gt;
-&lt;h1 property=&quot;title&quot;&gt;41P07S: American Creek&lt;/h1&gt;
-&lt;table&gt;
-&lt;tr&gt;&lt;td&gt;Elev: &lt;span property=&quot;elevation&quot;&gt;1050&lt;/span&gt; feet&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;Snow Water Equivalent: &lt;span property=&quot;snow&quot;&gt;0&lt;/span&gt; inches&lt;/td&gt;
+<pre><code>&amp;lt;Placemark&amp;gt;
+&amp;lt;description&amp;gt;
+&amp;lt;div vocab=&amp;quot;http://noaa.gov/&amp;quot; typeof=&amp;quot;Observation&amp;quot;&amp;gt;
+&amp;lt;h1 property=&amp;quot;title&amp;quot;&amp;gt;41P07S: American Creek&amp;lt;/h1&amp;gt;
+&amp;lt;table&amp;gt;
+&amp;lt;tr&amp;gt;&amp;lt;td&amp;gt;Elev: &amp;lt;span property=&amp;quot;elevation&amp;quot;&amp;gt;1050&amp;lt;/span&amp;gt; feet&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;
+&amp;lt;tr&amp;gt;&amp;lt;td&amp;gt;Snow Water Equivalent: &amp;lt;span property=&amp;quot;snow&amp;quot;&amp;gt;0&amp;lt;/span&amp;gt; inches&amp;lt;/td&amp;gt;
 ...
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;/description&gt;
+&amp;lt;/table&amp;gt;
+&amp;lt;/div&amp;gt;
+&amp;lt;/description&amp;gt;
 ...
-&lt;/Placemark&gt;
+&amp;lt;/Placemark&amp;gt;
 </code></pre>
 <p>Of course, we could make the annotations more comprehensive (e.g. include units of measure) and then they would be more verbose too.  At least the data would be in one place and we wouldn't need to  “shoehorn” the data into minimal markup that may not capture all its nuances.</p>
 <p>Yet, this approach is unusable because KML processors would throw errors when the description contains markup.  You aren't allowed to do that, by definition, so stop wishing for sanity!</p>
@@ -89,5 +91,4 @@ Generated: 30 May 2014]]&gt;&lt;/description&gt;&lt;Snippet&gt;&lt;/Snippet&gt;&
 <p>Frankly speaking, a table of data is easier to process.  Please, give me a table of data (I did say  “please” ).</p>
 <h3>What is next?</h3>
 <p>I could bore you all with describing the issues with GML (a whole bunch of XML Schema and then you are still not done), but I won't.  I want to address GeoJSON and few other odd formats next before we start talking about solutions.</p>
-
 </article>

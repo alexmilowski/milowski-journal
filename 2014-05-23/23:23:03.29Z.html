@@ -1,111 +1,113 @@
-<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2014-05-23T23:23:03.29Z">
-<script type="application/json+ld">
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2014-05-23T23:23:03.290000+00:00">
+<script type="application/ld+json">
 {
 "@context" : "http://schema.org/",
-"@id" : "http://www.milowski.com/journal/entry/2014-05-23T23:23:03.29Z",
+"@id" : "http://www.milowski.com/journal/entry/2014-05-23T23:23:03.290000+00:00",
+"genre" : "blog",
 "headline" : "Astroinformatics on the Web",
-"datePublished" : "2014-05-23T23:23:03.29Z",
-"dateModified" : "2014-05-23T23:23:03.29Z",
-"keywords" : ["phd","science","PAN","web","opendata","Edinburgh"],
+"description" : "This is the second entry in my series on my PhD dissertation titled &lt;cite&gt;Enabling Scientific Data on the Web&lt;/cite&gt;.  In this entry, we will explore how astronomers use the Web to share data, some of standards and technologies they have developed, and bit about the history of their development.",
+"datePublished" : "2014-05-23T23:23:03.290000+00:00",
+"dateModified" : "2014-05-23T23:23:03.290000+00:00",
+"keywords" : "phd,science,PAN,web,opendata,Edinburgh" ,
 "author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
 }
 </script>
 <h1>Astroinformatics on the Web</h1>
-<p>This is the second entry in my series on my PhD dissertation titled <cite>Enabling Scientific Data on the Web</cite>.  In this entry, we will explore how astronomers use the Web to share data, some of standards and technologies they have developed, and bit about the history of their development.</p>
+<p>This is the second entry in my series on my PhD dissertation titled &lt;cite&gt;Enabling Scientific Data on the Web&lt;/cite&gt;.  In this entry, we will explore how astronomers use the Web to share data, some of standards and technologies they have developed, and bit about the history of their development.</p>
 <h3>Using Astronomical Data on the Web</h3>
-<p>At the core of many of the services developed by the <a href="">International Virtual Observatory Alliance (IVOA) </a> are REST-oriented services, like <a href=""><cite>Simple Cone Search,</cite></a> that return tabular data in an XML format called <a href="">VOTable</a> .  The service is invoked by a HTTP GET request on a service base URI with a few query parameters attached.  These query parameters define a  “search cone” by the RA and DEC parameters (right ascension and declination) and a SR parameter (radius).  All of these parameters are in decimal degrees.</p>
-<figure><figcaption>Cone Search Parameters</figcaption><img src="vo-cone.svg"/></figure>
-<p>For example, the US Navy provides a number of star catalogs as IVOA Cone Search services. The ACT catalog contains about one billion stars. The endpoint for the service is the URI  <code>http://www.nofs.navy.mil/cgi-bin/vo_cone.cgi?CAT=ACT</code> and the parameters RA, DEC, and SR can be appended to retrieve specific data about stars contained with the corresponding cone (e.g., <a href="http://www.nofs.navy.mil/cgi-bin/vo_cone.cgi?CAT=ACT&amp;VERB=1&amp;SR=0.25&amp;RA=0&amp;DEC=0"><code>http://www.nofs.navy.mil/cgi-bin/vo_cone.cgi?CAT=ACT&amp;SR=0.25&amp;RA=0&amp;DEC=0</code> </a>  for a cone of radius 0.25° centered at [0°,0°]). The result is an XML document in the VOTable vocabulary as shown below (shorten a bit to fit on this page):</p>
-<pre><code>&lt;VOTABLE version=&quot;1.0&quot;&gt;
- &lt;DESCRIPTION&gt;
+<p>At the core of many of the services developed by the <a href="">International Virtual Observatory Alliance (IVOA) </a> are REST-oriented services, like <a href="">&lt;cite&gt;Simple Cone Search,&lt;/cite&gt;</a> that return tabular data in an XML format called <a href="">VOTable</a> .  The service is invoked by a HTTP GET request on a service base URI with a few query parameters attached.  These query parameters define a  “search cone” by the RA and DEC parameters (right ascension and declination) and a SR parameter (radius).  All of these parameters are in decimal degrees.</p>
+<p>&lt;figure&gt;&lt;figcaption&gt;Cone Search Parameters&lt;/figcaption&gt;&lt;img src=&quot;vo-cone.svg&quot;/&gt;&lt;/figure&gt;</p>
+<p>For example, the US Navy provides a number of star catalogs as IVOA Cone Search services. The ACT catalog contains about one billion stars. The endpoint for the service is the URI  <code>http://www.nofs.navy.mil/cgi-bin/vo_cone.cgi?CAT=ACT</code> and the parameters RA, DEC, and SR can be appended to retrieve specific data about stars contained with the corresponding cone (e.g., <a href="http://www.nofs.navy.mil/cgi-bin/vo_cone.cgi?CAT=ACT&amp;VERB=1&amp;SR=0.25&amp;RA=0&amp;DEC=0"><code>http://www.nofs.navy.mil/cgi-bin/vo_cone.cgi?CAT=ACT&amp;amp;SR=0.25&amp;amp;RA=0&amp;amp;DEC=0</code> </a>  for a cone of radius 0.25° centered at [0°,0°]). The result is an XML document in the VOTable vocabulary as shown below (shorten a bit to fit on this page):</p>
+<pre><code>&amp;lt;VOTABLE version=&amp;quot;1.0&amp;quot;&amp;gt;
+ &amp;lt;DESCRIPTION&amp;gt;
   United States Naval Observatory Flagstaff Station       23May2014-15:47:20
   Astronomical Image and Catalogue Server:
             http://www.nofs.navy.mil/data/fchpix/
   Please send questions and problem reports to:
             sel@nofs.navy.mil
-  
- &lt;/DESCRIPTION&gt;
- &lt;DEFINITIONS&gt;
-  &lt;COOSYS ID=&quot;eq_FK5&quot; equinox=&quot;2000.00&quot; epoch=&quot;2000.00&quot; system=&quot;eq_FK5&quot;/&gt;
-  &lt;DESCRIPTION&gt;Coordinate system is FK5 equinox=J2000.0, epoch=2000.0&lt;/DESCRIPTION&gt;
- &lt;/DEFINITIONS&gt;
- &lt;RESOURCE name=&quot;ACT&quot; type=&quot;results&quot;&gt;
-  &lt;PARAM ID=&quot;ipFIELD&quot; datatype=&quot;char&quot; name=&quot;Field Name&quot; value=&quot;NoName&quot; arraysize=&quot;*&quot;/&gt;
-  &lt;PARAM ID=&quot;ipCAT_ID&quot; datatype=&quot;char&quot; name=&quot;Catalogue ID&quot; value=&quot;ACT&quot; arraysize=&quot;*&quot;/&gt;
-  &lt;PARAM ID=&quot;ipNOBJECTS&quot; datatype=&quot;int&quot; name=&quot;Number of Objects In File&quot; value=&quot;5&quot;/&gt;
-  &lt;PARAM ID=&quot;ipEQUINOX&quot; unit=&quot;yr&quot; datatype=&quot;double&quot; precision=&quot;2&quot; name=&quot;Equinox&quot; value=&quot;2000.00&quot;/&gt;
-  &lt;PARAM ID=&quot;ipEPOCH&quot; unit=&quot;yr&quot; datatype=&quot;double&quot; precision=&quot;2&quot; name=&quot;Epoch&quot; value=&quot;2000.00&quot;/&gt;
-  &lt;PARAM ID=&quot;ipRA&quot; unit=&quot;deg&quot; datatype=&quot;double&quot; precision=&quot;6&quot; name=&quot;Center RA&quot; value=&quot;0.000000&quot;/&gt;
-  &lt;PARAM ID=&quot;ipDEC&quot; unit=&quot;deg&quot; datatype=&quot;double&quot; precision=&quot;6&quot; name=&quot;Center DEC&quot; value=&quot;0.000000&quot;/&gt;
-  &lt;PARAM ID=&quot;ipRADIUS&quot; unit=&quot;deg&quot; datatype=&quot;double&quot; precision=&quot;6&quot; name=&quot;Circle Radius&quot; value=&quot;0.250000&quot;/&gt;
-  &lt;PARAM ID=&quot;ipMAGNITUDE&quot; datatype=&quot;char&quot; name=&quot;Primary Sort Color&quot; value=&quot;R2&quot; arraysize=&quot;*&quot;/&gt;
-  &lt;PARAM ID=&quot;ipBR_MAG&quot; unit=&quot;mag&quot; datatype=&quot;double&quot; precision=&quot;2&quot; name=&quot;Bright Magnitude Limit&quot; value=&quot;0.00&quot;/&gt;
-  &lt;PARAM ID=&quot;ipFT_MAG&quot; unit=&quot;mag&quot; datatype=&quot;double&quot; precision=&quot;2&quot; name=&quot;Faint Magnitude Limit&quot; value=&quot;100.00&quot;/&gt;
-  &lt;PARAM ID=&quot;ipCOLOR&quot; datatype=&quot;char&quot; name=&quot;Color0 minus Color1&quot; value=&quot;B2-R2&quot; arraysize=&quot;*&quot;/&gt;
-  &lt;PARAM ID=&quot;ipBR_MIN&quot; unit=&quot;mag&quot; datatype=&quot;double&quot; precision=&quot;2&quot; name=&quot;Color Limit: Minimum B-R&quot; value=&quot;-100.00&quot;/&gt;
-  &lt;PARAM ID=&quot;ipBR_MAX&quot; unit=&quot;mag&quot; datatype=&quot;double&quot; precision=&quot;2&quot; name=&quot;Color Limit: Maximum B-R&quot; value=&quot;100.00&quot;/&gt;
-  &lt;PARAM ID=&quot;ipMU_MIN&quot; unit=&quot;mas.yr-1&quot; datatype=&quot;double&quot; precision=&quot;2&quot; name=&quot;Min. Proper Motion&quot; value=&quot;0.00&quot;/&gt;
-  &lt;PARAM ID=&quot;ipMU_MAX&quot; unit=&quot;mas.yr-1&quot; datatype=&quot;double&quot; precision=&quot;2&quot; name=&quot;Max. Proper Motion&quot; value=&quot;10000.00&quot;/&gt;
-  &lt;PARAM ID=&quot;ipSPOS_MIN&quot; unit=&quot;mas&quot; datatype=&quot;double&quot; precision=&quot;2&quot; name=&quot;Min. Position Error&quot; value=&quot;0.00&quot;/&gt;
-  &lt;PARAM ID=&quot;ipSPOS_MAX&quot; unit=&quot;mas&quot; datatype=&quot;double&quot; precision=&quot;2&quot; name=&quot;Max. Position Error&quot; value=&quot;10000.00&quot;/&gt;
-  &lt;PARAM ID=&quot;ipSMU_MIN&quot; unit=&quot;mas.yr-1&quot; datatype=&quot;double&quot; precision=&quot;2&quot; name=&quot;Min. Proper Motion Error&quot; value=&quot;0.00&quot;/&gt;
-  &lt;PARAM ID=&quot;ipSMU_MAX&quot; unit=&quot;mas.yr-1&quot; datatype=&quot;double&quot; precision=&quot;2&quot; name=&quot;Max. Proper Motion Error&quot; value=&quot;10000.00&quot;/&gt;
-  &lt;PARAM ID=&quot;ipSD_MAX&quot; unit=&quot;deg-2&quot; datatype=&quot;double&quot; precision=&quot;2&quot; name=&quot;Maximum Surface Density&quot; value=&quot;10000000.00&quot;/&gt;
-  &lt;PARAM ID=&quot;ipMIN_PTS&quot; datatype=&quot;int&quot; name=&quot;Min. Number of Observations&quot; value=&quot;0&quot;/&gt;
-  &lt;PARAM ID=&quot;ipMAX_PTS&quot; datatype=&quot;int&quot; name=&quot;Max. Number of Observations&quot; value=&quot;10&quot;/&gt;
-  &lt;PARAM ID=&quot;ipMIN_SG&quot; datatype=&quot;int&quot; name=&quot;Min. Star/Galaxy Sep. index&quot; value=&quot;0&quot;/&gt;
-  &lt;PARAM ID=&quot;ipMAX_SG&quot; datatype=&quot;int&quot; name=&quot;Max. Star/Galaxy Sep. index&quot; value=&quot;19&quot;/&gt;
-  &lt;PARAM ID=&quot;ipFLGMASK0&quot; datatype=&quot;int&quot; name=&quot;Lower Bit Mask for Flags&quot; value=&quot;0&quot;/&gt;
-  &lt;PARAM ID=&quot;ipFLGMASK1&quot; datatype=&quot;int&quot; name=&quot;Upper Bit Mask for Flags&quot; value=&quot;-1&quot;/&gt;
-  &lt;PARAM ID=&quot;ipCOLBITS&quot; datatype=&quot;int&quot; name=&quot;Column Selection Bits&quot; value=&quot;4271&quot;/&gt;
-  &lt;TABLE&gt;
-   &lt;FIELD ID=&quot;id&quot; datatype=&quot;char&quot; name=&quot;id&quot; ucd=&quot;ID_MAIN&quot; arraysize=&quot;*&quot;/&gt;
-   &lt;FIELD ID=&quot;RA&quot; unit=&quot;deg&quot; datatype=&quot;double&quot; precision=&quot;7&quot; ref=&quot;eq_FK5&quot; name=&quot;RA&quot; ucd=&quot;POS_EQ_RA_MAIN&quot;/&gt;
-   &lt;FIELD ID=&quot;DEC&quot; unit=&quot;deg&quot; datatype=&quot;double&quot; precision=&quot;6&quot; ref=&quot;eq_FK5&quot; name=&quot;DEC&quot; ucd=&quot;POS_EQ_DEC_MAIN&quot;/&gt;
-   &lt;FIELD ID=&quot;MuRA&quot; unit=&quot;mas/yr&quot; datatype=&quot;double&quot; name=&quot;MuRA&quot; ucd=&quot;POS_EQ_PMRA&quot;/&gt;
-   &lt;FIELD ID=&quot;MuDEC&quot; unit=&quot;mas/yr&quot; datatype=&quot;double&quot; name=&quot;MuDEC&quot; ucd=&quot;POS_EQ_PMDEC&quot;/&gt;
-   &lt;FIELD ID=&quot;B&quot; unit=&quot;mag&quot; datatype=&quot;double&quot; precision=&quot;3&quot; name=&quot;B&quot; ucd=&quot;PHOT_MAG&quot;/&gt;
-   &lt;FIELD ID=&quot;V&quot; unit=&quot;mag&quot; datatype=&quot;double&quot; precision=&quot;3&quot; name=&quot;V&quot; ucd=&quot;PHOT_MAG&quot;/&gt;
-   &lt;DATA&gt;
-    &lt;TABLEDATA&gt;
-     &lt;TR&gt;&lt;TD&gt;17&lt;/TD&gt;&lt;TD&gt;000.0374108&lt;/TD&gt;&lt;TD&gt;-0.0647914&lt;/TD&gt;&lt;TD&gt;-56.7&lt;/TD&gt;&lt;TD&gt;-86.3&lt;/TD&gt;
-         &lt;TD&gt;11.435&lt;/TD&gt;&lt;TD&gt; 10.735&lt;/TD&gt;
-     &lt;/TR&gt;
-     &lt;TR&gt;&lt;TD&gt;28&lt;/TD&gt;&lt;TD&gt;000.0575496&lt;/TD&gt;&lt;TD&gt;00.2200161&lt;/TD&gt;&lt;TD&gt;32.5&lt;/TD&gt;&lt;TD&gt;-15.0&lt;/TD&gt;
-         &lt;TD&gt;11.956&lt;/TD&gt;&lt;TD&gt;11.306&lt;/TD&gt;
-     &lt;/TR&gt;
-     &lt;TR&gt;&lt;TD&gt;45&lt;/TD&gt;&lt;TD&gt;000.1155646&lt;/TD&gt;&lt;TD&gt;00.2050606&lt;/TD&gt;&lt;TD&gt;21.1&lt;/TD&gt;&lt;TD&gt;45.7&lt;/TD&gt;
-         &lt;TD&gt;9.800&lt;/TD&gt;&lt;TD&gt;9.302&lt;/TD&gt;
-     &lt;/TR&gt;
-     &lt;TR&gt;&lt;TD&gt;64&lt;/TD&gt;&lt;TD&gt;000.1436979&lt;/TD&gt;&lt;TD&gt;00.1748081&lt;/TD&gt;&lt;TD&gt;-72.0&lt;/TD&gt;&lt;TD&gt;-25.5&lt;/TD&gt;
-         &lt;TD&gt;11.677&lt;/TD&gt;&lt;TD&gt;10.993&lt;/TD&gt;
-     &lt;/TR&gt;
-     &lt;TR&gt;&lt;TD&gt;199563&lt;/TD&gt;&lt;TD&gt;359.9990250&lt;/TD&gt;&lt;TD&gt;-0.0653275&lt;/TD&gt;&lt;TD&gt;9.4&lt;/TD&gt;&lt;TD&gt;-7.0&lt;/TD&gt;
-         &lt;TD&gt;11.800&lt;/TD&gt;&lt;TD&gt;10.489&lt;/TD&gt;
-     &lt;/TR&gt;
-    &lt;/TABLEDATA&gt;
-   &lt;/DATA&gt;
-  &lt;/TABLE&gt;
- &lt;/RESOURCE&gt;
-&lt;/VOTABLE&gt;
-        
+
+ &amp;lt;/DESCRIPTION&amp;gt;
+ &amp;lt;DEFINITIONS&amp;gt;
+  &amp;lt;COOSYS ID=&amp;quot;eq_FK5&amp;quot; equinox=&amp;quot;2000.00&amp;quot; epoch=&amp;quot;2000.00&amp;quot; system=&amp;quot;eq_FK5&amp;quot;/&amp;gt;
+  &amp;lt;DESCRIPTION&amp;gt;Coordinate system is FK5 equinox=J2000.0, epoch=2000.0&amp;lt;/DESCRIPTION&amp;gt;
+ &amp;lt;/DEFINITIONS&amp;gt;
+ &amp;lt;RESOURCE name=&amp;quot;ACT&amp;quot; type=&amp;quot;results&amp;quot;&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipFIELD&amp;quot; datatype=&amp;quot;char&amp;quot; name=&amp;quot;Field Name&amp;quot; value=&amp;quot;NoName&amp;quot; arraysize=&amp;quot;*&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipCAT_ID&amp;quot; datatype=&amp;quot;char&amp;quot; name=&amp;quot;Catalogue ID&amp;quot; value=&amp;quot;ACT&amp;quot; arraysize=&amp;quot;*&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipNOBJECTS&amp;quot; datatype=&amp;quot;int&amp;quot; name=&amp;quot;Number of Objects In File&amp;quot; value=&amp;quot;5&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipEQUINOX&amp;quot; unit=&amp;quot;yr&amp;quot; datatype=&amp;quot;double&amp;quot; precision=&amp;quot;2&amp;quot; name=&amp;quot;Equinox&amp;quot; value=&amp;quot;2000.00&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipEPOCH&amp;quot; unit=&amp;quot;yr&amp;quot; datatype=&amp;quot;double&amp;quot; precision=&amp;quot;2&amp;quot; name=&amp;quot;Epoch&amp;quot; value=&amp;quot;2000.00&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipRA&amp;quot; unit=&amp;quot;deg&amp;quot; datatype=&amp;quot;double&amp;quot; precision=&amp;quot;6&amp;quot; name=&amp;quot;Center RA&amp;quot; value=&amp;quot;0.000000&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipDEC&amp;quot; unit=&amp;quot;deg&amp;quot; datatype=&amp;quot;double&amp;quot; precision=&amp;quot;6&amp;quot; name=&amp;quot;Center DEC&amp;quot; value=&amp;quot;0.000000&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipRADIUS&amp;quot; unit=&amp;quot;deg&amp;quot; datatype=&amp;quot;double&amp;quot; precision=&amp;quot;6&amp;quot; name=&amp;quot;Circle Radius&amp;quot; value=&amp;quot;0.250000&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipMAGNITUDE&amp;quot; datatype=&amp;quot;char&amp;quot; name=&amp;quot;Primary Sort Color&amp;quot; value=&amp;quot;R2&amp;quot; arraysize=&amp;quot;*&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipBR_MAG&amp;quot; unit=&amp;quot;mag&amp;quot; datatype=&amp;quot;double&amp;quot; precision=&amp;quot;2&amp;quot; name=&amp;quot;Bright Magnitude Limit&amp;quot; value=&amp;quot;0.00&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipFT_MAG&amp;quot; unit=&amp;quot;mag&amp;quot; datatype=&amp;quot;double&amp;quot; precision=&amp;quot;2&amp;quot; name=&amp;quot;Faint Magnitude Limit&amp;quot; value=&amp;quot;100.00&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipCOLOR&amp;quot; datatype=&amp;quot;char&amp;quot; name=&amp;quot;Color0 minus Color1&amp;quot; value=&amp;quot;B2-R2&amp;quot; arraysize=&amp;quot;*&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipBR_MIN&amp;quot; unit=&amp;quot;mag&amp;quot; datatype=&amp;quot;double&amp;quot; precision=&amp;quot;2&amp;quot; name=&amp;quot;Color Limit: Minimum B-R&amp;quot; value=&amp;quot;-100.00&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipBR_MAX&amp;quot; unit=&amp;quot;mag&amp;quot; datatype=&amp;quot;double&amp;quot; precision=&amp;quot;2&amp;quot; name=&amp;quot;Color Limit: Maximum B-R&amp;quot; value=&amp;quot;100.00&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipMU_MIN&amp;quot; unit=&amp;quot;mas.yr-1&amp;quot; datatype=&amp;quot;double&amp;quot; precision=&amp;quot;2&amp;quot; name=&amp;quot;Min. Proper Motion&amp;quot; value=&amp;quot;0.00&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipMU_MAX&amp;quot; unit=&amp;quot;mas.yr-1&amp;quot; datatype=&amp;quot;double&amp;quot; precision=&amp;quot;2&amp;quot; name=&amp;quot;Max. Proper Motion&amp;quot; value=&amp;quot;10000.00&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipSPOS_MIN&amp;quot; unit=&amp;quot;mas&amp;quot; datatype=&amp;quot;double&amp;quot; precision=&amp;quot;2&amp;quot; name=&amp;quot;Min. Position Error&amp;quot; value=&amp;quot;0.00&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipSPOS_MAX&amp;quot; unit=&amp;quot;mas&amp;quot; datatype=&amp;quot;double&amp;quot; precision=&amp;quot;2&amp;quot; name=&amp;quot;Max. Position Error&amp;quot; value=&amp;quot;10000.00&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipSMU_MIN&amp;quot; unit=&amp;quot;mas.yr-1&amp;quot; datatype=&amp;quot;double&amp;quot; precision=&amp;quot;2&amp;quot; name=&amp;quot;Min. Proper Motion Error&amp;quot; value=&amp;quot;0.00&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipSMU_MAX&amp;quot; unit=&amp;quot;mas.yr-1&amp;quot; datatype=&amp;quot;double&amp;quot; precision=&amp;quot;2&amp;quot; name=&amp;quot;Max. Proper Motion Error&amp;quot; value=&amp;quot;10000.00&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipSD_MAX&amp;quot; unit=&amp;quot;deg-2&amp;quot; datatype=&amp;quot;double&amp;quot; precision=&amp;quot;2&amp;quot; name=&amp;quot;Maximum Surface Density&amp;quot; value=&amp;quot;10000000.00&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipMIN_PTS&amp;quot; datatype=&amp;quot;int&amp;quot; name=&amp;quot;Min. Number of Observations&amp;quot; value=&amp;quot;0&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipMAX_PTS&amp;quot; datatype=&amp;quot;int&amp;quot; name=&amp;quot;Max. Number of Observations&amp;quot; value=&amp;quot;10&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipMIN_SG&amp;quot; datatype=&amp;quot;int&amp;quot; name=&amp;quot;Min. Star/Galaxy Sep. index&amp;quot; value=&amp;quot;0&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipMAX_SG&amp;quot; datatype=&amp;quot;int&amp;quot; name=&amp;quot;Max. Star/Galaxy Sep. index&amp;quot; value=&amp;quot;19&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipFLGMASK0&amp;quot; datatype=&amp;quot;int&amp;quot; name=&amp;quot;Lower Bit Mask for Flags&amp;quot; value=&amp;quot;0&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipFLGMASK1&amp;quot; datatype=&amp;quot;int&amp;quot; name=&amp;quot;Upper Bit Mask for Flags&amp;quot; value=&amp;quot;-1&amp;quot;/&amp;gt;
+  &amp;lt;PARAM ID=&amp;quot;ipCOLBITS&amp;quot; datatype=&amp;quot;int&amp;quot; name=&amp;quot;Column Selection Bits&amp;quot; value=&amp;quot;4271&amp;quot;/&amp;gt;
+  &amp;lt;TABLE&amp;gt;
+   &amp;lt;FIELD ID=&amp;quot;id&amp;quot; datatype=&amp;quot;char&amp;quot; name=&amp;quot;id&amp;quot; ucd=&amp;quot;ID_MAIN&amp;quot; arraysize=&amp;quot;*&amp;quot;/&amp;gt;
+   &amp;lt;FIELD ID=&amp;quot;RA&amp;quot; unit=&amp;quot;deg&amp;quot; datatype=&amp;quot;double&amp;quot; precision=&amp;quot;7&amp;quot; ref=&amp;quot;eq_FK5&amp;quot; name=&amp;quot;RA&amp;quot; ucd=&amp;quot;POS_EQ_RA_MAIN&amp;quot;/&amp;gt;
+   &amp;lt;FIELD ID=&amp;quot;DEC&amp;quot; unit=&amp;quot;deg&amp;quot; datatype=&amp;quot;double&amp;quot; precision=&amp;quot;6&amp;quot; ref=&amp;quot;eq_FK5&amp;quot; name=&amp;quot;DEC&amp;quot; ucd=&amp;quot;POS_EQ_DEC_MAIN&amp;quot;/&amp;gt;
+   &amp;lt;FIELD ID=&amp;quot;MuRA&amp;quot; unit=&amp;quot;mas/yr&amp;quot; datatype=&amp;quot;double&amp;quot; name=&amp;quot;MuRA&amp;quot; ucd=&amp;quot;POS_EQ_PMRA&amp;quot;/&amp;gt;
+   &amp;lt;FIELD ID=&amp;quot;MuDEC&amp;quot; unit=&amp;quot;mas/yr&amp;quot; datatype=&amp;quot;double&amp;quot; name=&amp;quot;MuDEC&amp;quot; ucd=&amp;quot;POS_EQ_PMDEC&amp;quot;/&amp;gt;
+   &amp;lt;FIELD ID=&amp;quot;B&amp;quot; unit=&amp;quot;mag&amp;quot; datatype=&amp;quot;double&amp;quot; precision=&amp;quot;3&amp;quot; name=&amp;quot;B&amp;quot; ucd=&amp;quot;PHOT_MAG&amp;quot;/&amp;gt;
+   &amp;lt;FIELD ID=&amp;quot;V&amp;quot; unit=&amp;quot;mag&amp;quot; datatype=&amp;quot;double&amp;quot; precision=&amp;quot;3&amp;quot; name=&amp;quot;V&amp;quot; ucd=&amp;quot;PHOT_MAG&amp;quot;/&amp;gt;
+   &amp;lt;DATA&amp;gt;
+    &amp;lt;TABLEDATA&amp;gt;
+     &amp;lt;TR&amp;gt;&amp;lt;TD&amp;gt;17&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;000.0374108&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;-0.0647914&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;-56.7&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;-86.3&amp;lt;/TD&amp;gt;
+         &amp;lt;TD&amp;gt;11.435&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt; 10.735&amp;lt;/TD&amp;gt;
+     &amp;lt;/TR&amp;gt;
+     &amp;lt;TR&amp;gt;&amp;lt;TD&amp;gt;28&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;000.0575496&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;00.2200161&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;32.5&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;-15.0&amp;lt;/TD&amp;gt;
+         &amp;lt;TD&amp;gt;11.956&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;11.306&amp;lt;/TD&amp;gt;
+     &amp;lt;/TR&amp;gt;
+     &amp;lt;TR&amp;gt;&amp;lt;TD&amp;gt;45&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;000.1155646&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;00.2050606&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;21.1&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;45.7&amp;lt;/TD&amp;gt;
+         &amp;lt;TD&amp;gt;9.800&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;9.302&amp;lt;/TD&amp;gt;
+     &amp;lt;/TR&amp;gt;
+     &amp;lt;TR&amp;gt;&amp;lt;TD&amp;gt;64&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;000.1436979&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;00.1748081&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;-72.0&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;-25.5&amp;lt;/TD&amp;gt;
+         &amp;lt;TD&amp;gt;11.677&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;10.993&amp;lt;/TD&amp;gt;
+     &amp;lt;/TR&amp;gt;
+     &amp;lt;TR&amp;gt;&amp;lt;TD&amp;gt;199563&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;359.9990250&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;-0.0653275&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;9.4&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;-7.0&amp;lt;/TD&amp;gt;
+         &amp;lt;TD&amp;gt;11.800&amp;lt;/TD&amp;gt;&amp;lt;TD&amp;gt;10.489&amp;lt;/TD&amp;gt;
+     &amp;lt;/TR&amp;gt;
+    &amp;lt;/TABLEDATA&amp;gt;
+   &amp;lt;/DATA&amp;gt;
+  &amp;lt;/TABLE&amp;gt;
+ &amp;lt;/RESOURCE&amp;gt;
+&amp;lt;/VOTABLE&amp;gt;
+
 </code></pre>
 <p>The format provides a definition for each column via the <code>FIELD</code> element and then each table row ( <code>TR</code> ) contains a simple text value for each table cell ( <code>TD</code> ).  A tool can read the table header and use the various attributes to find columns of data of interest.  For example, the location of the star is in column 2 and 3 with the <code>ucd</code> labels <code>POS_EQ_RA_MAIN</code> and <code>POS_EQ_DEC_MAIN</code> and visible photographic magnitude is the last column with label <code>PHOT_MAG</code> .</p>
-<p>At XML Prague 2011, for my paper titled <a href="http://archive.xmlprague.cz/2011/sessions.html#Efficient-XML-Processing-in-Browsers"><cite>Efficient XML Processing in Browsers</cite></a> , I presented an example of an in-browser application computing a <a href="http://en.wikipedia.org/wiki/Mollweide_projection">Mollweide Projection </a> that computed over this data set to provide a visualization of the contained star data:</p>
-<figure><figcaption>Mollweide Projection of ACT</figcaption><img src="act-alpha-mollweide-12-adjusted.png"/></figure>
-<p>The IVOA defines a number of different services similar to the <cite>Simple Cone Search</cite> service for other kinds of data.  They all return VOTable instances as their response.  They also provide a registry system for discovering these services and a <a href="http://rofr.ivoa.net">Registry of Registries</a> for discovering registries.</p>
+<p>At XML Prague 2011, for my paper titled <a href="http://archive.xmlprague.cz/2011/sessions.html#Efficient-XML-Processing-in-Browsers">&lt;cite&gt;Efficient XML Processing in Browsers&lt;/cite&gt;</a> , I presented an example of an in-browser application computing a <a href="http://en.wikipedia.org/wiki/Mollweide_projection">Mollweide Projection </a> that computed over this data set to provide a visualization of the contained star data:</p>
+<p>&lt;figure&gt;&lt;figcaption&gt;Mollweide Projection of ACT&lt;/figcaption&gt;&lt;img src=&quot;act-alpha-mollweide-12-adjusted.png&quot;/&gt;&lt;/figure&gt;</p>
+<p>The IVOA defines a number of different services similar to the &lt;cite&gt;Simple Cone Search&lt;/cite&gt; service for other kinds of data.  They all return VOTable instances as their response.  They also provide a registry system for discovering these services and a <a href="http://rofr.ivoa.net">Registry of Registries</a> for discovering registries.</p>
 <p>Overall, the system has had success for tool-to-tool interchange of data and provides some ability for  “normal humans” to interact with the data.  The VOTable vocabulary suffers from age and would probably be a bit more streamlined if designed with today's knowledge. Nevertheless, it is a success story for XML, the Web, and Astronomy.</p>
 <h3>A Historical Perspective</h3>
-<p>While astronomers had long been using the Internet to exchange data, primarily through FTP services, the lack of common interchange formats meant that systems had to deal with custom formats in addition to managing provenance and updates. Around 1998, the Strasbourg Astronomical Observatory developed the <a href="">VizieR system</a> as an online database of astronomical catalogs. In <a href=""><cite>The VizieR database of astronomical catalogs</cite></a> , the challenges of interoperable exchanges of information without a common format were discussed with the primary observation being that, while most data was tabular, the formats in which they were distributed varied widely. Even when the data was available in <a href="">FITS format </a> , the usefulness of that format outside of certain tools was limited. As conventions were developed for documenting each format in “Readme files”, the increasing amount of data available from automated systems made this approach unworkable.</p>
+<p>While astronomers had long been using the Internet to exchange data, primarily through FTP services, the lack of common interchange formats meant that systems had to deal with custom formats in addition to managing provenance and updates. Around 1998, the Strasbourg Astronomical Observatory developed the <a href="">VizieR system</a> as an online database of astronomical catalogs. In <a href="">&lt;cite&gt;The VizieR database of astronomical catalogs&lt;/cite&gt;</a> , the challenges of interoperable exchanges of information without a common format were discussed with the primary observation being that, while most data was tabular, the formats in which they were distributed varied widely. Even when the data was available in <a href="">FITS format </a> , the usefulness of that format outside of certain tools was limited. As conventions were developed for documenting each format in “Readme files”, the increasing amount of data available from automated systems made this approach unworkable.</p>
 <p>The VizieR system developed a set of metadata divided into three categories: descriptions of catalogs, descriptions of tabular data, and descriptions of columns. This set of “meta tables” allowed the system to consume data from various sources in an automated fashion and store it in a common format. The result was made available over the Web in a common format that included one of the first uses of XML for scientific data.</p>
-<p>In conjunction with the VizieR system, two important ideas were developed: a proposal to standardize tabular data using XML and the concept of a <cite>Universal Content Descriptor (UCD)</cite>. An XML format called <cite>Astrores</cite>, described in <cite>Using XML for Accessing Resource in Astronomy</cite>, is the direct predecessor to IVOA's  <a href="">VOTable format</a> (an XML tabular format). It shares the idea of describing columns of data and then using a simple tabular format to encode the actual data. In the original proposal, the data was encoded as “comma separated 28 values” in a CSV element. The combination of the column definitions and quasi-tabular data allowed tools to interpret columns based on basic metadata such as units, data types, labels, and UCD labels.</p>
-<p>Around the same time as the Astrores XML format development, the concept of a UCD was developed in <cite>ESO/CDS Data-mining Tool Development Project</cite>. The idea was to have a controlled vocabulary of descriptors, in the form of simple text strings composed of a single word or “token”, that systems could use to label columns regardless of the descriptive names, units, or data types used to encode the actual data. For example, two systems might label a column with &quot;POS_EQ_RA&quot;, yet in one system use decimal degrees for the data and in the other use hours, minutes, and seconds. A receiving system attempting to aggregate the two data sources can now map these values at a higher level and then use encoding specifics to translate each data type and syntax used.</p>
-<p>Unfortunately, the problems inherent in developing and agreeing to a common vocabulary proved to be too much for this approach. In <cite>UCD in the IVOA Context</cite>, the idea of getting agreement upon a single, non-extensible controlled vocabulary was described as “a nearly impossible task”. This realization led to the development of the UCD1+ (called UCD2 in the reference), which maintained the notion of a UCD, but turned it into a mechanism for composing descriptors build from “atoms” and “words” derived from a well-defined and controlled vocabulary. This approach lessened the need for ultimate agreement and provided “some level between the fuzziness of natural language and the accuracy of attributes of data models”.</p>
+<p>In conjunction with the VizieR system, two important ideas were developed: a proposal to standardize tabular data using XML and the concept of a &lt;cite&gt;Universal Content Descriptor (UCD)&lt;/cite&gt;. An XML format called &lt;cite&gt;Astrores&lt;/cite&gt;, described in &lt;cite&gt;Using XML for Accessing Resource in Astronomy&lt;/cite&gt;, is the direct predecessor to IVOA's  <a href="">VOTable format</a> (an XML tabular format). It shares the idea of describing columns of data and then using a simple tabular format to encode the actual data. In the original proposal, the data was encoded as “comma separated 28 values” in a CSV element. The combination of the column definitions and quasi-tabular data allowed tools to interpret columns based on basic metadata such as units, data types, labels, and UCD labels.</p>
+<p>Around the same time as the Astrores XML format development, the concept of a UCD was developed in &lt;cite&gt;ESO/CDS Data-mining Tool Development Project&lt;/cite&gt;. The idea was to have a controlled vocabulary of descriptors, in the form of simple text strings composed of a single word or “token”, that systems could use to label columns regardless of the descriptive names, units, or data types used to encode the actual data. For example, two systems might label a column with &quot;POS_EQ_RA&quot;, yet in one system use decimal degrees for the data and in the other use hours, minutes, and seconds. A receiving system attempting to aggregate the two data sources can now map these values at a higher level and then use encoding specifics to translate each data type and syntax used.</p>
+<p>Unfortunately, the problems inherent in developing and agreeing to a common vocabulary proved to be too much for this approach. In &lt;cite&gt;UCD in the IVOA Context&lt;/cite&gt;, the idea of getting agreement upon a single, non-extensible controlled vocabulary was described as “a nearly impossible task”. This realization led to the development of the UCD1+ (called UCD2 in the reference), which maintained the notion of a UCD, but turned it into a mechanism for composing descriptors build from “atoms” and “words” derived from a well-defined and controlled vocabulary. This approach lessened the need for ultimate agreement and provided “some level between the fuzziness of natural language and the accuracy of attributes of data models”.</p>
 <p>These varied efforts seemed to have led to the establishment of IVOA to develop the myriad of standards and architectures for exchanging astronomical data that now exist.</p>
 <h3>Enhancements and Generalization</h3>
 <p>The IVOA's approach of using simple REST-oriented services, with simple requests, that return XML, provided a baseline of interoperability.  Over time they revised their vocabulary and upgraded the UCD syntax.  Unfortunately, once services were deployed, they seemed unlikely to change.</p>
 <p>I conducted a survey by inspecting all the entries found in the various IVOA service registries and sampled their outputs.  What I found is shown in the figure below. Essentially, many services still use older version of VOTable and most services have not migrated completely to the new UCD format even though these changes might enhance interoperability.</p>
-<figure><figcaption>VOTable and UCD Usage</figcaption><img src="ivoa-votable-usage.png"/></figure>
+<p>&lt;figure&gt;&lt;figcaption&gt;VOTable and UCD Usage&lt;/figcaption&gt;&lt;img src=&quot;ivoa-votable-usage.png&quot;/&gt;&lt;/figure&gt;</p>
 <p>Further complicating these services, many of the services can be discovered otherwise and have useful forms oriented towards human consumption.  Their outputs are rendered, often via XSLT in the browser, which presents a nicer visual output but hides the actual structure of the data.  Often, the URI of the service is hidden by the processes that provide these interfaces and this makes it harder to understand that they can be used outside of the visual interface.</p>
 <p>Because the IVOA has had some success, we want to consider this as one model that can be enhanced and generalized:</p>
 <ol>
@@ -115,5 +117,4 @@
 <li>UCD1+ essentially failed.  How will other annotation techniques succeed?</li>
 </ol>
 <p>I've used the IVOA approach as a informative model my methodology.  We'll take a look at that in a bit, but we first need to look at other kinds of scientific data in the wild and on the Web.</p>
-
 </article>

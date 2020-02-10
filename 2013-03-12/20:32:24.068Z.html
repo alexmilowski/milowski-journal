@@ -1,12 +1,14 @@
-<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2013-03-12T20:32:24.068Z">
-<script type="application/json+ld">
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2013-03-12T20:32:24.068000+00:00">
+<script type="application/ld+json">
 {
 "@context" : "http://schema.org/",
-"@id" : "http://www.milowski.com/journal/entry/2013-03-12T20:32:24.068Z",
+"@id" : "http://www.milowski.com/journal/entry/2013-03-12T20:32:24.068000+00:00",
+"genre" : "blog",
 "headline" : "What is the Subject Origin?",
-"datePublished" : "2013-03-12T20:32:24.068Z",
-"dateModified" : "2013-03-12T20:32:24.068Z",
-"keywords" : ["RDFa","RDFa API","JavaScript"],
+"description" : "[RDFa](http://www.w3.org/TR/rdfa-core/) allow annotations of subjects (identifiers) to exist in multiple locations within a document. When a user tries to retrieve elements by this subject identifier, what element is returned? Currently, the [RDFa API](http://www.w3.org/TR/rdfa-api/) says that all the element origins in the document identified via `@about` , `@resource,`   `@src` , `@href` are returned by the  `document.getElementsBySubject()` API method.",
+"datePublished" : "2013-03-12T20:32:24.068000+00:00",
+"dateModified" : "2013-03-12T20:32:24.068000+00:00",
+"keywords" : "RDFa,RDFa API,JavaScript" ,
 "author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
 }
 </script>
@@ -14,42 +16,42 @@
 <p><a href="http://www.w3.org/TR/rdfa-core/">RDFa</a> allow annotations of subjects (identifiers) to exist in multiple locations within a document. When a user tries to retrieve elements by this subject identifier, what element is returned? Currently, the <a href="http://www.w3.org/TR/rdfa-api/">RDFa API</a> says that all the element origins in the document identified via <code>@about</code> , <code>@resource,</code>   <code>@src</code> , <code>@href</code> are returned by the  <code>document.getElementsBySubject()</code> API method.</p>
 <p>For example, consider this example using RDFa:</p>
 <pre><code>
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;!DOCTYPE html&gt;
-&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
-    &lt;head&gt;
-        &lt;title&gt;&lt;/title&gt;
-    &lt;/head&gt;
-    &lt;body vocab=&quot;http://www.example.com/&quot;&gt;
-       &lt;div about=&quot;_:ex1&quot;&gt;
-          &lt;span property=&quot;a&quot;&gt;v1&lt;/span&gt;
-       &lt;/div&gt;
-       &lt;div about=&quot;_:ex1&quot;&gt;
-          &lt;span property=&quot;b&quot;&gt;v2&lt;/span&gt;
-       &lt;/div&gt;
-       &lt;div resource=&quot;_:ex1&quot;&gt;
-          &lt;span property=&quot;c&quot;&gt;v3&lt;/span&gt;
-       &lt;/div&gt;
-       &lt;div about=&quot;_:ex1&quot; typeof=&quot;T&quot;&gt;
-          &lt;span property=&quot;d&quot;&gt;v4&lt;/span&gt;
-       &lt;/div&gt;
-       &lt;div resource=&quot;_:ex1&quot; typeof=&quot;T&quot;&gt;
-          &lt;span property=&quot;e&quot;&gt;v5&lt;/span&gt;
-       &lt;/div&gt;
-    &lt;/body&gt;
-&lt;/html&gt;       
-    
+&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;
+&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html xmlns=&amp;quot;http://www.w3.org/1999/xhtml&amp;quot;&amp;gt;
+    &amp;lt;head&amp;gt;
+        &amp;lt;title&amp;gt;&amp;lt;/title&amp;gt;
+    &amp;lt;/head&amp;gt;
+    &amp;lt;body vocab=&amp;quot;http://www.example.com/&amp;quot;&amp;gt;
+       &amp;lt;div about=&amp;quot;_:ex1&amp;quot;&amp;gt;
+          &amp;lt;span property=&amp;quot;a&amp;quot;&amp;gt;v1&amp;lt;/span&amp;gt;
+       &amp;lt;/div&amp;gt;
+       &amp;lt;div about=&amp;quot;_:ex1&amp;quot;&amp;gt;
+          &amp;lt;span property=&amp;quot;b&amp;quot;&amp;gt;v2&amp;lt;/span&amp;gt;
+       &amp;lt;/div&amp;gt;
+       &amp;lt;div resource=&amp;quot;_:ex1&amp;quot;&amp;gt;
+          &amp;lt;span property=&amp;quot;c&amp;quot;&amp;gt;v3&amp;lt;/span&amp;gt;
+       &amp;lt;/div&amp;gt;
+       &amp;lt;div about=&amp;quot;_:ex1&amp;quot; typeof=&amp;quot;T&amp;quot;&amp;gt;
+          &amp;lt;span property=&amp;quot;d&amp;quot;&amp;gt;v4&amp;lt;/span&amp;gt;
+       &amp;lt;/div&amp;gt;
+       &amp;lt;div resource=&amp;quot;_:ex1&amp;quot; typeof=&amp;quot;T&amp;quot;&amp;gt;
+          &amp;lt;span property=&amp;quot;e&amp;quot;&amp;gt;v5&amp;lt;/span&amp;gt;
+       &amp;lt;/div&amp;gt;
+    &amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;       
+
 </code></pre>
 <p>This example generates the triples:</p>
 <pre><code>
-&lt;origin.xhtml&gt;	&lt;http://www.w3.org/ns/rdfa#usesVocabulary&gt;	&lt;http://www.example.com/&gt;
-@prefix e: &lt;http://www.example.com/&gt; .
-&lt;_:ex1&gt; rdf:type &lt;http://www.example.com/T&gt; ;
-        e:a	&quot;v1&quot; ;
-        e:b	&quot;v2&quot; ;
-        e:c	&quot;v3&quot; ;
-        e:d	&quot;v4&quot; ;
-        e:e	&quot;v5&quot; .
+&amp;lt;origin.xhtml&amp;gt;	&amp;lt;http://www.w3.org/ns/rdfa#usesVocabulary&amp;gt;	&amp;lt;http://www.example.com/&amp;gt;
+@prefix e: &amp;lt;http://www.example.com/&amp;gt; .
+&amp;lt;_:ex1&amp;gt; rdf:type &amp;lt;http://www.example.com/T&amp;gt; ;
+        e:a	&amp;quot;v1&amp;quot; ;
+        e:b	&amp;quot;v2&amp;quot; ;
+        e:c	&amp;quot;v3&amp;quot; ;
+        e:d	&amp;quot;v4&amp;quot; ;
+        e:e	&amp;quot;v5&amp;quot; .
 
 </code></pre>
 <h3>What is the subject origin?</h3>
@@ -58,7 +60,7 @@
 <li>Each child <code>span</code> element generates a different property.</li>
 <li>Two separate elements type the subject as <code>http://www.example.com/T</code> .</li>
 </ol>
-<p>With the current <a href="http://www.w3.org/TR/rdfa-api/">RDFa API</a> , all of these div elements should be returned by <code>document.getElementsBySubject(&quot;_:ex1)</code> and two by <code>document.getElementsByType(&quot;http://www.example.com/T&quot;)</code> . Also, each property is generated by a different set of descendants of each subject element origin.</p>
+<p>With the current <a href="http://www.w3.org/TR/rdfa-api/">RDFa API</a> , all of these div elements should be returned by <code>document.getElementsBySubject(&amp;quot;_:ex1)</code> and two by <code>document.getElementsByType(&amp;quot;http://www.example.com/T&amp;quot;)</code> . Also, each property is generated by a different set of descendants of each subject element origin.</p>
 <p>Obviously, this particular example is quite pathological. That said, the ability to have subject annotations in different places within a single document is a good feature that is useful when the content doesn't follow a tree structure. As such, in practice, something like this will happen for good reasons.</p>
 <p>In contrast, it probably isn't a good idea to type a subject in different locations.  The resulting annotation graph (i.e. triples) are the same but it just isn't necessary to do as the same thing is being said twice.  Alas, it is possible and is likely to happen in some document somewhere on the Web.</p>
 <h3>What does this mean for an easier API?</h3>
@@ -75,5 +77,4 @@
 <h3>What next?</h3>
 <p>My proposal is that every subject origin have a <code>data</code> property that is the RDFa API object.  The <code>id</code> property of this object returns the subject URI.  Further methods on this object should allow access to the subject properties (i.e. subset of the annotation graph).</p>
 <p>The next problem is how to make accessing properties and values easier for scripting.</p>
-
 </article>

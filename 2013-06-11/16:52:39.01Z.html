@@ -1,21 +1,23 @@
-<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2013-06-11T16:52:39.01Z">
-<script type="application/json+ld">
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2013-06-11T16:52:39.010000+00:00">
+<script type="application/ld+json">
 {
 "@context" : "http://schema.org/",
-"@id" : "http://www.milowski.com/journal/entry/2013-06-11T16:52:39.01Z",
+"@id" : "http://www.milowski.com/journal/entry/2013-06-11T16:52:39.010000+00:00",
+"genre" : "blog",
 "headline" : "Microdata in Green Turtle",
-"datePublished" : "2013-06-11T16:52:39.01Z",
-"dateModified" : "2013-06-11T16:52:39.01Z",
-"keywords" : ["RDFa","Microdata","Green Turtle"],
+"description" : "After being asked how hard it would be to add [Microdata](http://dev.w3.org/html5/md-LC/) , at least in some minimal way, to [Green Turtle](https://code.google.com/p/green-turtle/) I decided to find out.  Since I already have a bunch of infrastructure, this didn&#x27;t feel like a hard thing to add.  If I did add support, at least experimentally, microdata and RDFa could use the same API and scripting support.",
+"datePublished" : "2013-06-11T16:52:39.010000+00:00",
+"dateModified" : "2013-06-11T16:52:39.010000+00:00",
+"keywords" : "RDFa,Microdata,Green Turtle" ,
 "author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
 }
 </script>
 <h1>Microdata in Green Turtle</h1>
 <p>After being asked how hard it would be to add <a href="http://dev.w3.org/html5/md-LC/">Microdata</a> , at least in some minimal way, to <a href="https://code.google.com/p/green-turtle/">Green Turtle</a> I decided to find out.  Since I already have a bunch of infrastructure, this didn't feel like a hard thing to add.  If I did add support, at least experimentally, microdata and RDFa could use the same API and scripting support.</p>
 <p>Of course, this requires understanding how to interpret microdata and generate a triples graph from it.  There are some pathological cases, such as untyped items, that are just impossible.  For example:</p>
-<pre><code>&lt;div itemscope&gt;
-&lt;p itemprop=&quot;name&quot;&gt;Alex Milowski&lt;/p&gt;
-&lt;/div&gt;
+<pre><code>&amp;lt;div itemscope&amp;gt;
+&amp;lt;p itemprop=&amp;quot;name&amp;quot;&amp;gt;Alex Milowski&amp;lt;/p&amp;gt;
+&amp;lt;/div&amp;gt;
 
 </code></pre>
 <p>Is it someone's attempt at encoding a person?  Does it have any interchange semantics over the Web?  Probably not and so I just ignore things that don't map easily.</p>
@@ -29,39 +31,35 @@
 <p>Here's how:</p>
 <ul>
 <li>Until I package this implementation somehow, you'll need to include three Javascript files: <a href="https://green-turtle.googlecode.com/svn/trunk/src/URI.js">URI.js</a> , <a href="https://green-turtle.googlecode.com/svn/trunk/src/RDFaGraph.js">RDFaGraph.js</a> , and <a href="https://green-turtle.googlecode.com/svn/trunk/src/Microdata.js">Microdata.js</a></li>
-<li>Register a processor with Green Turtle for Microdata: ```</li>
-</ul>
-<script type="text/javascript">
-GreenTurtle.implementation.processors["microdata"] = {
-   process: function(node,options) {
-      var owner = node.nodeType==Node.DOCUMENT_NODE ? node : node.ownerDocument;
-      if (!owner.data) {
-         return false;
-      }
-      var processor = new GraphMicrodataProcessor(owner.data.graph);
-      processor.process(node);
-      return true;
-   }
+<li>Register a processor with Green Turtle for Microdata: ```
+&lt;script type=&quot;text/javascript&quot;&gt;
+GreenTurtle.implementation.processors[&quot;microdata&quot;] = {
+process: function(node,options) {
+var owner = node.nodeType==Node.DOCUMENT_NODE ? node : node.ownerDocument;
+if (!owner.data) {
+return false;
+}
+var processor = new GraphMicrodataProcessor(owner.data.graph);
+processor.process(node);
+return true;
+}
 };
-</script>
+&lt;/script&gt;</li>
+</ul>
 <pre><code>
-  
-That's it!  The Green Turtle runs after the document has loaded and so any registered processors will run against the document.  In this example, the Microdata triples are merged into the same graph as the RDFa.  Beware, there be dragons here!
+
+That&amp;#x27;s it!  The Green Turtle runs after the document has loaded and so any registered processors will run against the document.  In this example, the Microdata triples are merged into the same graph as the RDFa.  Beware, there be dragons here!
 
 An example of the above is [available here](https://code.google.com/p/green-turtle/source/browse/trunk/tests/microdata.html) .
 
-Now, the question remains as to what I should do with this.  I'm not a huge fan of Microdata but embracing users of Microdata and giving them a way to co-exist or transition to RDFa feels like a good idea.
+Now, the question remains as to what I should do with this.  I&amp;#x27;m not a huge fan of Microdata but embracing users of Microdata and giving them a way to co-exist or transition to RDFa feels like a good idea.
 
 The questions that need to be answered are:
 
   * Do I integrate this into Green Turtle as a standard feature?
   * Should it be enabled by default?
-  * If I don't integrated it, how should it be packaged for ease of use?
-  
-It is important to understand that there is code being duplicated.  Both `URI.js` and `RDFaGraph.js` are already packaged with Green Turtle but they are hidden from general use as to not clutter the global namespace.  As such, you unfortunately need to include them again.  As such, something needs to be done to make this easy to distribute. 
+  * If I don&amp;#x27;t integrated it, how should it be packaged for ease of use?
 
-
-
+It is important to understand that there is code being duplicated.  Both `URI.js` and `RDFaGraph.js` are already packaged with Green Turtle but they are hidden from general use as to not clutter the global namespace.  As such, you unfortunately need to include them again.  As such, something needs to be done to make this easy to distribute.
 </code></pre>
-
 </article>

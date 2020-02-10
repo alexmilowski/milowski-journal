@@ -1,12 +1,14 @@
-<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2012-04-11T11:08:29.62-07:00">
-<script type="application/json+ld">
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2012-04-11T11:08:29.620000-07:00">
+<script type="application/ld+json">
 {
 "@context" : "http://schema.org/",
-"@id" : "http://www.milowski.com/journal/entry/2012-04-11T11:08:29.62-07:00",
+"@id" : "http://www.milowski.com/journal/entry/2012-04-11T11:08:29.620000-07:00",
+"genre" : "blog",
 "headline" : "Experiments with Big Weather Data in MarkLogic - The Naive Approach",
-"datePublished" : "2012-04-11T11:08:29.62-07:00",
-"dateModified" : "2012-04-11T11:08:29.62-07:00",
-"keywords" : ["MarkLogic","big data","weather"],
+"description" : "I&#x27;ve heard over-and-over that [MarkLogic](http://www.marklogic.com/) is a fantastic XML database--you just import your documents and query away!  Given the quality of the people that I personally know at MarkLogic, I&#x27;m sure that&#x27;s true.  Still, I wanted to put that to the test.  Every database system has techniques for getting reasonable or  “blindingly fast” performance and I wanted to see how that works and at what cost.",
+"datePublished" : "2012-04-11T11:08:29.620000-07:00",
+"dateModified" : "2012-04-11T11:08:29.620000-07:00",
+"keywords" : "MarkLogic,big data,weather" ,
 "author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
 }
 </script>
@@ -14,13 +16,13 @@
 <p>I've heard over-and-over that <a href="http://www.marklogic.com/">MarkLogic</a> is a fantastic XML database--you just import your documents and query away!  Given the quality of the people that I personally know at MarkLogic, I'm sure that's true.  Still, I wanted to put that to the test.  Every database system has techniques for getting reasonable or  “blindingly fast” performance and I wanted to see how that works and at what cost.</p>
 <p>The process that receives the APRS weather reports from the <a href="http://www.wxqa.com/">CWOP</a> produces data in five minute segments stored in separate documents and from each of the three APRS-IS servers.  Each document produced is between 130K and 430K in size and contains between 450 to 1600 weather reports.  Each hour, 36 of those documents are produced.  On average, about 17MB per hour, or 12GB per month, of data is produced.</p>
 <p>The documents produced have the following structure:</p>
-<pre><code>&lt;aprs xmlns=&quot;http://weather.milowski.com/V/APRS/&quot; source=&quot;cwop.tssg.org&quot; start=&quot;2012-04-11T16:03:29Z&quot;&gt;
-&lt;report from=&quot;CW1367&quot; type=&quot;weather&quot; latitude=&quot;40.7&quot; longitude=&quot;-74.2&quot; 
-received=&quot;2012-04-11T16:03:29Z&quot; at=&quot;2012-04-13T17:12:00Z&quot; 
-wind-dir=&quot;340&quot; wind-speed=&quot;9&quot; wind-gust=&quot;14&quot; 
-temperature=&quot;53&quot; rain-hour=&quot;0&quot; rain-midnight=&quot;0&quot; humidity=&quot;40&quot; pressure=&quot;10090&quot; /&gt;
+<pre><code>&amp;lt;aprs xmlns=&amp;quot;http://weather.milowski.com/V/APRS/&amp;quot; source=&amp;quot;cwop.tssg.org&amp;quot; start=&amp;quot;2012-04-11T16:03:29Z&amp;quot;&amp;gt;
+&amp;lt;report from=&amp;quot;CW1367&amp;quot; type=&amp;quot;weather&amp;quot; latitude=&amp;quot;40.7&amp;quot; longitude=&amp;quot;-74.2&amp;quot; 
+received=&amp;quot;2012-04-11T16:03:29Z&amp;quot; at=&amp;quot;2012-04-13T17:12:00Z&amp;quot;
+wind-dir=&amp;quot;340&amp;quot; wind-speed=&amp;quot;9&amp;quot; wind-gust=&amp;quot;14&amp;quot;
+temperature=&amp;quot;53&amp;quot; rain-hour=&amp;quot;0&amp;quot; rain-midnight=&amp;quot;0&amp;quot; humidity=&amp;quot;40&amp;quot; pressure=&amp;quot;10090&amp;quot; /&amp;gt;
 ...
-&lt;/aprs&gt;
+&amp;lt;/aprs&amp;gt;
 </code></pre>
 <p>The naive approach is to just import these documents verbatim into one large collection and setup a few basic indices:</p>
 <ol>
@@ -29,40 +31,39 @@ temperature=&quot;53&quot; rain-hour=&quot;0&quot; rain-midnight=&quot;0&quot; h
 <li>a geospatial index on the attribute pair <code>s:report/@longitude</code> and <code>s:report/@latitude.</code></li>
 </ol>
 <p>My tool of choice for importing these documents is <a href="http://www.w3.org/TR/xproc">XProc</a> .  The pipeline is rather simple:</p>
-<pre><code>&lt;p:declare-step xmlns:p=&quot;http://www.w3.org/ns/xproc&quot;
-                xmlns:c=&quot;http://www.w3.org/ns/xproc-step&quot;
-                xmlns:ml=&quot;http://xmlcalabash.com/ns/extensions/marklogic&quot;
-                xmlns:s=&quot;http://weather.milowski.com/V/APRS/&quot;
-                version=&quot;1.0&quot;
-                name=&quot;insert-weather&quot;&gt;
-&lt;p:option name='xdb.user'/&gt;
-&lt;p:option name='xdb.password'/&gt;
-&lt;p:option name='xdb.host'/&gt;
-&lt;p:option name='xdb.port'/&gt;
-&lt;p:input port=&quot;source&quot;/&gt;
+<pre><code>&amp;lt;p:declare-step xmlns:p=&amp;quot;http://www.w3.org/ns/xproc&amp;quot;
+                xmlns:c=&amp;quot;http://www.w3.org/ns/xproc-step&amp;quot;
+                xmlns:ml=&amp;quot;http://xmlcalabash.com/ns/extensions/marklogic&amp;quot;
+                xmlns:s=&amp;quot;http://weather.milowski.com/V/APRS/&amp;quot;
+                version=&amp;quot;1.0&amp;quot;
+                name=&amp;quot;insert-weather&amp;quot;&amp;gt;
+&amp;lt;p:option name=&amp;#x27;xdb.user&amp;#x27;/&amp;gt;
+&amp;lt;p:option name=&amp;#x27;xdb.password&amp;#x27;/&amp;gt;
+&amp;lt;p:option name=&amp;#x27;xdb.host&amp;#x27;/&amp;gt;
+&amp;lt;p:option name=&amp;#x27;xdb.port&amp;#x27;/&amp;gt;
+&amp;lt;p:input port=&amp;quot;source&amp;quot;/&amp;gt;
 
-&lt;p:import href=&quot;http://xmlcalabash.com/extension/steps/library-1.0.xpl&quot;/&gt;
+&amp;lt;p:import href=&amp;quot;http://xmlcalabash.com/extension/steps/library-1.0.xpl&amp;quot;/&amp;gt;
 
-&lt;p:delete match=&quot;/s:aprs/s:report[@type='encoded']&quot;/&gt;
+&amp;lt;p:delete match=&amp;quot;/s:aprs/s:report[@type=&amp;#x27;encoded&amp;#x27;]&amp;quot;/&amp;gt;
 
-&lt;p:delete match=&quot;/s:aprs/s:report[@error]&quot;/&gt;
+&amp;lt;p:delete match=&amp;quot;/s:aprs/s:report[@error]&amp;quot;/&amp;gt;
 
-&lt;ml:insert-document name=&quot;insert&quot; collections=&quot;http://weather.milowski.com/weather/&quot;&gt;
+&amp;lt;ml:insert-document name=&amp;quot;insert&amp;quot; collections=&amp;quot;http://weather.milowski.com/weather/&amp;quot;&amp;gt;
 </code></pre>
-<pre><code>   &lt;p:with-option name='user' select='$xdb.user'/&gt;
-   &lt;p:with-option name='password' select='$xdb.password'/&gt;
-   &lt;p:with-option name='host' select='$xdb.host'/&gt;
-   &lt;p:with-option name='port' select='$xdb.port'/&gt;
-   &lt;p:with-option name=&quot;uri&quot; 
-                  select=&quot;concat('http://weather.milowski.com/',/s:report/@source,'-',/s:report/@start,'.xml')&quot;/&gt;
+<pre><code>   &amp;lt;p:with-option name=&amp;#x27;user&amp;#x27; select=&amp;#x27;$xdb.user&amp;#x27;/&amp;gt;
+   &amp;lt;p:with-option name=&amp;#x27;password&amp;#x27; select=&amp;#x27;$xdb.password&amp;#x27;/&amp;gt;
+   &amp;lt;p:with-option name=&amp;#x27;host&amp;#x27; select=&amp;#x27;$xdb.host&amp;#x27;/&amp;gt;
+   &amp;lt;p:with-option name=&amp;#x27;port&amp;#x27; select=&amp;#x27;$xdb.port&amp;#x27;/&amp;gt;
+   &amp;lt;p:with-option name=&amp;quot;uri&amp;quot; 
+                  select=&amp;quot;concat(&amp;#x27;http://weather.milowski.com/&amp;#x27;,/s:report/@source,&amp;#x27;-&amp;#x27;,/s:report/@start,&amp;#x27;.xml&amp;#x27;)&amp;quot;/&amp;gt;
 </code></pre>
-<pre><code>&lt;/ml:insert-document&gt;
+<pre><code>&amp;lt;/ml:insert-document&amp;gt;
 
 </code></pre>
-<pre><code>&lt;/p:declare-step&gt;
+<pre><code>&amp;lt;/p:declare-step&amp;gt;
 </code></pre>
 <p>You'll notice that I decided to remove errors and encoded data from the original source.  Errors are reports I couldn't parse according the APRS rules and encoded data are non-standard encodings of weather data.  These turn out to be very small percentages of the actual received data.  That is, almost everyone is producing data correctly by the standardize set of rules.</p>
 <p>To apply that pipeline over and over again to the documents, I wrote a little daemon process that uses <a href="http://xmlcalabash.com/">Calabash's</a> API to run the pipeline.  The daemon waits for the files to show up in a particular directory, applies the pipeline to documents it discovers, and then moves them to an archive directory.  That allows me to re-process them in the future if I change my mind--which I did.</p>
 <p>A bit of foreshadowing never hurts.  I'll post more on the results of this later.  I've got some queries to write.</p>
-
 </article>

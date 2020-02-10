@@ -1,12 +1,14 @@
-<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2012-06-22T12:40:27.494-07:00">
-<script type="application/json+ld">
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2012-06-22T12:40:27.494000-07:00">
+<script type="application/ld+json">
 {
 "@context" : "http://schema.org/",
-"@id" : "http://www.milowski.com/journal/entry/2012-06-22T12:40:27.494-07:00",
+"@id" : "http://www.milowski.com/journal/entry/2012-06-22T12:40:27.494000-07:00",
+"genre" : "blog",
 "headline" : "Disk Space is Important!",
-"datePublished" : "2012-06-22T12:40:27.494-07:00",
-"dateModified" : "2012-06-22T12:40:27.494-07:00",
-"keywords" : ["MarkLogic","AWS","EBS"],
+"description" : "Sometimes you learn interesting things under duress, reaffirm things you already know, and pay for not doing it right the first time.",
+"datePublished" : "2012-06-22T12:40:27.494000-07:00",
+"dateModified" : "2012-06-22T12:40:27.494000-07:00",
+"keywords" : "MarkLogic,AWS,EBS" ,
 "author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
 }
 </script>
@@ -27,5 +29,4 @@
 <p>I don't know exactly why the system went down as the system logs just stop.  I do know that MarkLogic was complaining with critical errors about not having enough disk space to merge.  Keep in mind that new content was continuously streaming in and so the problem was getting worse and worse.  In the end, if I had to guess, I believe the OS just ran into some wall (like very low memory) and froze.  When I rebooted it via the AWS console, it trashed the filesystem because the disks weren't sync'd.</p>
 <p>My website is easy to backup and I'll do that more often now.  The weather database is tricky because of its size.  I'm looking into using automatic EBS snapshots by taking the database and filesystem offline for a moment.  I can always re-create the weather database from scratch if I really need to do so as I have the raw XML source files but that would take quite awhile to do.</p>
 <p>In the end, I was very lucky.</p>
-
 </article>

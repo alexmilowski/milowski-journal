@@ -1,42 +1,44 @@
-<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2012-09-21T22:03:43.72Z">
-<script type="application/json+ld">
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2012-09-21T22:03:43.720000+00:00">
+<script type="application/ld+json">
 {
 "@context" : "http://schema.org/",
-"@id" : "http://www.milowski.com/journal/entry/2012-09-21T22:03:43.72Z",
+"@id" : "http://www.milowski.com/journal/entry/2012-09-21T22:03:43.720000+00:00",
+"genre" : "blog",
 "headline" : "A Clarification for RDFa in the Browser",
-"datePublished" : "2012-09-21T22:03:43.72Z",
-"dateModified" : "2012-09-21T22:03:43.72Z",
-"keywords" : ["RDFa","javascript","browser"],
+"description" : "On [International Talk Like a Pirate Day](http://www.talklikeapirate.com) , September 19th, I happen to post my [&lt;cite&gt;RDFa in the Browser&lt;/cite&gt;](http://www.milowski.com/journal/entry/2012-09-19T15:38:11.827Z/) entry about using [Green Turtle](http://code.google.com/p/green-turtle/) .  I have received some feedback about my use of  “typed links” when demonstrating RDFa in action.",
+"datePublished" : "2012-09-21T22:03:43.720000+00:00",
+"dateModified" : "2012-09-21T22:03:43.720000+00:00",
+"keywords" : "RDFa,javascript,browser" ,
 "author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
 }
 </script>
 <h1>A Clarification for RDFa in the Browser</h1>
-<p>On <a href="http://www.talklikeapirate.com">International Talk Like a Pirate Day</a> , September 19th, I happen to post my <a href="http://www.milowski.com/journal/entry/2012-09-19T15:38:11.827Z/"><cite>RDFa in the Browser</cite></a> entry about using <a href="http://code.google.com/p/green-turtle/">Green Turtle</a> .  I have received some feedback about my use of  “typed links” when demonstrating RDFa in action.</p>
+<p>On <a href="http://www.talklikeapirate.com">International Talk Like a Pirate Day</a> , September 19th, I happen to post my <a href="http://www.milowski.com/journal/entry/2012-09-19T15:38:11.827Z/">&lt;cite&gt;RDFa in the Browser&lt;/cite&gt;</a> entry about using <a href="http://code.google.com/p/green-turtle/">Green Turtle</a> .  I have received some feedback about my use of  “typed links” when demonstrating RDFa in action.</p>
 <p>The content in question was this:</p>
 <pre><code>
-&lt;a href=&quot;http://www.milowski.com/#alex&quot; typeof=&quot;http://example.org/PersonRef&quot;&gt;Alex Milowski&lt;/a&gt;
+&amp;lt;a href=&amp;quot;http://www.milowski.com/#alex&amp;quot; typeof=&amp;quot;http://example.org/PersonRef&amp;quot;&amp;gt;Alex Milowski&amp;lt;/a&amp;gt;
 
 </code></pre>
 <p>The clarification is simple:</p>
 <p>Now, the code was a bit terse and used a shortcut as the subject and the <code>href</code> property of the anchor element are the same.  This code could be expanded for clarity as such:</p>
 <pre><code>
 // 1. Get the anchor element(s) by type
-var links = document.getElementsByType(&quot;http://example.org/PersonRef&quot;);
+var links = document.getElementsByType(&amp;quot;http://example.org/PersonRef&amp;quot;);
 
-// 2. Since there are possibly more than one, we'll loop:
-for (var i=0; i&lt;links.length; i++) {
+// 2. Since there are possibly more than one, we&amp;#x27;ll loop:
+for (var i=0; i&amp;lt;links.length; i++) {
 
-   // Change the click link behavior 
+   // Change the click link behavior
    links[i].onclick = function() {
 
       // this.data.id holds the subject which is the same as this.href
 
       // Get the property values from the RDFa graph
-      var alumniOf = document.data.getValues(this.data.id,&quot;http://schema.org/alumniOf&quot;);
-      var affiliation = document.data.getValues(this.data.id,&quot;http://schema.org/affiliation&quot;);
+      var alumniOf = document.data.getValues(this.data.id,&amp;quot;http://schema.org/alumniOf&amp;quot;);
+      var affiliation = document.data.getValues(this.data.id,&amp;quot;http://schema.org/affiliation&amp;quot;);
 
       // Do something with them!
-      alert(&quot;Currently at &quot;+affiliation+&quot;, alumni of &quot;+alumniOf);
+      alert(&amp;quot;Currently at &amp;quot;+affiliation+&amp;quot;, alumni of &amp;quot;+alumniOf);
       return false;
   }
 
@@ -44,44 +46,40 @@ for (var i=0; i&lt;links.length; i++) {
 
 </code></pre>
 <p>Here it is in action, again:</p>
-<div class="verbatim">
-<blockquote>
-<a href="http://www.milowski.com/#alex" typeof="http://example.org/PersonRef">Alex Milowski</a>
-</blockquote>
-<div resource="http://www.milowski.com/#alex" style="display: none" typeof="Person" vocab="http://schema.org/">
-<span property="email">alex@milowski.com</span>, 
-<span property="alumniOf">University of Minnesota</span>, 
-<span property="alumniOf">San Francisco State University</span>, 
-<span property="affiliation">University of Edinburgh</span>
-</div>
-</div>
-<script type="text/javascript">
-document.addEventListener(&quot;rdfa.loaded&quot;,
+<p>&lt;div class=&quot;verbatim&quot;&gt;
+&lt;blockquote&gt;
+&lt;a href=&quot;http://www.milowski.com/#alex&quot; typeof=&quot;http://example.org/PersonRef&quot;&gt;Alex Milowski&lt;/a&gt;
+&lt;/blockquote&gt;
+&lt;div resource=&quot;http://www.milowski.com/#alex&quot; style=&quot;display: none&quot; typeof=&quot;Person&quot; vocab=&quot;http://schema.org/&quot;&gt;
+&lt;span property=&quot;email&quot;&gt;alex@milowski.com&lt;/span&gt;,
+&lt;span property=&quot;alumniOf&quot;&gt;University of Minnesota&lt;/span&gt;,
+&lt;span property=&quot;alumniOf&quot;&gt;San Francisco State University&lt;/span&gt;,
+&lt;span property=&quot;affiliation&quot;&gt;University of Edinburgh&lt;/span&gt;
+&lt;/div&gt;
+&lt;/div&gt;</p>
+<p>&lt;script type=&quot;text/javascript&quot;&gt;
+document.addEventListener(&amp;quot;rdfa.loaded&amp;quot;,
 function() {
 // 1. Get the anchor element(s) by type
-var links = document.getElementsByType(&quot;http://example.org/PersonRef&quot;);
+var links = document.getElementsByType(&amp;quot;http://example.org/PersonRef&amp;quot;);</p>
+<p>// 2. Since there are possibly more than one, we'll loop:
+for (var i=0; i&amp;lt;links.length; i++) {</p>
+<p>// Change the click link behavior
+links[i].onclick = function() {</p>
+<pre><code>  // this.data.id holds the subject which is the same as this.href
 
-// 2. Since there are possibly more than one, we'll loop:
-for (var i=0; i&lt;links.length; i++) {
+  // Get the property values from the RDFa graph
+  var alumniOf = document.data.getValues(this.data.id,&amp;amp;quot;http://schema.org/alumniOf&amp;amp;quot;);
+  var affiliation = document.data.getValues(this.data.id,&amp;amp;quot;http://schema.org/affiliation&amp;amp;quot;);
 
-   // Change the click link behavior 
-   links[i].onclick = function() {
-
-      // this.data.id holds the subject which is the same as this.href
-
-      // Get the property values from the RDFa graph
-      var alumniOf = document.data.getValues(this.data.id,&quot;http://schema.org/alumniOf&quot;);
-      var affiliation = document.data.getValues(this.data.id,&quot;http://schema.org/affiliation&quot;);
-
-      // Do something with them!
-      alert(&quot;Currently at &quot;+affiliation+&quot;, alumni of &quot;+alumniOf.join(&quot;, &quot;));
-      return false;
-  }
-
-}
+  // Do something with them!
+  alert(&amp;amp;quot;Currently at &amp;amp;quot;+affiliation+&amp;amp;quot;, alumni of &amp;amp;quot;+alumniOf.join(&amp;amp;quot;, &amp;amp;quot;));
+  return false;
+</code></pre>
+<p>}</p>
+<p>}
 },false);
-</script>
+&lt;/script&gt;</p>
 <p>The point here is that you can go back and forth between the triples graph generated by RDFa annotations and elements in the document.  In this example, I'm using the graph to find elements for which I want to modify behavior and then using the graph again to get additional information from elsewhere in the document (i.e. the alumni and affiliation encoded in a div somewhere on the page).</p>
 <p>At minimum, I think this is a neat and useful technique.</p>
-
 </article>

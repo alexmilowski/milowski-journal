@@ -1,12 +1,14 @@
-<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2014-05-22T03:54:51.218Z">
-<script type="application/json+ld">
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2014-05-22T03:54:51.218000+00:00">
+<script type="application/ld+json">
 {
 "@context" : "http://schema.org/",
-"@id" : "http://www.milowski.com/journal/entry/2014-05-22T03:54:51.218Z",
+"@id" : "http://www.milowski.com/journal/entry/2014-05-22T03:54:51.218000+00:00",
+"genre" : "blog",
 "headline" : "XProclet Released",
-"datePublished" : "2014-05-22T03:54:51.218Z",
-"dateModified" : "2014-05-22T03:54:51.218Z",
-"keywords" : ["XProc","Restlet","web","github"],
+"description" : "## What is it?",
+"datePublished" : "2014-05-22T03:54:51.218000+00:00",
+"dateModified" : "2014-05-22T03:54:51.218000+00:00",
+"keywords" : "XProc,Restlet,web,github" ,
 "author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
 }
 </script>
@@ -18,39 +20,43 @@
 <p>It was a bit messy and dependent on too many things within the Atomojo project. I recently cleaned it up, refactored it a bit, and put it up on Github!</p>
 <h2>The Lowdown</h2>
 <ul>
-<li>XProclet is a full Web server that relies on Restlet.  You can use any server implementation from Restlet that you desire but I package the Jetty embedded server.</li>
-</ul>
-<ul>
-<li>You can run XProc directly by just associated a URI path with your XProc pipeline:</li>
+<li>
+<p>XProclet is a full Web server that relies on Restlet.  You can use any server implementation from Restlet that you desire but I package the Jetty embedded server.</p>
+</li>
+<li>
+<p>You can run XProc directly by just associated a URI path with your XProc pipeline:</p>
+</li>
 </ul>
 <pre><code>
-&lt;route match=&quot;/make-it-go&quot; ref=&quot;xproc&quot;&gt;
-   &lt;parameter name=&quot;xproc.href&quot; href=&quot;go.xpl&quot;/&gt;
-&lt;/route&gt;
-             
+&amp;lt;route match=&amp;quot;/make-it-go&amp;quot; ref=&amp;quot;xproc&amp;quot;&amp;gt;
+   &amp;lt;parameter name=&amp;quot;xproc.href&amp;quot; href=&amp;quot;go.xpl&amp;quot;/&amp;gt;
+&amp;lt;/route&amp;gt;
+
 </code></pre>
 <ul>
 <li>If you want to get more complicated and handle different methods with different pipelines, you can:</li>
 </ul>
 <pre><code>
-&lt;route match=&quot;/&quot; ref=&quot;xproclet&quot;&gt;
-   &lt;attribute name=&quot;xproc.configuration&quot;&gt;
-      &lt;xproc:method name=&quot;HEAD&quot; href=&quot;head.xpl&quot; bind-output=&quot;true&quot;/&gt;
-      &lt;xproc:method name=&quot;GET&quot; href=&quot;get.xpl&quot;/&gt;
-      &lt;xproc:method name=&quot;PUT&quot; href=&quot;echo.xpl&quot;/&gt;
-      &lt;xproc:method name=&quot;POST&quot; href=&quot;echo.xpl&quot;/&gt;
-   &lt;/attribute&gt;
-&lt;/route&gt;               
-            
+&amp;lt;route match=&amp;quot;/&amp;quot; ref=&amp;quot;xproclet&amp;quot;&amp;gt;
+   &amp;lt;attribute name=&amp;quot;xproc.configuration&amp;quot;&amp;gt;
+      &amp;lt;xproc:method name=&amp;quot;HEAD&amp;quot; href=&amp;quot;head.xpl&amp;quot; bind-output=&amp;quot;true&amp;quot;/&amp;gt;
+      &amp;lt;xproc:method name=&amp;quot;GET&amp;quot; href=&amp;quot;get.xpl&amp;quot;/&amp;gt;
+      &amp;lt;xproc:method name=&amp;quot;PUT&amp;quot; href=&amp;quot;echo.xpl&amp;quot;/&amp;gt;
+      &amp;lt;xproc:method name=&amp;quot;POST&amp;quot; href=&amp;quot;echo.xpl&amp;quot;/&amp;gt;
+   &amp;lt;/attribute&amp;gt;
+&amp;lt;/route&amp;gt;               
+
 </code></pre>
 <ul>
-<li>You can do all the things you normally would with the server: host content, route requests, redirects, etc.</li>
-</ul>
-<ul>
-<li>It is really easy to write Restlet code and have it run side-by-side with your XProc.</li>
-</ul>
-<ul>
-<li>You can take full advantage of Restlet's router, guard, filter, and resource architecture but with an XML syntax.</li>
+<li>
+<p>You can do all the things you normally would with the server: host content, route requests, redirects, etc.</p>
+</li>
+<li>
+<p>It is really easy to write Restlet code and have it run side-by-side with your XProc.</p>
+</li>
+<li>
+<p>You can take full advantage of Restlet's router, guard, filter, and resource architecture but with an XML syntax.</p>
+</li>
 </ul>
 <h2>Get it on Github</h2>
 <p>The project is at <a href="https://github.com/alexmilowski/xproclet">alexmilowski / xproclet</a> .</p>
@@ -67,5 +73,4 @@
 <li>There is an AtomPub implementation that stores content on <a href="http://www.marklogic.com/">MarkLogic</a> .</li>
 </ol>
 <p>Try it out and tell me what you think.</p>
-
 </article>

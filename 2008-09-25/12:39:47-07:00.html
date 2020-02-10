@@ -1,11 +1,14 @@
 <article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2008-09-25T12:39:47-07:00">
-<script type="application/json+ld">
+<script type="application/ld+json">
 {
 "@context" : "http://schema.org/",
 "@id" : "http://www.milowski.com/journal/entry/2008-09-25T12:39:47-07:00",
+"genre" : "blog",
 "headline" : "Restlet is Awesome!",
+"description" : "[Restlet](http://www.restlet.org) is really an amazing project.  It is so easy to create a REST-oriented service.",
 "datePublished" : "2008-09-25T12:39:47-07:00",
 "dateModified" : "2008-09-25T12:39:47-07:00",
+"keywords" : "" ,
 "author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
 }
 </script>
@@ -20,23 +23,22 @@
    public Restlet createRoot() {
        Router router = new Router(getContext());
 
-       router.attach(&quot;/hello&quot;,new Restlet(getContext()) {
+       router.attach(&amp;quot;/hello&amp;quot;,new Restlet(getContext()) {
            public void handle(Request request, Response response) {
                 response.setStatus(Status.SUCCESS_OK);
-                response.setEntity(new StringRepresentation(&quot;Hello World!&quot;,MediaType.TEXT_PLAIN);
+                response.setEntity(new StringRepresentation(&amp;quot;Hello World!&amp;quot;,MediaType.TEXT_PLAIN);
            }
        });
 
-       router.attach(&quot;/goodbye&quot;,new Restlet(getContext()) {
+       router.attach(&amp;quot;/goodbye&amp;quot;,new Restlet(getContext()) {
            public void handle(Request request, Response response) {
                 response.setStatus(Status.SUCCESS_OK);
-                response.setEntity(new StringRepresentation(&quot;Goodbye Cruel World!&quot;,MediaType.TEXT_PLAIN);
+                response.setEntity(new StringRepresentation(&amp;quot;Goodbye Cruel World!&amp;quot;,MediaType.TEXT_PLAIN);
            }
-       });       return router; 
+       });       return router;
    }
 }
 </code></pre>
 <p>Here we have an application that responds to two resource paths: &quot;/hello&quot; and &quot;/goodbye&quot;.  Each is is associated by attaching a &quot;restlet&quot; to a router.</p>
 <p>Now, we could get more complicated and handle the requests more elegantly, but the above demonstrates how easy it is to route requests to instances that can handle them.</p>
-
 </article>

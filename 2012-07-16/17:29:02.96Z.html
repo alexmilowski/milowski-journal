@@ -1,12 +1,14 @@
-<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2012-07-16T17:29:02.96Z">
-<script type="application/json+ld">
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2012-07-16T17:29:02.960000+00:00">
+<script type="application/ld+json">
 {
 "@context" : "http://schema.org/",
-"@id" : "http://www.milowski.com/journal/entry/2012-07-16T17:29:02.96Z",
+"@id" : "http://www.milowski.com/journal/entry/2012-07-16T17:29:02.960000+00:00",
+"genre" : "blog",
 "headline" : "Experiments with Big Weather Data in MarkLogic - Right-sizing and Indexing",
-"datePublished" : "2012-07-16T17:29:02.96Z",
-"dateModified" : "2012-07-16T17:29:02.96Z",
-"keywords" : ["MarkLogic","big data","weather"],
+"description" : "A lot has happened since my last update on my  “big data” weather experiment with [MarkLogic](http://www.marklogic.com/) .  I&#x27;ve been through a server crash, low memory trouble, reloaded my database, calculated the actual server requirements, and migrated to a new server.   In summary:  “Whew!  That was a lot of work and hair pulling.”",
+"datePublished" : "2012-07-16T17:29:02.960000+00:00",
+"dateModified" : "2012-07-16T17:29:02.960000+00:00",
+"keywords" : "MarkLogic,big data,weather" ,
 "author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
 }
 </script>
@@ -20,27 +22,27 @@
 <pre><code>
 sum(
    for $s in cts:search(
-        collection(&quot;http://.../stations/&quot;), 
+        collection(&amp;quot;http://.../stations/&amp;quot;),
         cts:element-attribute-pair-geospatial-query(
-            xs:QName(&quot;s:station&quot;), QName(&quot;&quot;,&quot;latitude&quot;), QName(&quot;&quot;,&quot;longitude&quot;),
+            xs:QName(&amp;quot;s:station&amp;quot;), QName(&amp;quot;&amp;quot;,&amp;quot;latitude&amp;quot;), QName(&amp;quot;&amp;quot;,&amp;quot;longitude&amp;quot;),
             $quad) )
        return xdmp:estimate(
-            collection(concat(&quot;http://.../weather/&quot;,$s/s:station/@id))
-            /s:report[@received&gt;=$dtstart and @received&lt;=$dtend]))
+            collection(concat(&amp;quot;http://.../weather/&amp;quot;,$s/s:station/@id))
+            /s:report[@received&amp;gt;=$dtstart and @received&amp;lt;=$dtend]))
 
 </code></pre>
 <p>As an experiment, I added back the geospatial index on all the weather reports and waited for the re-index to complete.  This time the re-index completed in a rational amount of time.  The result was what I expected (i.e. faster, same as before) and the query is listed below.</p>
 <pre><code>
 xdmp:estimate(
    cts:search(
-       collection(&quot;http://.../weather/&quot;)/s:report,
+       collection(&amp;quot;http://.../weather/&amp;quot;)/s:report,
            cts:and-query(
                (cts:element-attribute-range-query(
-                    xs:QName(&quot;s:report&quot;), QName(&quot;&quot;,&quot;received&quot;),&quot;&gt;=&quot;,$dtstart),
+                    xs:QName(&amp;quot;s:report&amp;quot;), QName(&amp;quot;&amp;quot;,&amp;quot;received&amp;quot;),&amp;quot;&amp;gt;=&amp;quot;,$dtstart),
                 cts:element-attribute-range-query(
-                    xs:QName(&quot;s:report&quot;), QName(&quot;&quot;,&quot;received&quot;),&quot;&lt;=&quot;,$dtend),
+                    xs:QName(&amp;quot;s:report&amp;quot;), QName(&amp;quot;&amp;quot;,&amp;quot;received&amp;quot;),&amp;quot;&amp;lt;=&amp;quot;,$dtend),
                 cts:element-attribute-pair-geospatial-query(
-                    xs:QName(&quot;s:report&quot;), QName(&quot;&quot;,&quot;latitude&quot;), QName(&quot;&quot;,&quot;longitude&quot;), 
+                    xs:QName(&amp;quot;s:report&amp;quot;), QName(&amp;quot;&amp;quot;,&amp;quot;latitude&amp;quot;), QName(&amp;quot;&amp;quot;,&amp;quot;longitude&amp;quot;),
                     $quad) ) )))
 
 </code></pre>
@@ -50,5 +52,4 @@ xdmp:estimate(
 <p>The result was fantastic.  The cost of the most expensive reports all the way through to page generation has dropped to less than two seconds.  That includes the latency from my browser, on my desktop, through my OK network connection to Amazon AWS's us-east-1c availability zone.</p>
 <p>The result is that I know that I can store at least one month of data without penalty on this system.  I'm going to be tracking the cost increases and any change in performance over the next few weeks.  Ultimately, I want a cluster plan for how big each forest is allowed to get and how many EC2 instances, EBS volumes, etc. I'll need to support that.</p>
 <p>Right now, I'm just a happy MarkLogic camper.</p>
-
 </article>

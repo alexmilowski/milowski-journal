@@ -1,12 +1,14 @@
-<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2014-05-04T06:36:35.389Z">
-<script type="application/json+ld">
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2014-05-04T06:36:35.389000+00:00">
+<script type="application/ld+json">
 {
 "@context" : "http://schema.org/",
-"@id" : "http://www.milowski.com/journal/entry/2014-05-04T06:36:35.389Z",
+"@id" : "http://www.milowski.com/journal/entry/2014-05-04T06:36:35.389000+00:00",
+"genre" : "blog",
 "headline" : "XProc to the Rescue: Restoring AtomPub",
-"datePublished" : "2014-05-04T06:36:35.389Z",
-"dateModified" : "2014-05-04T06:36:35.389Z",
-"keywords" : ["XProc","atom","atompub"],
+"description" : "## Restoring AtomPub via XProc",
+"datePublished" : "2014-05-04T06:36:35.389000+00:00",
+"dateModified" : "2014-05-04T06:36:35.389000+00:00",
+"keywords" : "XProc,atom,atompub" ,
 "author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
 }
 </script>
@@ -28,112 +30,111 @@
 </ul>
 <p>The XProc looks like this:</p>
 <pre><code>
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;p:declare-step xmlns:p=&quot;http://www.w3.org/ns/xproc&quot;
-    xmlns:c=&quot;http://www.w3.org/ns/xproc-step&quot; version=&quot;1.0&quot;
-    xmlns:app=&quot;http://www.w3.org/2007/app&quot; xmlns:atom=&quot;http://www.w3.org/2005/Atom&quot;
-   name=&quot;restore&quot;&gt;
-   &lt;p:input port=&quot;source&quot; primary=&quot;true&quot;/&gt;
-   &lt;p:output port=&quot;result&quot; primary=&quot;true&quot;/&gt;
-   &lt;p:option name=&quot;target&quot;/&gt;
-   &lt;p:option name=&quot;token&quot;/&gt;
-   &lt;!-- get the target service document --&gt;
-   &lt;p:template&gt;
-      &lt;p:with-param name=&quot;token&quot; select=&quot;$token&quot;/&gt;
-      &lt;p:with-param name=&quot;target&quot; select=&quot;$target&quot;/&gt;
-      &lt;p:input port=&quot;source&quot;&gt;&lt;p:empty/&gt;&lt;/p:input&gt;
-      &lt;p:input port=&quot;template&quot;&gt;
-         &lt;p:inline&gt;
-            &lt;c:request method=&quot;GET&quot; href=&quot;{$target}&quot;&gt;
-               &lt;c:header name=&quot;Authorization&quot; value=&quot;Bearer {$token}&quot;/&gt;
-            &lt;/c:request&gt;
-         &lt;/p:inline&gt;
-      &lt;/p:input&gt;
-   &lt;/p:template&gt;
-   &lt;p:http-request/&gt;
-   
-   &lt;p:group&gt;
-      &lt;!-- get the URI for creating collections --&gt;
-      &lt;p:variable name=&quot;target-collections&quot; select=&quot;resolve-uri(/app:service/app:workspace/@href,$target)&quot;/&gt;
-      
-      &lt;!-- viewport over the collections in the source service --&gt;
-      &lt;p:viewport match=&quot;app:collection&quot;&gt;
-         &lt;p:viewport-source&gt;
-            &lt;p:pipe step=&quot;restore&quot; port=&quot;source&quot;/&gt;
-         &lt;/p:viewport-source&gt;
-         &lt;p:variable name=&quot;slug&quot; select=&quot;substring-after(substring-before(/app:collection/@href,'/__index__.atom'),'/')&quot;/&gt;
-         &lt;p:load&gt;
-            &lt;p:with-option name=&quot;href&quot; select=&quot;resolve-uri(/app:collection/@href,base-uri(/app:collection))&quot;/&gt;
-         &lt;/p:load&gt;
-         &lt;p:xslt&gt;
-            &lt;p:input port=&quot;stylesheet&quot;&gt;&lt;p:document href=&quot;restore.xsl&quot;/&gt;&lt;/p:input&gt;
-            &lt;p:with-param name=&quot;target-collections&quot; select=&quot;$target-collections&quot;/&gt;
-            &lt;p:with-param name=&quot;collection&quot; select=&quot;$target-collections&quot;/&gt;
-            &lt;p:with-param name=&quot;slug&quot; select=&quot;$slug&quot;/&gt;
-            &lt;p:with-param name=&quot;token&quot; select=&quot;$token&quot;/&gt;
-         &lt;/p:xslt&gt;
-         &lt;p:viewport match=&quot;c:request&quot;&gt;
-            &lt;p:http-request/&gt;
-         &lt;/p:viewport&gt;
-      &lt;/p:viewport&gt;
-   &lt;/p:group&gt;
-&lt;/p:declare-step&gt;         
-      
+&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;
+&amp;lt;p:declare-step xmlns:p=&amp;quot;http://www.w3.org/ns/xproc&amp;quot;
+    xmlns:c=&amp;quot;http://www.w3.org/ns/xproc-step&amp;quot; version=&amp;quot;1.0&amp;quot;
+    xmlns:app=&amp;quot;http://www.w3.org/2007/app&amp;quot; xmlns:atom=&amp;quot;http://www.w3.org/2005/Atom&amp;quot;
+   name=&amp;quot;restore&amp;quot;&amp;gt;
+   &amp;lt;p:input port=&amp;quot;source&amp;quot; primary=&amp;quot;true&amp;quot;/&amp;gt;
+   &amp;lt;p:output port=&amp;quot;result&amp;quot; primary=&amp;quot;true&amp;quot;/&amp;gt;
+   &amp;lt;p:option name=&amp;quot;target&amp;quot;/&amp;gt;
+   &amp;lt;p:option name=&amp;quot;token&amp;quot;/&amp;gt;
+   &amp;lt;!-- get the target service document --&amp;gt;
+   &amp;lt;p:template&amp;gt;
+      &amp;lt;p:with-param name=&amp;quot;token&amp;quot; select=&amp;quot;$token&amp;quot;/&amp;gt;
+      &amp;lt;p:with-param name=&amp;quot;target&amp;quot; select=&amp;quot;$target&amp;quot;/&amp;gt;
+      &amp;lt;p:input port=&amp;quot;source&amp;quot;&amp;gt;&amp;lt;p:empty/&amp;gt;&amp;lt;/p:input&amp;gt;
+      &amp;lt;p:input port=&amp;quot;template&amp;quot;&amp;gt;
+         &amp;lt;p:inline&amp;gt;
+            &amp;lt;c:request method=&amp;quot;GET&amp;quot; href=&amp;quot;{$target}&amp;quot;&amp;gt;
+               &amp;lt;c:header name=&amp;quot;Authorization&amp;quot; value=&amp;quot;Bearer {$token}&amp;quot;/&amp;gt;
+            &amp;lt;/c:request&amp;gt;
+         &amp;lt;/p:inline&amp;gt;
+      &amp;lt;/p:input&amp;gt;
+   &amp;lt;/p:template&amp;gt;
+   &amp;lt;p:http-request/&amp;gt;
+
+   &amp;lt;p:group&amp;gt;
+      &amp;lt;!-- get the URI for creating collections --&amp;gt;
+      &amp;lt;p:variable name=&amp;quot;target-collections&amp;quot; select=&amp;quot;resolve-uri(/app:service/app:workspace/@href,$target)&amp;quot;/&amp;gt;
+
+      &amp;lt;!-- viewport over the collections in the source service --&amp;gt;
+      &amp;lt;p:viewport match=&amp;quot;app:collection&amp;quot;&amp;gt;
+         &amp;lt;p:viewport-source&amp;gt;
+            &amp;lt;p:pipe step=&amp;quot;restore&amp;quot; port=&amp;quot;source&amp;quot;/&amp;gt;
+         &amp;lt;/p:viewport-source&amp;gt;
+         &amp;lt;p:variable name=&amp;quot;slug&amp;quot; select=&amp;quot;substring-after(substring-before(/app:collection/@href,&amp;#x27;/__index__.atom&amp;#x27;),&amp;#x27;/&amp;#x27;)&amp;quot;/&amp;gt;
+         &amp;lt;p:load&amp;gt;
+            &amp;lt;p:with-option name=&amp;quot;href&amp;quot; select=&amp;quot;resolve-uri(/app:collection/@href,base-uri(/app:collection))&amp;quot;/&amp;gt;
+         &amp;lt;/p:load&amp;gt;
+         &amp;lt;p:xslt&amp;gt;
+            &amp;lt;p:input port=&amp;quot;stylesheet&amp;quot;&amp;gt;&amp;lt;p:document href=&amp;quot;restore.xsl&amp;quot;/&amp;gt;&amp;lt;/p:input&amp;gt;
+            &amp;lt;p:with-param name=&amp;quot;target-collections&amp;quot; select=&amp;quot;$target-collections&amp;quot;/&amp;gt;
+            &amp;lt;p:with-param name=&amp;quot;collection&amp;quot; select=&amp;quot;$target-collections&amp;quot;/&amp;gt;
+            &amp;lt;p:with-param name=&amp;quot;slug&amp;quot; select=&amp;quot;$slug&amp;quot;/&amp;gt;
+            &amp;lt;p:with-param name=&amp;quot;token&amp;quot; select=&amp;quot;$token&amp;quot;/&amp;gt;
+         &amp;lt;/p:xslt&amp;gt;
+         &amp;lt;p:viewport match=&amp;quot;c:request&amp;quot;&amp;gt;
+            &amp;lt;p:http-request/&amp;gt;
+         &amp;lt;/p:viewport&amp;gt;
+      &amp;lt;/p:viewport&amp;gt;
+   &amp;lt;/p:group&amp;gt;
+&amp;lt;/p:declare-step&amp;gt;         
+
 </code></pre>
 <p>The referenced XSLT is fairly simple:</p>
 <pre><code>
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;
-   xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;
-   exclude-result-prefixes=&quot;xs&quot;
-   version=&quot;2.0&quot;
-   xmlns:c=&quot;http://www.w3.org/ns/xproc-step&quot;
-   xmlns:app=&quot;http://www.w3.org/2007/app&quot;
-   xmlns:atom=&quot;http://www.w3.org/2005/Atom&quot;&gt;
+&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;
+&amp;lt;xsl:stylesheet xmlns:xsl=&amp;quot;http://www.w3.org/1999/XSL/Transform&amp;quot;
+   xmlns:xs=&amp;quot;http://www.w3.org/2001/XMLSchema&amp;quot;
+   exclude-result-prefixes=&amp;quot;xs&amp;quot;
+   version=&amp;quot;2.0&amp;quot;
+   xmlns:c=&amp;quot;http://www.w3.org/ns/xproc-step&amp;quot;
+   xmlns:app=&amp;quot;http://www.w3.org/2007/app&amp;quot;
+   xmlns:atom=&amp;quot;http://www.w3.org/2005/Atom&amp;quot;&amp;gt;
 
-&lt;xsl:param name=&quot;target-collections&quot;/&gt;
-&lt;xsl:param name=&quot;token&quot;/&gt;
-&lt;xsl:param name=&quot;slug&quot;/&gt;
-   
-&lt;xsl:template match=&quot;atom:feed&quot;&gt;
-   &lt;atom:feed&gt;
-   &lt;c:request method=&quot;POST&quot; href=&quot;{$target-collections}&quot; status-only=&quot;true&quot; detailed=&quot;true&quot;&gt;
-      &lt;c:header name=&quot;Authorization&quot; value=&quot;Bearer {$token}&quot;/&gt;
-      &lt;c:header name=&quot;Slug&quot; value=&quot;{$slug}&quot;/&gt;
-      &lt;c:body content-type=&quot;application/atomsvc+xml&quot;&gt;
-         &lt;app:collection&gt;
-            &lt;xsl:copy-of select=&quot;atom:title|atom:category&quot;/&gt;
-         &lt;/app:collection&gt;
-      &lt;/c:body&gt;
-   &lt;/c:request&gt;
-   &lt;xsl:apply-templates select=&quot;atom:entry&quot;/&gt;
-   &lt;/atom:feed&gt;
-&lt;/xsl:template&gt;
-   
-&lt;xsl:template match=&quot;atom:entry&quot;&gt;
-   &lt;c:request method=&quot;POST&quot; href=&quot;{$target-collections}{$slug}/&quot; status-only=&quot;true&quot; detailed=&quot;true&quot;&gt;
-      &lt;c:header name=&quot;Authorization&quot; value=&quot;Bearer {$token}&quot;/&gt;
-      &lt;c:body content-type=&quot;application/atom+xml&quot;&gt;
-         &lt;xsl:copy&gt;
-            &lt;xsl:apply-templates/&gt;
-         &lt;/xsl:copy&gt;
-      &lt;/c:body&gt;
-   &lt;/c:request&gt;
-&lt;/xsl:template&gt;
-   
-&lt;xsl:template match=&quot;atom:link[@rel='edit']|atom:link[@rel='edit-media']&quot;/&gt;
-   
-&lt;xsl:template match=&quot;node()|@*&quot;&gt;
-   &lt;xsl:copy&gt;
-      &lt;xsl:apply-templates select=&quot;@*|node()&quot;/&gt;
-   &lt;/xsl:copy&gt;
-&lt;/xsl:template&gt;
+&amp;lt;xsl:param name=&amp;quot;target-collections&amp;quot;/&amp;gt;
+&amp;lt;xsl:param name=&amp;quot;token&amp;quot;/&amp;gt;
+&amp;lt;xsl:param name=&amp;quot;slug&amp;quot;/&amp;gt;
 
-&lt;/xsl:stylesheet&gt;         
-      
+&amp;lt;xsl:template match=&amp;quot;atom:feed&amp;quot;&amp;gt;
+   &amp;lt;atom:feed&amp;gt;
+   &amp;lt;c:request method=&amp;quot;POST&amp;quot; href=&amp;quot;{$target-collections}&amp;quot; status-only=&amp;quot;true&amp;quot; detailed=&amp;quot;true&amp;quot;&amp;gt;
+      &amp;lt;c:header name=&amp;quot;Authorization&amp;quot; value=&amp;quot;Bearer {$token}&amp;quot;/&amp;gt;
+      &amp;lt;c:header name=&amp;quot;Slug&amp;quot; value=&amp;quot;{$slug}&amp;quot;/&amp;gt;
+      &amp;lt;c:body content-type=&amp;quot;application/atomsvc+xml&amp;quot;&amp;gt;
+         &amp;lt;app:collection&amp;gt;
+            &amp;lt;xsl:copy-of select=&amp;quot;atom:title|atom:category&amp;quot;/&amp;gt;
+         &amp;lt;/app:collection&amp;gt;
+      &amp;lt;/c:body&amp;gt;
+   &amp;lt;/c:request&amp;gt;
+   &amp;lt;xsl:apply-templates select=&amp;quot;atom:entry&amp;quot;/&amp;gt;
+   &amp;lt;/atom:feed&amp;gt;
+&amp;lt;/xsl:template&amp;gt;
+
+&amp;lt;xsl:template match=&amp;quot;atom:entry&amp;quot;&amp;gt;
+   &amp;lt;c:request method=&amp;quot;POST&amp;quot; href=&amp;quot;{$target-collections}{$slug}/&amp;quot; status-only=&amp;quot;true&amp;quot; detailed=&amp;quot;true&amp;quot;&amp;gt;
+      &amp;lt;c:header name=&amp;quot;Authorization&amp;quot; value=&amp;quot;Bearer {$token}&amp;quot;/&amp;gt;
+      &amp;lt;c:body content-type=&amp;quot;application/atom+xml&amp;quot;&amp;gt;
+         &amp;lt;xsl:copy&amp;gt;
+            &amp;lt;xsl:apply-templates/&amp;gt;
+         &amp;lt;/xsl:copy&amp;gt;
+      &amp;lt;/c:body&amp;gt;
+   &amp;lt;/c:request&amp;gt;
+&amp;lt;/xsl:template&amp;gt;
+
+&amp;lt;xsl:template match=&amp;quot;atom:link[@rel=&amp;#x27;edit&amp;#x27;]|atom:link[@rel=&amp;#x27;edit-media&amp;#x27;]&amp;quot;/&amp;gt;
+
+&amp;lt;xsl:template match=&amp;quot;node()|@*&amp;quot;&amp;gt;
+   &amp;lt;xsl:copy&amp;gt;
+      &amp;lt;xsl:apply-templates select=&amp;quot;@*|node()&amp;quot;/&amp;gt;
+   &amp;lt;/xsl:copy&amp;gt;
+&amp;lt;/xsl:template&amp;gt;
+
+&amp;lt;/xsl:stylesheet&amp;gt;         
+
 </code></pre>
 <h3>Why?</h3>
 <p>You might look at this and think: &quot;Why all the complexity?&quot;  The Java code was worse.  In fact, any programming langauge code would be worse. XProc is really good at doing this kind of thing.</p>
 <p>If it wasn't still Saturday night, I might do a better job explaining why.</p>
-
 </article>
