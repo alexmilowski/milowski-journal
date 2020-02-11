@@ -30,23 +30,23 @@
 </li>
 </ul>
 <pre><code>
-&amp;lt;route match=&quot;/make-it-go&quot; ref=&quot;xproc&quot;&amp;gt;
-   &amp;lt;parameter name=&quot;xproc.href&quot; href=&quot;go.xpl&quot;/&amp;gt;
-&amp;lt;/route&amp;gt;
+&lt;route match=&quot;/make-it-go&quot; ref=&quot;xproc&quot;&gt;
+   &lt;parameter name=&quot;xproc.href&quot; href=&quot;go.xpl&quot;/&gt;
+&lt;/route&gt;
 
 </code></pre>
 <ul>
 <li>If you want to get more complicated and handle different methods with different pipelines, you can:</li>
 </ul>
 <pre><code>
-&amp;lt;route match=&quot;/&quot; ref=&quot;xproclet&quot;&amp;gt;
-   &amp;lt;attribute name=&quot;xproc.configuration&quot;&amp;gt;
-      &amp;lt;xproc:method name=&quot;HEAD&quot; href=&quot;head.xpl&quot; bind-output=&quot;true&quot;/&amp;gt;
-      &amp;lt;xproc:method name=&quot;GET&quot; href=&quot;get.xpl&quot;/&amp;gt;
-      &amp;lt;xproc:method name=&quot;PUT&quot; href=&quot;echo.xpl&quot;/&amp;gt;
-      &amp;lt;xproc:method name=&quot;POST&quot; href=&quot;echo.xpl&quot;/&amp;gt;
-   &amp;lt;/attribute&amp;gt;
-&amp;lt;/route&amp;gt;               
+&lt;route match=&quot;/&quot; ref=&quot;xproclet&quot;&gt;
+   &lt;attribute name=&quot;xproc.configuration&quot;&gt;
+      &lt;xproc:method name=&quot;HEAD&quot; href=&quot;head.xpl&quot; bind-output=&quot;true&quot;/&gt;
+      &lt;xproc:method name=&quot;GET&quot; href=&quot;get.xpl&quot;/&gt;
+      &lt;xproc:method name=&quot;PUT&quot; href=&quot;echo.xpl&quot;/&gt;
+      &lt;xproc:method name=&quot;POST&quot; href=&quot;echo.xpl&quot;/&gt;
+   &lt;/attribute&gt;
+&lt;/route&gt;               
 
 </code></pre>
 <ul>

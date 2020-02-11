@@ -18,37 +18,37 @@
 <p><a href="http://www.w3.org/TR/rdfa-core/">RDFa</a> allow annotations of subjects (identifiers) to exist in multiple locations within a document. When a user tries to retrieve elements by this subject identifier, what element is returned? Currently, the <a href="http://www.w3.org/TR/rdfa-api/">RDFa API</a> says that all the element origins in the document identified via <code>@about</code> , <code>@resource,</code>   <code>@src</code> , <code>@href</code> are returned by the  <code>document.getElementsBySubject()</code> API method.</p>
 <p>For example, consider this example using RDFa:</p>
 <pre><code>
-&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;
-&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&amp;gt;
-    &amp;lt;head&amp;gt;
-        &amp;lt;title&amp;gt;&amp;lt;/title&amp;gt;
-    &amp;lt;/head&amp;gt;
-    &amp;lt;body vocab=&quot;http://www.example.com/&quot;&amp;gt;
-       &amp;lt;div about=&quot;_:ex1&quot;&amp;gt;
-          &amp;lt;span property=&quot;a&quot;&amp;gt;v1&amp;lt;/span&amp;gt;
-       &amp;lt;/div&amp;gt;
-       &amp;lt;div about=&quot;_:ex1&quot;&amp;gt;
-          &amp;lt;span property=&quot;b&quot;&amp;gt;v2&amp;lt;/span&amp;gt;
-       &amp;lt;/div&amp;gt;
-       &amp;lt;div resource=&quot;_:ex1&quot;&amp;gt;
-          &amp;lt;span property=&quot;c&quot;&amp;gt;v3&amp;lt;/span&amp;gt;
-       &amp;lt;/div&amp;gt;
-       &amp;lt;div about=&quot;_:ex1&quot; typeof=&quot;T&quot;&amp;gt;
-          &amp;lt;span property=&quot;d&quot;&amp;gt;v4&amp;lt;/span&amp;gt;
-       &amp;lt;/div&amp;gt;
-       &amp;lt;div resource=&quot;_:ex1&quot; typeof=&quot;T&quot;&amp;gt;
-          &amp;lt;span property=&quot;e&quot;&amp;gt;v5&amp;lt;/span&amp;gt;
-       &amp;lt;/div&amp;gt;
-    &amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;       
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+    &lt;head&gt;
+        &lt;title&gt;&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body vocab=&quot;http://www.example.com/&quot;&gt;
+       &lt;div about=&quot;_:ex1&quot;&gt;
+          &lt;span property=&quot;a&quot;&gt;v1&lt;/span&gt;
+       &lt;/div&gt;
+       &lt;div about=&quot;_:ex1&quot;&gt;
+          &lt;span property=&quot;b&quot;&gt;v2&lt;/span&gt;
+       &lt;/div&gt;
+       &lt;div resource=&quot;_:ex1&quot;&gt;
+          &lt;span property=&quot;c&quot;&gt;v3&lt;/span&gt;
+       &lt;/div&gt;
+       &lt;div about=&quot;_:ex1&quot; typeof=&quot;T&quot;&gt;
+          &lt;span property=&quot;d&quot;&gt;v4&lt;/span&gt;
+       &lt;/div&gt;
+       &lt;div resource=&quot;_:ex1&quot; typeof=&quot;T&quot;&gt;
+          &lt;span property=&quot;e&quot;&gt;v5&lt;/span&gt;
+       &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;       
 
 </code></pre>
 <p>This example generates the triples:</p>
 <pre><code>
-&amp;lt;origin.xhtml&amp;gt;	&amp;lt;http://www.w3.org/ns/rdfa#usesVocabulary&amp;gt;	&amp;lt;http://www.example.com/&amp;gt;
-@prefix e: &amp;lt;http://www.example.com/&amp;gt; .
-&amp;lt;_:ex1&amp;gt; rdf:type &amp;lt;http://www.example.com/T&amp;gt; ;
+&lt;origin.xhtml&gt;	&lt;http://www.w3.org/ns/rdfa#usesVocabulary&gt;	&lt;http://www.example.com/&gt;
+@prefix e: &lt;http://www.example.com/&gt; .
+&lt;_:ex1&gt; rdf:type &lt;http://www.example.com/T&gt; ;
         e:a	&quot;v1&quot; ;
         e:b	&quot;v2&quot; ;
         e:c	&quot;v3&quot; ;

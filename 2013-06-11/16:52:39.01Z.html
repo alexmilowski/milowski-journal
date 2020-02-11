@@ -17,9 +17,9 @@
 <h1>Microdata in Green Turtle</h1>
 <p>After being asked how hard it would be to add <a href="http://dev.w3.org/html5/md-LC/">Microdata</a> , at least in some minimal way, to <a href="https://code.google.com/p/green-turtle/">Green Turtle</a> I decided to find out.  Since I already have a bunch of infrastructure, this didn't feel like a hard thing to add.  If I did add support, at least experimentally, microdata and RDFa could use the same API and scripting support.</p>
 <p>Of course, this requires understanding how to interpret microdata and generate a triples graph from it.  There are some pathological cases, such as untyped items, that are just impossible.  For example:</p>
-<pre><code>&amp;lt;div itemscope&amp;gt;
-&amp;lt;p itemprop=&quot;name&quot;&amp;gt;Alex Milowski&amp;lt;/p&amp;gt;
-&amp;lt;/div&amp;gt;
+<pre><code>&lt;div itemscope&gt;
+&lt;p itemprop=&quot;name&quot;&gt;Alex Milowski&lt;/p&gt;
+&lt;/div&gt;
 
 </code></pre>
 <p>Is it someone's attempt at encoding a person?  Does it have any interchange semantics over the Web?  Probably not and so I just ignore things that don't map easily.</p>
@@ -33,21 +33,21 @@
 <p>Here's how:</p>
 <ul>
 <li>Until I package this implementation somehow, you'll need to include three Javascript files: <a href="https://green-turtle.googlecode.com/svn/trunk/src/URI.js">URI.js</a> , <a href="https://green-turtle.googlecode.com/svn/trunk/src/RDFaGraph.js">RDFaGraph.js</a> , and <a href="https://green-turtle.googlecode.com/svn/trunk/src/Microdata.js">Microdata.js</a></li>
-<li>Register a processor with Green Turtle for Microdata: ```
-&lt;script type=&quot;text/javascript&quot;&gt;
-GreenTurtle.implementation.processors[&quot;microdata&quot;] = {
-process: function(node,options) {
-var owner = node.nodeType==Node.DOCUMENT_NODE ? node : node.ownerDocument;
-if (!owner.data) {
-return false;
-}
-var processor = new GraphMicrodataProcessor(owner.data.graph);
-processor.process(node);
-return true;
-}
-};
-&lt;/script&gt;</li>
+<li>Register a processor with Green Turtle for Microdata: ```</li>
 </ul>
+<script type="text/javascript">
+GreenTurtle.implementation.processors["microdata"] = {
+   process: function(node,options) {
+      var owner = node.nodeType==Node.DOCUMENT_NODE ? node : node.ownerDocument;
+      if (!owner.data) {
+         return false;
+      }
+      var processor = new GraphMicrodataProcessor(owner.data.graph);
+      processor.process(node);
+      return true;
+   }
+};
+</script>
 <pre><code>
 
 That's it!  The Green Turtle runs after the document has loaded and so any registered processors will run against the document.  In this example, the Microdata triples are merged into the same graph as the RDFa.  Beware, there be dragons here!

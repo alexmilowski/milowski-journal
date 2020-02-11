@@ -30,16 +30,16 @@
 <h4>Microdata Packaging</h4>
 <p>A packaging of Microdata has been added to both the script and the extension.  The experimental Microdata processor is now included with Green Turtle and can be enabled via a simple switch:</p>
 <pre><code>
-&amp;lt;script type=&quot;text/javascript&quot;&amp;gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
 GreenTurtle.implementation.processors[&quot;microdata&quot;].enabled = true;
-&amp;lt;/script&amp;gt;
+&lt;/script&gt;
 
 </code></pre>
 <p>Including the above script just after the Green Turtle script will turn on Microdata support (off by default).  You can also disable <a href="http://www.w3.org/TR/turtle/">Turtle</a> processing much the same way (on by default):</p>
 <pre><code>
-&amp;lt;script type=&quot;text/javascript&quot;&amp;gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
 GreenTurtle.implementation.processors[&quot;text/turtle&quot;].enabled = false;
-&amp;lt;/script&amp;gt;
+&lt;/script&gt;
 
 </code></pre>
 <p>Any Microdata is turned into triples and added the the graph along with any RDFa or Turtle found in the document.  If the Microdata can't be turned into triples, it is just ignored.  It would be really nice if there was a specification for this but there really isn't as of yet.</p>

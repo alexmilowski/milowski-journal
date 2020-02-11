@@ -32,108 +32,108 @@
 </ul>
 <p>The XProc looks like this:</p>
 <pre><code>
-&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;
-&amp;lt;p:declare-step xmlns:p=&quot;http://www.w3.org/ns/xproc&quot;
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;p:declare-step xmlns:p=&quot;http://www.w3.org/ns/xproc&quot;
     xmlns:c=&quot;http://www.w3.org/ns/xproc-step&quot; version=&quot;1.0&quot;
     xmlns:app=&quot;http://www.w3.org/2007/app&quot; xmlns:atom=&quot;http://www.w3.org/2005/Atom&quot;
-   name=&quot;restore&quot;&amp;gt;
-   &amp;lt;p:input port=&quot;source&quot; primary=&quot;true&quot;/&amp;gt;
-   &amp;lt;p:output port=&quot;result&quot; primary=&quot;true&quot;/&amp;gt;
-   &amp;lt;p:option name=&quot;target&quot;/&amp;gt;
-   &amp;lt;p:option name=&quot;token&quot;/&amp;gt;
-   &amp;lt;!-- get the target service document --&amp;gt;
-   &amp;lt;p:template&amp;gt;
-      &amp;lt;p:with-param name=&quot;token&quot; select=&quot;$token&quot;/&amp;gt;
-      &amp;lt;p:with-param name=&quot;target&quot; select=&quot;$target&quot;/&amp;gt;
-      &amp;lt;p:input port=&quot;source&quot;&amp;gt;&amp;lt;p:empty/&amp;gt;&amp;lt;/p:input&amp;gt;
-      &amp;lt;p:input port=&quot;template&quot;&amp;gt;
-         &amp;lt;p:inline&amp;gt;
-            &amp;lt;c:request method=&quot;GET&quot; href=&quot;{$target}&quot;&amp;gt;
-               &amp;lt;c:header name=&quot;Authorization&quot; value=&quot;Bearer {$token}&quot;/&amp;gt;
-            &amp;lt;/c:request&amp;gt;
-         &amp;lt;/p:inline&amp;gt;
-      &amp;lt;/p:input&amp;gt;
-   &amp;lt;/p:template&amp;gt;
-   &amp;lt;p:http-request/&amp;gt;
+   name=&quot;restore&quot;&gt;
+   &lt;p:input port=&quot;source&quot; primary=&quot;true&quot;/&gt;
+   &lt;p:output port=&quot;result&quot; primary=&quot;true&quot;/&gt;
+   &lt;p:option name=&quot;target&quot;/&gt;
+   &lt;p:option name=&quot;token&quot;/&gt;
+   &lt;!-- get the target service document --&gt;
+   &lt;p:template&gt;
+      &lt;p:with-param name=&quot;token&quot; select=&quot;$token&quot;/&gt;
+      &lt;p:with-param name=&quot;target&quot; select=&quot;$target&quot;/&gt;
+      &lt;p:input port=&quot;source&quot;&gt;&lt;p:empty/&gt;&lt;/p:input&gt;
+      &lt;p:input port=&quot;template&quot;&gt;
+         &lt;p:inline&gt;
+            &lt;c:request method=&quot;GET&quot; href=&quot;{$target}&quot;&gt;
+               &lt;c:header name=&quot;Authorization&quot; value=&quot;Bearer {$token}&quot;/&gt;
+            &lt;/c:request&gt;
+         &lt;/p:inline&gt;
+      &lt;/p:input&gt;
+   &lt;/p:template&gt;
+   &lt;p:http-request/&gt;
 
-   &amp;lt;p:group&amp;gt;
-      &amp;lt;!-- get the URI for creating collections --&amp;gt;
-      &amp;lt;p:variable name=&quot;target-collections&quot; select=&quot;resolve-uri(/app:service/app:workspace/@href,$target)&quot;/&amp;gt;
+   &lt;p:group&gt;
+      &lt;!-- get the URI for creating collections --&gt;
+      &lt;p:variable name=&quot;target-collections&quot; select=&quot;resolve-uri(/app:service/app:workspace/@href,$target)&quot;/&gt;
 
-      &amp;lt;!-- viewport over the collections in the source service --&amp;gt;
-      &amp;lt;p:viewport match=&quot;app:collection&quot;&amp;gt;
-         &amp;lt;p:viewport-source&amp;gt;
-            &amp;lt;p:pipe step=&quot;restore&quot; port=&quot;source&quot;/&amp;gt;
-         &amp;lt;/p:viewport-source&amp;gt;
-         &amp;lt;p:variable name=&quot;slug&quot; select=&quot;substring-after(substring-before(/app:collection/@href,'/__index__.atom'),'/')&quot;/&amp;gt;
-         &amp;lt;p:load&amp;gt;
-            &amp;lt;p:with-option name=&quot;href&quot; select=&quot;resolve-uri(/app:collection/@href,base-uri(/app:collection))&quot;/&amp;gt;
-         &amp;lt;/p:load&amp;gt;
-         &amp;lt;p:xslt&amp;gt;
-            &amp;lt;p:input port=&quot;stylesheet&quot;&amp;gt;&amp;lt;p:document href=&quot;restore.xsl&quot;/&amp;gt;&amp;lt;/p:input&amp;gt;
-            &amp;lt;p:with-param name=&quot;target-collections&quot; select=&quot;$target-collections&quot;/&amp;gt;
-            &amp;lt;p:with-param name=&quot;collection&quot; select=&quot;$target-collections&quot;/&amp;gt;
-            &amp;lt;p:with-param name=&quot;slug&quot; select=&quot;$slug&quot;/&amp;gt;
-            &amp;lt;p:with-param name=&quot;token&quot; select=&quot;$token&quot;/&amp;gt;
-         &amp;lt;/p:xslt&amp;gt;
-         &amp;lt;p:viewport match=&quot;c:request&quot;&amp;gt;
-            &amp;lt;p:http-request/&amp;gt;
-         &amp;lt;/p:viewport&amp;gt;
-      &amp;lt;/p:viewport&amp;gt;
-   &amp;lt;/p:group&amp;gt;
-&amp;lt;/p:declare-step&amp;gt;         
+      &lt;!-- viewport over the collections in the source service --&gt;
+      &lt;p:viewport match=&quot;app:collection&quot;&gt;
+         &lt;p:viewport-source&gt;
+            &lt;p:pipe step=&quot;restore&quot; port=&quot;source&quot;/&gt;
+         &lt;/p:viewport-source&gt;
+         &lt;p:variable name=&quot;slug&quot; select=&quot;substring-after(substring-before(/app:collection/@href,'/__index__.atom'),'/')&quot;/&gt;
+         &lt;p:load&gt;
+            &lt;p:with-option name=&quot;href&quot; select=&quot;resolve-uri(/app:collection/@href,base-uri(/app:collection))&quot;/&gt;
+         &lt;/p:load&gt;
+         &lt;p:xslt&gt;
+            &lt;p:input port=&quot;stylesheet&quot;&gt;&lt;p:document href=&quot;restore.xsl&quot;/&gt;&lt;/p:input&gt;
+            &lt;p:with-param name=&quot;target-collections&quot; select=&quot;$target-collections&quot;/&gt;
+            &lt;p:with-param name=&quot;collection&quot; select=&quot;$target-collections&quot;/&gt;
+            &lt;p:with-param name=&quot;slug&quot; select=&quot;$slug&quot;/&gt;
+            &lt;p:with-param name=&quot;token&quot; select=&quot;$token&quot;/&gt;
+         &lt;/p:xslt&gt;
+         &lt;p:viewport match=&quot;c:request&quot;&gt;
+            &lt;p:http-request/&gt;
+         &lt;/p:viewport&gt;
+      &lt;/p:viewport&gt;
+   &lt;/p:group&gt;
+&lt;/p:declare-step&gt;         
 
 </code></pre>
 <p>The referenced XSLT is fairly simple:</p>
 <pre><code>
-&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;
-&amp;lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;
    xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;
    exclude-result-prefixes=&quot;xs&quot;
    version=&quot;2.0&quot;
    xmlns:c=&quot;http://www.w3.org/ns/xproc-step&quot;
    xmlns:app=&quot;http://www.w3.org/2007/app&quot;
-   xmlns:atom=&quot;http://www.w3.org/2005/Atom&quot;&amp;gt;
+   xmlns:atom=&quot;http://www.w3.org/2005/Atom&quot;&gt;
 
-&amp;lt;xsl:param name=&quot;target-collections&quot;/&amp;gt;
-&amp;lt;xsl:param name=&quot;token&quot;/&amp;gt;
-&amp;lt;xsl:param name=&quot;slug&quot;/&amp;gt;
+&lt;xsl:param name=&quot;target-collections&quot;/&gt;
+&lt;xsl:param name=&quot;token&quot;/&gt;
+&lt;xsl:param name=&quot;slug&quot;/&gt;
 
-&amp;lt;xsl:template match=&quot;atom:feed&quot;&amp;gt;
-   &amp;lt;atom:feed&amp;gt;
-   &amp;lt;c:request method=&quot;POST&quot; href=&quot;{$target-collections}&quot; status-only=&quot;true&quot; detailed=&quot;true&quot;&amp;gt;
-      &amp;lt;c:header name=&quot;Authorization&quot; value=&quot;Bearer {$token}&quot;/&amp;gt;
-      &amp;lt;c:header name=&quot;Slug&quot; value=&quot;{$slug}&quot;/&amp;gt;
-      &amp;lt;c:body content-type=&quot;application/atomsvc+xml&quot;&amp;gt;
-         &amp;lt;app:collection&amp;gt;
-            &amp;lt;xsl:copy-of select=&quot;atom:title|atom:category&quot;/&amp;gt;
-         &amp;lt;/app:collection&amp;gt;
-      &amp;lt;/c:body&amp;gt;
-   &amp;lt;/c:request&amp;gt;
-   &amp;lt;xsl:apply-templates select=&quot;atom:entry&quot;/&amp;gt;
-   &amp;lt;/atom:feed&amp;gt;
-&amp;lt;/xsl:template&amp;gt;
+&lt;xsl:template match=&quot;atom:feed&quot;&gt;
+   &lt;atom:feed&gt;
+   &lt;c:request method=&quot;POST&quot; href=&quot;{$target-collections}&quot; status-only=&quot;true&quot; detailed=&quot;true&quot;&gt;
+      &lt;c:header name=&quot;Authorization&quot; value=&quot;Bearer {$token}&quot;/&gt;
+      &lt;c:header name=&quot;Slug&quot; value=&quot;{$slug}&quot;/&gt;
+      &lt;c:body content-type=&quot;application/atomsvc+xml&quot;&gt;
+         &lt;app:collection&gt;
+            &lt;xsl:copy-of select=&quot;atom:title|atom:category&quot;/&gt;
+         &lt;/app:collection&gt;
+      &lt;/c:body&gt;
+   &lt;/c:request&gt;
+   &lt;xsl:apply-templates select=&quot;atom:entry&quot;/&gt;
+   &lt;/atom:feed&gt;
+&lt;/xsl:template&gt;
 
-&amp;lt;xsl:template match=&quot;atom:entry&quot;&amp;gt;
-   &amp;lt;c:request method=&quot;POST&quot; href=&quot;{$target-collections}{$slug}/&quot; status-only=&quot;true&quot; detailed=&quot;true&quot;&amp;gt;
-      &amp;lt;c:header name=&quot;Authorization&quot; value=&quot;Bearer {$token}&quot;/&amp;gt;
-      &amp;lt;c:body content-type=&quot;application/atom+xml&quot;&amp;gt;
-         &amp;lt;xsl:copy&amp;gt;
-            &amp;lt;xsl:apply-templates/&amp;gt;
-         &amp;lt;/xsl:copy&amp;gt;
-      &amp;lt;/c:body&amp;gt;
-   &amp;lt;/c:request&amp;gt;
-&amp;lt;/xsl:template&amp;gt;
+&lt;xsl:template match=&quot;atom:entry&quot;&gt;
+   &lt;c:request method=&quot;POST&quot; href=&quot;{$target-collections}{$slug}/&quot; status-only=&quot;true&quot; detailed=&quot;true&quot;&gt;
+      &lt;c:header name=&quot;Authorization&quot; value=&quot;Bearer {$token}&quot;/&gt;
+      &lt;c:body content-type=&quot;application/atom+xml&quot;&gt;
+         &lt;xsl:copy&gt;
+            &lt;xsl:apply-templates/&gt;
+         &lt;/xsl:copy&gt;
+      &lt;/c:body&gt;
+   &lt;/c:request&gt;
+&lt;/xsl:template&gt;
 
-&amp;lt;xsl:template match=&quot;atom:link[@rel='edit']|atom:link[@rel='edit-media']&quot;/&amp;gt;
+&lt;xsl:template match=&quot;atom:link[@rel='edit']|atom:link[@rel='edit-media']&quot;/&gt;
 
-&amp;lt;xsl:template match=&quot;node()|@*&quot;&amp;gt;
-   &amp;lt;xsl:copy&amp;gt;
-      &amp;lt;xsl:apply-templates select=&quot;@*|node()&quot;/&amp;gt;
-   &amp;lt;/xsl:copy&amp;gt;
-&amp;lt;/xsl:template&amp;gt;
+&lt;xsl:template match=&quot;node()|@*&quot;&gt;
+   &lt;xsl:copy&gt;
+      &lt;xsl:apply-templates select=&quot;@*|node()&quot;/&gt;
+   &lt;/xsl:copy&gt;
+&lt;/xsl:template&gt;
 
-&amp;lt;/xsl:stylesheet&amp;gt;         
+&lt;/xsl:stylesheet&gt;         
 
 </code></pre>
 <h3>Why?</h3>

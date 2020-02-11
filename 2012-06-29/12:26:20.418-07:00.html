@@ -34,78 +34,78 @@
 </ul>
 <p>I can generate the list of start times easily with the XQuery:</p>
 <pre><code>declare variable $date external;
-&amp;lt;starts&amp;gt;
+&lt;starts&gt;
 {
 let $start := xs:dateTime(concat($date,&quot;T00:00:00Z&quot;)),
     $duration := xs:dayTimeDuration(&quot;PT5M&quot;)
     for $i in (0 to 287)
-       return &amp;lt;start&amp;gt;{$start + $i*$duration}&amp;lt;/start&amp;gt;
+       return &lt;start&gt;{$start + $i*$duration}&lt;/start&gt;
 }
-&amp;lt;/starts&amp;gt;
+&lt;/starts&gt;
 </code></pre>
 <p>The weather reports are also easily deleted by the XQuery:</p>
 <pre><code>declare namespace s=&quot;http://.../V/APRS/&quot;;
 declare variable $start external;
 declare variable $duration external;
 
-&amp;lt;operation&amp;gt;deleted {$start} for {$duration}{
+&lt;operation&gt;deleted {$start} for {$duration}{
 let $dstart := xs:dateTime($start),
     $dend := $dstart + xs:dayTimeDuration($duration)
-   for $r in collection(&quot;http://.../weather/&quot;)/s:report[@received&amp;gt;=$dstart and @received&amp;lt;$dend]
+   for $r in collection(&quot;http://.../weather/&quot;)/s:report[@received&gt;=$dstart and @received&lt;$dend]
       return xdmp:document-delete(base-uri($r))
 }
-&amp;lt;/operation&amp;gt;
+&lt;/operation&gt;
 
 </code></pre>
 <p>and I can sequence them in XProc as follows:</p>
-<pre><code>&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;
-&amp;lt;p:declare-step xmlns:p=&quot;http://www.w3.org/ns/xproc&quot;
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;p:declare-step xmlns:p=&quot;http://www.w3.org/ns/xproc&quot;
     xmlns:c=&quot;http://www.w3.org/ns/xproc-step&quot; version=&quot;1.0&quot;
     xmlns:ml=&quot;http://xmlcalabash.com/ns/extensions/marklogic&quot;
     xmlns:cx=&quot;http://xmlcalabash.com/ns/extensions&quot;    
-    &amp;gt;
-    &amp;lt;p:option name='xdb.user'/&amp;gt;
-    &amp;lt;p:option name='xdb.password'/&amp;gt;
-    &amp;lt;p:option name='xdb.host'/&amp;gt;
-    &amp;lt;p:option name='xdb.port'/&amp;gt;
-    &amp;lt;p:option name=&quot;day&quot;/&amp;gt;
-    &amp;lt;p:output port=&quot;result&quot;/&amp;gt;
+    &gt;
+    &lt;p:option name='xdb.user'/&gt;
+    &lt;p:option name='xdb.password'/&gt;
+    &lt;p:option name='xdb.host'/&gt;
+    &lt;p:option name='xdb.port'/&gt;
+    &lt;p:option name=&quot;day&quot;/&gt;
+    &lt;p:output port=&quot;result&quot;/&gt;
 
-    &amp;lt;p:import href=&quot;http://xmlcalabash.com/extension/steps/library-1.0.xpl&quot;/&amp;gt;
+    &lt;p:import href=&quot;http://xmlcalabash.com/extension/steps/library-1.0.xpl&quot;/&gt;
 
-    &amp;lt;!-- generate the start times --&amp;gt;
+    &lt;!-- generate the start times --&gt;
 
-    &amp;lt;p:xquery&amp;gt;
-        &amp;lt;p:with-param name=&quot;date&quot; select=&quot;$day&quot;/&amp;gt;
-        &amp;lt;p:input port=&quot;source&quot;&amp;gt;&amp;lt;p:inline&amp;gt;&amp;lt;doc/&amp;gt;&amp;lt;/p:inline&amp;gt;&amp;lt;/p:input&amp;gt;
-        &amp;lt;p:input port=&quot;query&quot;&amp;gt;
-            &amp;lt;p:data wrapper=&quot;c:data&quot; href=&quot;generate-start.xq&quot; content-type=&quot;text/plain&quot;/&amp;gt;
-        &amp;lt;/p:input&amp;gt;
-    &amp;lt;/p:xquery&amp;gt;
+    &lt;p:xquery&gt;
+        &lt;p:with-param name=&quot;date&quot; select=&quot;$day&quot;/&gt;
+        &lt;p:input port=&quot;source&quot;&gt;&lt;p:inline&gt;&lt;doc/&gt;&lt;/p:inline&gt;&lt;/p:input&gt;
+        &lt;p:input port=&quot;query&quot;&gt;
+            &lt;p:data wrapper=&quot;c:data&quot; href=&quot;generate-start.xq&quot; content-type=&quot;text/plain&quot;/&gt;
+        &lt;/p:input&gt;
+    &lt;/p:xquery&gt;
 
-    &amp;lt;!-- iterate over the start times and delete reports from the database --&amp;gt;
+    &lt;!-- iterate over the start times and delete reports from the database --&gt;
 
-    &amp;lt;p:viewport match=&quot;/starts/start&quot;&amp;gt;
+    &lt;p:viewport match=&quot;/starts/start&quot;&gt;
 
-        &amp;lt;cx:message&amp;gt;
-            &amp;lt;p:with-option name=&quot;message&quot; select=&quot;concat('Processing ',/start)&quot;/&amp;gt;
-        &amp;lt;/cx:message&amp;gt;
+        &lt;cx:message&gt;
+            &lt;p:with-option name=&quot;message&quot; select=&quot;concat('Processing ',/start)&quot;/&gt;
+        &lt;/cx:message&gt;
 
-        &amp;lt;ml:adhoc-query&amp;gt;
-            &amp;lt;p:with-option name='user' select='$xdb.user'/&amp;gt;
-            &amp;lt;p:with-option name='password' select='$xdb.password'/&amp;gt;
-            &amp;lt;p:with-option name='host' select='$xdb.host'/&amp;gt;
-            &amp;lt;p:with-option name='port' select='$xdb.port'/&amp;gt;
-            &amp;lt;p:with-param name=&quot;start&quot; select=&quot;string(/start)&quot;/&amp;gt;
-            &amp;lt;p:with-param name=&quot;duration&quot; select=&quot;'PT5M'&quot;/&amp;gt;
-            &amp;lt;p:input port=&quot;source&quot;&amp;gt;
-                &amp;lt;p:data wrapper=&quot;c:query&quot; href=&quot;delete-report-duration.xq&quot; content-type=&quot;text/plain&quot;/&amp;gt;
-            &amp;lt;/p:input&amp;gt;
-        &amp;lt;/ml:adhoc-query&amp;gt;
+        &lt;ml:adhoc-query&gt;
+            &lt;p:with-option name='user' select='$xdb.user'/&gt;
+            &lt;p:with-option name='password' select='$xdb.password'/&gt;
+            &lt;p:with-option name='host' select='$xdb.host'/&gt;
+            &lt;p:with-option name='port' select='$xdb.port'/&gt;
+            &lt;p:with-param name=&quot;start&quot; select=&quot;string(/start)&quot;/&gt;
+            &lt;p:with-param name=&quot;duration&quot; select=&quot;'PT5M'&quot;/&gt;
+            &lt;p:input port=&quot;source&quot;&gt;
+                &lt;p:data wrapper=&quot;c:query&quot; href=&quot;delete-report-duration.xq&quot; content-type=&quot;text/plain&quot;/&gt;
+            &lt;/p:input&gt;
+        &lt;/ml:adhoc-query&gt;
 
-    &amp;lt;/p:viewport&amp;gt;
+    &lt;/p:viewport&gt;
 
-&amp;lt;/p:declare-step&amp;gt;
+&lt;/p:declare-step&gt;
 
 </code></pre>
 <p>My current plan is to use a similar XProc process to trim content from the database while new content is continually streamed into it.  This will allow me to keep the current weather data within the database while I determine a larger strategy to store all of it.</p>

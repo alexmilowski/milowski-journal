@@ -18,21 +18,21 @@
 <p>Over the past couple months, I've been experimenting with  “big data” on the web for scientific purposes. The goal is to take my research on geospatial scientific data on the web and use <a href="http://www.marklogic.com/">MarkLogic</a> to create a repository for large sensor data. My current scientific area of focus is weather data (sensor data in general) that I'm collecting through the <a href="http://www.wxqa.com/">Citizen Weather Observation Program (CWOP)</a> .</p>
 <p>The data comes to me over the Internet via <a href="http://www.aprs-is.net/">APRS-IS</a> , which is a home-grown peer-to-peer message relaying system.  The messages originate from both Internet and radio-based systems. Typically, the sending systems are weather stations or location trackers, but they could be just about anything. The messages are cryptic character-based packets encoding data.</p>
 <p>All you really want to know is that:</p>
-<pre><code>DW7508&amp;gt;APRS,TCPXX*,qAX,CWOP-2:@140818z5303.00N/00414.20W_290/011g018t040r000P000h77b09878eCumulusDsVP
-DW4331&amp;gt;APRS,TCPXX*,qAX,CWOP-2:@140818z3244.80N/11708.33W_137/000g...t046r...p...P000h96b10083.DsVP
-DW4314&amp;gt;APRS,TCPXX*,qAX,CWOP-2:@140818z3835.73N/12057.58W_072/000g001t040r000p000P000h71b10214.DsVP
-KF9X&amp;gt;APRS,TCPXX*,qAX,CWOP-2:@140819z4420.99N/08952.58W_080/001g004t034r001P001p001h91b10208v6
+<pre><code>DW7508&gt;APRS,TCPXX*,qAX,CWOP-2:@140818z5303.00N/00414.20W_290/011g018t040r000P000h77b09878eCumulusDsVP
+DW4331&gt;APRS,TCPXX*,qAX,CWOP-2:@140818z3244.80N/11708.33W_137/000g...t046r...p...P000h96b10083.DsVP
+DW4314&gt;APRS,TCPXX*,qAX,CWOP-2:@140818z3835.73N/12057.58W_072/000g001t040r000p000P000h71b10214.DsVP
+KF9X&gt;APRS,TCPXX*,qAX,CWOP-2:@140819z4420.99N/08952.58W_080/001g004t034r001P001p001h91b10208v6
 </code></pre>
 <p>gets turned into XML:</p>
-<pre><code>&amp;lt;report from=&quot;dw3512&quot; type=&quot;weather&quot; latitude=&quot;44.903&quot; longitude=&quot;-85.06833&quot;
+<pre><code>&lt;report from=&quot;dw3512&quot; type=&quot;weather&quot; latitude=&quot;44.903&quot; longitude=&quot;-85.06833&quot;
         received=&quot;2012-04-10T08:00:00Z&quot; at=&quot;2012-04-10T08:00:00 Z&quot; wind-dir=&quot;303&quot; wind-speed=&quot;6&quot; wind-gust=&quot;13&quot;
-        temperature=&quot;33&quot; rain-hour=&quot;0&quot; rain-midnight=&quot;0&quot; humidity=&quot;81&quot; pressure=&quot;10098&quot; /&amp;gt;
-&amp;lt;report from=&quot;DW6820&quot; type=&quot;weather&quot; latitude=&quot;54.37533&quot; longitude=&quot;2.89533&quot;
+        temperature=&quot;33&quot; rain-hour=&quot;0&quot; rain-midnight=&quot;0&quot; humidity=&quot;81&quot; pressure=&quot;10098&quot; /&gt;
+&lt;report from=&quot;DW6820&quot; type=&quot;weather&quot; latitude=&quot;54.37533&quot; longitude=&quot;2.89533&quot;
         received=&quot;2012-04-10T08:00:00Z&quot; at=&quot;2012-04-10T08:00:00 Z&quot; wind-dir=&quot;272&quot; wind-speed=&quot;9&quot; wind-gust=&quot;19&quot;
-        temperature=&quot;43&quot; rain-hour=&quot;1&quot; rain-24hours=&quot;56&quot; rain-midnight=&quot;17&quot; humidity=&quot;78&quot; pr essure=&quot;9662&quot; /&amp;gt;
-&amp;lt;report from=&quot;DW2039&quot; type=&quot;weather&quot; latitude=&quot;51.24533&quot; longitude=&quot;-2.94883&quot;
+        temperature=&quot;43&quot; rain-hour=&quot;1&quot; rain-24hours=&quot;56&quot; rain-midnight=&quot;17&quot; humidity=&quot;78&quot; pr essure=&quot;9662&quot; /&gt;
+&lt;report from=&quot;DW2039&quot; type=&quot;weather&quot; latitude=&quot;51.24533&quot; longitude=&quot;-2.94883&quot;
         received=&quot;2012-04-10T08:00:00Z&quot; at=&quot;2012-04-10T07:59:0 0Z&quot; wind-dir=&quot;237&quot; wind-speed=&quot;6&quot; wind-gust=&quot;12&quot;
-        temperature=&quot;44&quot; rain-hour=&quot;0&quot; rain-24hours=&quot;43&quot; rain-midnight=&quot;1&quot; humidity=&quot;88&quot; pr essure=&quot;9898&quot; /&amp;gt;
+        temperature=&quot;44&quot; rain-hour=&quot;0&quot; rain-24hours=&quot;43&quot; rain-midnight=&quot;1&quot; humidity=&quot;88&quot; pr essure=&quot;9898&quot; /&gt;
 </code></pre>
 <p>Note: there is no correspondence for the above examples, so don't try to parse the APRS messages to produce my XML.</p>
 <p>Through the CWOP APRS-IS servers, somewhere around 55,000+ weather reports per hour are aggregated and available to be received.  I setup a process to receive these messages, turn them into XML, and dump them onto disk as XML documents in 5 minute segments.  I have that running now and I expect it to generate about 8-12 GB of raw XML data a month.</p>

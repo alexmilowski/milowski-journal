@@ -14,7 +14,9 @@
 "publisher" : { "@type" : "Person", "name" : "Alex Miłowski"}
 }
 </script>
-<p>&gt; The open data premise is a grand idea which I fully support and need to replicate into other contexts.</p>
+<blockquote>
+<p>The open data premise is a grand idea which I fully support and need to replicate into other contexts.</p>
+</blockquote>
 <p>There have been a variety of approaches for describing open data via &quot;semantic vocabularies&quot; over the last few years of which a few notable &quot;standards&quot; are:</p>
 <ul>
 <li><a href="http://www.w3.org/TR/vocab-dcat/">Data Catalog Vocabulary</a></li>
@@ -27,13 +29,17 @@
 enables information to be disseminated via the regular mechanisms of the Web (i.e., a web page or service).</p>
 <p>The open data premise is a grand idea which I fully support and need to replicated into other contexts. In a data science / analytics context, there are similar needs and concerns.  For an analytics backbone to operate, we need more data accessible and discoverable by interested consumers.</p>
 <h2>Producers, Consumers, and Implicit Transfer</h2>
-<p>&gt; An organization needs to be able to track and audit the use of data to ensure policies are being enforced.</p>
+<blockquote>
+<p>An organization needs to be able to track and audit the use of data to ensure policies are being enforced.</p>
+</blockquote>
 <p>We also need to understand the relationships between data artifacts.  As processes produce new data artifacts by consuming existing ones, a web of relationships is produced.  Over time, the variety of replicated data can become overwhelming.</p>
 <p>The use of data is not explicitly traceable within the context of open data.  Once data is downloaded, whether new data artifacts are produced from a data source is not necessary known.  The quality of that metadata and whether it lists its sources is wholly dependent on the producer.</p>
 <p>In an enterprise context, we can and need to control the provenance of data and record sources within its metadata.  Data may have important properties like governance or privacy concerns.  These various properties of the data may be implicitly transferred to the new data artifacts.  An organization needs to be able to track and audit the use of data to ensure policies are being enforced.</p>
 <p>While not necessarily specific to the enterprise, the need to track the use of data is essential in the modern world of analytics and data pipelines.</p>
 <h2>Going Private</h2>
-<p>&gt; ...need to understand ... the graph of producers and consumers of data within context the provenance and governance of the data that flows within.</p>
+<blockquote>
+<p>...need to understand ... the graph of producers and consumers of data within context the provenance and governance of the data that flows within.</p>
+</blockquote>
 <p>Within a large enterprise, the same issues of discoverability of data assets exist. Over time, data silos compartmentalize data and gatekeepers within the organization make traversing those silos difficult. Issues of security, provenance, governance, and ownership prevail over sharing; the cross-silo analysis for agile business practices fall to the politics of data fiefdoms.</p>
 <p>From an analytics perspective, any particular data science pipeline may require inputs from a number of data silos.  The speed and success of any such analytics endeavour is dependent upon access to the required data.  Even further, data scientists and engineers need to understand the data to be able to use it effectively.</p>
 <p>Understanding data pipelines and the dependencies that ensue requires goes beyond the basics of a simple schema definition. We need to understand the operational semantics of the graph of producers and consumers of data within the context of the provenance and governance of the data that flows within. In today's world, privacy is fleeting and we need to be careful not to run afoul of regulation and promises to our customers.</p>
@@ -47,7 +53,9 @@ enables information to be disseminated via the regular mechanisms of the Web (i.
 </ul>
 <p>In the end, we want an inventory of everything in one place so we can understand all the relationships within our enterprise; <strong>analytics on analytics</strong>.</p>
 <h2>A Centralized Approach</h2>
-<p>&gt; Every analytics data pipeline ... must maintain all the essential metadata ...</p>
+<blockquote>
+<p>Every analytics data pipeline ... must maintain all the essential metadata ...</p>
+</blockquote>
 <p>An approach I am exploring is the idea of a centralized semantic repository of data asset annotations. I imagine this repository as an inventory of various aspects of the data:</p>
 <p>Essential core:</p>
 <ul>
@@ -68,7 +76,9 @@ enables information to be disseminated via the regular mechanisms of the Web (i.
 </ul>
 <p>Every analytics data pipeline in our enterprise must keep this information up-to-date.  It must maintain all the essential metadata about the inputs, outputs, and how to access the results.</p>
 <h2>Tyranny of Choice - Vocabularies</h2>
-<p>&gt; not a fan of proliferation of prefixes, namespaces, etc. just for the purpose of identification</p>
+<blockquote>
+<p>not a fan of proliferation of prefixes, namespaces, etc. just for the purpose of identification</p>
+</blockquote>
 <p>The essential stumbling block is what vocabulary should be used to describe various data assets:</p>
 <ul>
 <li>As mentioned previously, there are number of competing, overlapping, and complimentary vocabularies for open data.</li>

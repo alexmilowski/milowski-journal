@@ -21,20 +21,20 @@
 <p>The engineers that made IE made what I believe to be the worse decision in forwards compatibility I could imagine for any system that processes markup.  Instead of just ignoring tags it doesn't understand, it automatically closes them and makes the child a sibling.  This completely destroys any kind of forwards compability as the DOM used by the browser is now enormously different than expected.</p>
 <p>For example, in my pages I use the HTML5 article structure.  Whenever an <code>article</code> , <code>section</code> , or other such HTML5 elements occurs, such as:</p>
 <pre><code>
-&amp;lt;article&amp;gt;
-&amp;lt;h1&amp;gt;Test Article&amp;lt;/h1&amp;gt;
-&amp;lt;section&amp;gt;
-&amp;lt;h2&amp;gt;Overview&amp;lt;/h2&amp;gt;
-&amp;lt;p&amp;gt;In the beginning ...
+&lt;article&gt;
+&lt;h1&gt;Test Article&lt;/h1&gt;
+&lt;section&gt;
+&lt;h2&gt;Overview&lt;/h2&gt;
+&lt;p&gt;In the beginning ...
 
 </code></pre>
 <p>in IE 8 or previous versions, you'll get:</p>
 <pre><code>
-&amp;lt;article/&amp;gt;
-&amp;lt;h1&amp;gt;Test Article&amp;lt;/h1&amp;gt;
-&amp;lt;section/&amp;gt;
-&amp;lt;h2&amp;gt;Overview&amp;lt;/h2&amp;gt;
-&amp;lt;p&amp;gt;In the beginning ...
+&lt;article/&gt;
+&lt;h1&gt;Test Article&lt;/h1&gt;
+&lt;section/&gt;
+&lt;h2&gt;Overview&lt;/h2&gt;
+&lt;p&gt;In the beginning ...
 
 </code></pre>
 <p>As the containers are gone, the stylesheets won't work properly, and everything looks funny.</p>
