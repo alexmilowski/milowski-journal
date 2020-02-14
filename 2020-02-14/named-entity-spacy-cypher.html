@@ -1,0 +1,167 @@
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="https://www.milowski.com/journal/entry/2020-02-14T15:00:00-08:00">
+<script type="application/ld+json">
+{
+"@context" : "http://schema.org/",
+"@id" : "https://www.milowski.com/journal/entry/2020-02-14T15:00:00-08:00",
+"@type" : "BlogPosting",
+"genre" : "blog",
+"headline" : "Named Entity Recognition and Co-occurrence Graphs",
+"description" : "## Getting started with spaCy and Named Entities",
+"datePublished" : "2020-02-14T15:00:00-08:00",
+"dateModified" : "2020-02-14T15:00:00-08:00",
+"keywords" : "python,Spacy,Named Entity Recognition,RedisGraph,NLP" ,
+"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }],
+"publisher" : { "@type" : "Person", "name" : "Alex Miłowski"}
+}
+</script>
+<h2>Getting started with spaCy and Named Entities</h2>
+<p>As an experiment, I wanted to extract various significant &quot;keywords&quot; from my
+blog posts and compare them to the curated terms I have tagged over the years.
+This is a kind of NLP task where various terms are identified by their part of speech
+and role within the sentences. Over the years, this process have evolved to
+a specific task of Named Entity Recognition and Resolution.</p>
+<p>Fortunately for me, the python <a href="https://spacy.io">spaCy</a>
+library has a very useful API and particularly great pre-trained language model
+(e.g., en_core_web_sm for English language text). Installation of the model
+is straightforward and then you just tell spacy to load the model with a
+single line of code. This returns a function that you can apply
+to the text you would like to analyze.</p>
+<p>For example, first we install spaCy and download the model:</p>
+<pre><code class="language-Python">pip install spacy
+python -m spacy download en_core_web_sm
+</code></pre>
+<p>We can create a simple program that will print the entities found:</p>
+<pre><code class="language-Python">import spacy
+nlp = spacy.load(&quot;en_core_web_sm&quot;)
+
+def print_entities(text):
+   doc = nlp(text)
+   for entity in doc.ents:
+      print(entity.text + ' : '+entity.label_)
+</code></pre>
+<p>Next, we can process the preceding paragraphs by the following invocation:</p>
+<pre><code class="language-Python">print_entities(&quot;&quot;&quot;
+As an experiment, I wanted to extract various significant &quot;keywords&quot; from my
+blog posts and compare them to the curated terms I have tagged over the years.
+This kind of NLP task where various terms are identified by their part of speech
+and role within the sentences. Over the years, this process have evolved to
+a specific task of Named Entity Recognition and the python spaCy
+library has a very useful API and particularly great pre-trained language model
+(e.g., en_core_web_sm for English language text).
+
+The spaCy library is particular easy to use. You must first download the model
+into your python environment. Once you have done so, you just tell spaCy to load
+the model when you bootstrap the main &quot;nlp&quot; function. Afterwards, you apply this
+function to the text you would like to analyze.
+&quot;&quot;&quot;)
+</code></pre>
+<p>The output should look like:</p>
+<pre><code>the years : DATE
+NLP : ORG
+the years : DATE
+Named Entity Recognition : ORG
+API : ORG
+English : LANGUAGE
+</code></pre>
+<p>If we process the first part of the spaCy web page, we'll get:</p>
+<pre><code>API : ORG
+the Ruby on Rails of Natural Language Processing : ORG
+Cython : PERSON
+2015 : DATE
+FACTS &amp; FIGURES : ORG
+TensorFlow : ORG
+PyTorch : ORG
+Gensim : PERSON
+Python : GPE
+NLP : ORG
+</code></pre>
+<p>From the above output, we can see the entity text followed by the label. For the
+purpose of keyword extraction, some labels may not be interesting all by themselves
+(e.g. dates, ordinals, etc.).  It is certainly not perfect (e.g., it doesn't
+recognize 'spaCy') but it does find some useful terms.</p>
+<p>Note: The above example is available <a href="example.py">here</a>.</p>
+<h2>Scraping Web Content</h2>
+<p>While I have the <a href="https://github.com/alexmilowski/milowski-journal">source to my blog</a>
+in a <a href="https://github.com/alexmilowski/yamlblog">YAML + Markdown format</a> that
+is easy to read programmatically, we can also just go to the website (or any
+URL) to analyze the text content. On my blog, the HTML article element is
+the main content of the page.</p>
+<p>Fortunately, there is a nice Python library called <a href="https://pyquery.readthedocs.io/en/latest/">pyquery</a>
+that is very much like <a href="https://jquery.com">jquery</a>. We can process a web
+page via the following code:</p>
+<pre><code class="language-Python">from pyquery import PyQuery as pq
+
+doc = pq(url='https://www.milowski.com/')
+doc('article[resource] p').text()
+</code></pre>
+<h2>Cleaning Entities</h2>
+<p>The text pulled from the web page is not perfect and neither is the model's
+ability to parse this text. As such, there are syntactic oddities that sometime
+make their way into entities. Also, sometimes stop words (e.g., 'the') prefix
+entities and the model will include them.</p>
+<p>As such, there are various things I have found that need to be done with the
+results:</p>
+<ul>
+<li>remove stop word prefixes</li>
+<li>detect and remove various punctuation that precedes or suffixes</li>
+<li>remove possessive forms</li>
+<li>removal plurals</li>
+</ul>
+<p>In some instances, the solution to the above are rather trivial post processing.
+For others, such as plural forms, it is often hard to understand, without use of
+some ontology, whether a plural form is the correct form (e.g., Kubernetes is
+always plural).</p>
+<h2>Co-occurrence Graphs via Property Graphs</h2>
+<p>An interesting graph to generate is the Co-occurrence of two entities. Generating
+this graph is issue of counting a storing the uses of terms within a resource
+(e.g., a blog post) and then querying for their Co-occurrence. Keeping track of
+which resource url uses what entity is essential.</p>
+<p>We can create a simple graph with a node for the resource and node for each
+entity. An edge between these will indicate usage and a property on that edge
+will be the count.</p>
+<p>For example, the resource <code>https://www.milowski.com/journal/entry/2020-01-17T12:43:00-08:00/</code>
+contains the entities and counts:</p>
+<pre><code>Graphs : 1, {'NORP'}
+Cypher : 1, {'PERSON'}
+Redis Labs : 1, {'ORG'}
+RedisGraph : 1, {'ORG'}
+</code></pre>
+<p>and we can turn this into the following Cypher:</p>
+<pre><code class="language-Cypher">MERGE (a:BlogPosting { url : 'https://www.milowski.com/journal/entry/2020-01-17T12:43:00-08:00/'})
+MERGE (e0:Entity { text : 'Graphs'})
+MERGE (a)-[u0:uses]-&gt;(e0)
+SET u0.count = 1
+MERGE (e1:Entity { text : 'Cypher'})
+MERGE (a)-[u1:uses]-&gt;(e1)
+SET u1.count = 1
+MERGE (e2:Entity { text : 'Redis Labs'})
+MERGE (a)-[u2:uses]-&gt;(e2)
+SET u2.count = 1
+MERGE (e3:Entity { text : 'RedisGraph'})
+MERGE (a)-[u3:uses]-&gt;(e3)
+SET u3.count = 1
+</code></pre>
+<p>Once we have inserted nodes and edges for every blog post, we can count the uses
+of an entity across all the blog posts:</p>
+<pre><code class="language-Cypher">MATCH (a:BlogPosting)-[u:uses]-&gt;(e:Entity) RETURN e.text, count(a), sum(u.count)
+</code></pre>
+<p>We can also find the Co-occurrences of terms and compute various counts:</p>
+<pre><code class="language-Cypher">MATCH (e1:Entity)&lt;-[u1:uses]-(a)-[u2:uses]-&gt;(e2:Entity)
+WHERE e1 &lt;&gt; e2
+RETURN e1.text, e2.text, count(a), sum(u1.count), sum(u2.count)
+</code></pre>
+<p>The full code example that does this is available <a href="analyze.py">here</a>.</p>
+<h2>Visualizing Co-occurrence of Entities</h2>
+<p>Using the Co-occurrence data from the query result, we can visualize the connection
+between entities. For example, for entities found at least twice, the following
+entities are connected:</p>
+<img src='entities-min-count-2.png' width='100%'/>
+<p>If you include all the entities detected, you get the following graph. My favourite
+discoveries are entities <em>Google Scrooge</em> and <em>International Talk Like a Pirate Day</em>.</p>
+<img src='entities-min-count-1.png' width='100%'/>
+<h2>Conclusions</h2>
+<p>Detecting and harvesting named entities within text can give you insights. In my
+particular case, I can see that my curated keywords are just not as good as the
+entities discovered by analyzing the text. Within these entities are hidden gems
+that I'll have to expose somehow on this website.</p>
+</article>
