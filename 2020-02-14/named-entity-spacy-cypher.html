@@ -1,14 +1,14 @@
-<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="https://www.milowski.com/journal/entry/2020-02-14T15:00:00-08:00">
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="https://www.milowski.com/journal/entry/2020-02-14T16:11:00-08:00">
 <script type="application/ld+json">
 {
 "@context" : "http://schema.org/",
-"@id" : "https://www.milowski.com/journal/entry/2020-02-14T15:00:00-08:00",
+"@id" : "https://www.milowski.com/journal/entry/2020-02-14T16:11:00-08:00",
 "@type" : "BlogPosting",
 "genre" : "blog",
 "headline" : "Named Entity Recognition and Co-occurrence Graphs",
 "description" : "## Getting started with spaCy and Named Entities",
-"datePublished" : "2020-02-14T15:00:00-08:00",
-"dateModified" : "2020-02-14T15:00:00-08:00",
+"datePublished" : "2020-02-14T16:11:00-08:00",
+"dateModified" : "2020-02-14T16:11:00-08:00",
 "keywords" : "python,Spacy,Named Entity Recognition,RedisGraph,NLP" ,
 "author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }],
 "publisher" : { "@type" : "Person", "name" : "Alex Miłowski"}
@@ -114,13 +114,13 @@ For others, such as plural forms, it is often hard to understand, without use of
 some ontology, whether a plural form is the correct form (e.g., Kubernetes is
 always plural).</p>
 <h2>Co-occurrence Graphs via Property Graphs</h2>
-<p>An interesting graph to generate is the Co-occurrence of two entities. Generating
+<p>An interesting graph to generate is the co-occurrence of two entities. Generating
 this graph is issue of counting a storing the uses of terms within a resource
-(e.g., a blog post) and then querying for their Co-occurrence. Keeping track of
+(e.g., a blog post) and then querying for their co-occurrence. Keeping track of
 which resource url uses what entity is essential.</p>
 <p>We can create a simple graph with a node for the resource and node for each
 entity. An edge between these will indicate usage and a property on that edge
-will be the count.</p>
+for the use count.</p>
 <p>For example, the resource <code>https://www.milowski.com/journal/entry/2020-01-17T12:43:00-08:00/</code>
 contains the entities and counts:</p>
 <pre><code>Graphs : 1, {'NORP'}
@@ -147,7 +147,7 @@ SET u3.count = 1
 of an entity across all the blog posts:</p>
 <pre><code class="language-Cypher">MATCH (a:BlogPosting)-[u:uses]-&gt;(e:Entity) RETURN e.text, count(a), sum(u.count)
 </code></pre>
-<p>We can also find the Co-occurrences of terms and compute various counts:</p>
+<p>We can also find the co-occurrences of terms and compute various counts:</p>
 <pre><code class="language-Cypher">MATCH (e1:Entity)&lt;-[u1:uses]-(a)-[u2:uses]-&gt;(e2:Entity)
 WHERE e1 &lt;&gt; e2
 RETURN e1.text, e2.text, count(a), sum(u1.count), sum(u2.count)
@@ -195,11 +195,11 @@ host.docker.internal:6379&gt; graph.query test 'match (a:BlogPosting) return cou
 3) 1) &quot;Query internal execution time: 22.808400 milliseconds&quot;
 </code></pre>
 <h2>Visualizing Co-occurrence of Entities</h2>
-<p>Using the Co-occurrence data from the query result, we can visualize the connection
-between entities. For example, for entities found at least twice, the following
-entities are connected:</p>
+<p>Using the co-occurrence data from the query result, we can visualize the connection
+between entities. For example, for entities found at least twice we have the
+following co-occurrence graph:</p>
 <img src='entities-min-count-2.png' width='100%'/>
-<p>If you include all the entities detected, you get the following graph. My favourite
+<p>If you include all the entities detected, you get the following co-occurrence graph. My favourite
 discoveries are entities <em>Google Scrooge</em> and <em>International Talk Like a Pirate Day</em>.</p>
 <img src='entities-min-count-1.png' width='100%'/>
 <h2>Conclusions</h2>
