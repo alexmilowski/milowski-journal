@@ -18,14 +18,15 @@
 <h2>Getting started with spaCy and Named Entities</h2>
 <p>As an experiment, I wanted to extract various significant &quot;keywords&quot; from my
 blog posts and compare them to the curated terms I have tagged over the years.
-This is a kind of NLP task where various terms are identified by their part of speech
-and role within the sentences. Over the years, this process have evolved to
-a specific task of Named Entity Recognition and Resolution.</p>
+This is a kind of NLP task called Named Entity Recognition where various
+terms are identified by their part of speech and role within the sentences. A
+subsequent task is to resolve various forms of duplication, plurals, or other
+variations of the same task (e.g., Entity Resolution).</p>
 <p>Fortunately for me, the python <a href="https://spacy.io">spaCy</a>
-library has a very useful API and particularly great pre-trained language model
+library has a very useful API and provides a particularly great pre-trained language model
 (e.g., en_core_web_sm for English language text). Installation of the model
-is straightforward and then you just tell spacy to load the model with a
-single line of code. This returns a function that you can apply
+is straightforward and use is simple: you just tell spacy to load the model with a
+single line of code which returns a function that you can apply
 to the text you would like to analyze.</p>
 <p>For example, first we install spaCy and download the model:</p>
 <pre><code class="language-Python">pip install spacy
@@ -152,6 +153,47 @@ WHERE e1 &lt;&gt; e2
 RETURN e1.text, e2.text, count(a), sum(u1.count), sum(u2.count)
 </code></pre>
 <p>The full code example that does this is available <a href="analyze.py">here</a>.</p>
+<h2>Using RedisGraph</h2>
+<p>We can run the whole process and load the data into <a href="https://oss.redislabs.com/redisgraph/">RedisGraph</a>
+for analysis. RedisGraph provides an implementation of the Cypher query language
+and allows you to store property graphs along side other data structures in Redis.</p>
+<p>You can start an instance of RedisGraph via docker:</p>
+<pre><code class="language-bash">docker run -p 6379:6379 redislabs/redisgraph:2.0.1
+</code></pre>
+<p>We can then run the analysis code on my website via this <a href="urls.txt">list of urls</a>:</p>
+<pre><code class="language-bash">pip install redis redisgraph
+cat urls.txt | python analyze.py --load --show-query
+</code></pre>
+<p>This will load the posts and entities into the database into a graph called <code>test</code>.</p>
+<p>We can then run the Redis CLI against the instance and query:</p>
+<pre><code class="language-bash">docker run -it --rm redis redis-cli -h host.docker.internal
+host.docker.internal:6379&gt; graph.query test 'match (a:BlogPosting) return count(a)'
+1) 1) &quot;count(a)&quot;
+2) 1) 1) (integer) 46
+3) 1) &quot;Query internal execution time: 0.603200 milliseconds&quot;
+</code></pre>
+<p>And we can list the co-occurrences ordered by count:</p>
+<pre><code class="language-bash">host.docker.internal:6379&gt; graph.query test 'match (e1:Entity)&lt;-[u1:uses]-(a)-[u2:uses]-&gt;(e2:Entity) where e1&lt;&gt;e2 return e1.text,e2.text,count(a) order by count(a) desc limit 5'
+1) 1) &quot;e1.text&quot;
+   2) &quot;e2.text&quot;
+   3) &quot;count(a)&quot;
+2) 1) 1) &quot;XProc&quot;
+      2) &quot;MarkLogic&quot;
+      3) (integer) 8
+   2) 1) &quot;MarkLogic&quot;
+      2) &quot;XProc&quot;
+      3) (integer) 8
+   3) 1) &quot;Green Turtle&quot;
+      2) &quot;API&quot;
+      3) (integer) 4
+   4) 1) &quot;MarkLogic&quot;
+      2) &quot;XML&quot;
+      3) (integer) 4
+   5) 1) &quot;API&quot;
+      2) &quot;Green Turtle&quot;
+      3) (integer) 4
+3) 1) &quot;Query internal execution time: 22.808400 milliseconds&quot;
+</code></pre>
 <h2>Visualizing Co-occurrence of Entities</h2>
 <p>Using the Co-occurrence data from the query result, we can visualize the connection
 between entities. For example, for entities found at least twice, the following
