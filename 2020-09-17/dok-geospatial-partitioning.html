@@ -1,0 +1,35 @@
+<article xmlns="http://www.w3.org/1999/xhtml" vocab="http://schema.org/" typeof="BlogPosting" resource="http://www.milowski.com/journal/entry/2020-09-17T14:00:00-08:00">
+<script type="application/ld+json">
+{
+"@context" : "http://schema.org/",
+"@id" : "http://www.milowski.com/journal/entry/2020-09-17T14:00:00-08:00",
+"@type" : "BlogPosting",
+"genre" : "blog",
+"headline" : "Data on Kubernetes meetup - Geospatial Sensor Networks and Partitioning Data",
+"description" : "I recently gave a talk at the",
+"datePublished" : "2020-09-17T14:00:00-08:00",
+"dateModified" : "2020-09-17T14:00:00-08:00",
+"keywords" : "python,redis,air quality,AQI,Kubernetes,data science" ,
+"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
+}
+</script>
+<h1>Data on Kubernetes meetup - Geospatial Sensor Networks and Partitioning Data</h1>
+<p>I recently gave a talk at the
+<a href="https://www.meetup.com/Data-on-Kubernetes-community/events/273254207/">Data on Kubernetes meetup on September 15th, 2020</a>
+where I presented my research and experience with publishing and using
+geospatial sensor data on the Web. I spoke a bit about the challenges of
+reliably collecting and processing geospatial sensor data (e.g., weather
+station or air quality sensor data). I also went through the
+evolution of some of my work towards Kubernetes-based deployments. Finally,
+I demonstrated a Redis-based application for air quality measurements.</p>
+<h2>Abstract</h2>
+<p>We use resources like weather reports or air quality measurements to navigate the world. These resources become especially important when faced by extreme events like the current wildfires in the Western USA. The data for the reports, predictions, and maps all start as realtime sensor networks.</p>
+<p>In this talk, Alex will present some of his research into scientific data representation on the Web and how the key mechanism is the partitioning, annotation, and naming of data representations. We’ll take a look at a few examples, including some recent work on air quality data relating to the current wildfires in the western USA. We’ll explore the central question of how geospatial sensor network data can be collected and consumed within K8s deployments.</p>
+<h2>Video and Podcast</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/D5WsvsRvH5Q" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe src="https://anchor.fm/dokcommunity/embed/episodes/Data-on-kubernetes-community-9-Geospatial-Sensor-Networks-and-Partitioning-Data-ejpi1r/a-a386ci2" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
+<h2>Code</h2>
+<p>Github: <a href="https://github.com/alexmilowski/redis-aqi">alexmilowski/redis-aqi</a></p>
+<h2>Presentation</h2>
+<iframe width="560" height="315" src="geospatial-sensor-networks-and-partitioning-data.pdf" frameborder="0" scrolling="no"></iframe>
+</article>
