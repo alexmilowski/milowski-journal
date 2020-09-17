@@ -39,4 +39,4 @@ content: |
 
   ## Presentation
 
-  <iframe width="560" height="315" src="geospatial-sensor-networks-and-partitioning-data.pdf" frameborder="0" scrolling="no"></iframe>
+  [View presentation](http://alexmilowski.github.io/milowski-journal/2020-09-17/geospatial-sensor-networks-and-partitioning-data.pdf)
