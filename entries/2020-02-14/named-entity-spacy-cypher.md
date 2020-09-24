@@ -8,9 +8,9 @@ keywords:
 - Named Entity Recognition
 - RedisGraph
 - NLP
+description: |
+  A brief introduction to using spaCy for NER and creating co-occurrence graphs.
 content: |
-
-  # Named Entity Recognition and Co-occurrence Graphs
 
   ## Getting started with spaCy and Named Entities
 

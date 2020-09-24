@@ -8,8 +8,8 @@ keywords:
 - Redis
 - RedisGraph
 - Property Graph
+description: Just a bit of fun ...
 content: |
-  # New Year - New Fun
 
   I've been playing around with Property Graphs and Cypher over the last
   year. In December 2019, I started a new job as Product Evangelist for
