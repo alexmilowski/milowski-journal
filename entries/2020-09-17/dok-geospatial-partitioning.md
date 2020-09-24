@@ -9,11 +9,22 @@ keywords:
 - AQI
 - Kubernetes
 - data science
+description: |
+  I gave a talk about recent work where I built an example of collecting and
+  utilizing air-quality sensor data using Redis and Kubernetes as an example
+  of partitioning geospatial data in Redis and using Kubernetes for the
+  "Data DevOps".
 content: |
-  # Data on Kubernetes meetup - Geospatial Sensor Networks and Partitioning Data
 
-  I recently gave a talk at the
-  [Data on Kubernetes meetup on September 15th, 2020](https://www.meetup.com/Data-on-Kubernetes-community/events/273254207/)
+  With all the wildfires, I recently noticed that the [PurpleAir](https://www2.purpleair.com)
+  sensors and their data are also accessible via an API. I [built an
+  application](https://github.com/alexmilowski/redis-aqi) to collect, interpolate, and visualize these values over time. It
+  was a great way to explore the geospatial features of [Redis](https://redis.io)
+  and how I might use it to replicate some of my past methodologies with
+  exposing geospatial data on the Web.
+
+  Just last Tuesday, September 15th, 2020, I gave a talk at the
+  [Data on Kubernetes meetup](https://www.meetup.com/Data-on-Kubernetes-community/events/273254207/)
   where I presented my research and experience with publishing and using
   geospatial sensor data on the Web. I spoke a bit about the challenges of
   reliably collecting and processing geospatial sensor data (e.g., weather
@@ -25,7 +36,7 @@ content: |
 
   We use resources like weather reports or air quality measurements to navigate the world. These resources become especially important when faced by extreme events like the current wildfires in the Western USA. The data for the reports, predictions, and maps all start as realtime sensor networks.
 
-  In this talk, Alex will present some of his research into scientific data representation on the Web and how the key mechanism is the partitioning, annotation, and naming of data representations. We’ll take a look at a few examples, including some recent work on air quality data relating to the current wildfires in the western USA. We’ll explore the central question of how geospatial sensor network data can be collected and consumed within K8s deployments.
+  In this talk, I will present some of my research into scientific data representation on the Web and how the key mechanism is the partitioning, annotation, and naming of data representations. We’ll take a look at a few examples, including some recent work on air quality data relating to the current wildfires in the western USA. We’ll explore the central question of how geospatial sensor network data can be collected and consumed within K8s deployments.
 
   ## Video and Podcast
 
