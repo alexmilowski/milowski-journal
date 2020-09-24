@@ -10,10 +10,23 @@
 "datePublished" : "2012-04-11T11:08:29.620000-07:00",
 "dateModified" : "2012-04-11T11:08:29.620000-07:00",
 "keywords" : "MarkLogic,big data,weather" ,
-"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }],
-"publisher" : { "@type" : "Person", "name" : "Alex Miłowski"}
+"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
 }
 </script>
+<section class="info">
+
+<div class="metadata">
+<p>
+<a href="http://www.milowski.com/journal/entry/2012-04-11T11:08:29.620000-07:00" title="link to this entry">🔗</a> Published on
+<span property="datePublished" content="2012-04-11T11:08:29.620000-07:00">2012-04-11 11:08:29.620000-07:00</span>
+<span property="dateModified" content="2012-04-11T11:08:29.620000-07:00"></span>
+</p>
+<p property="keywords">MarkLogic,big data,weather</p>
+<p property="description">I've heard over-and-over that [MarkLogic](http://www.marklogic.com/) is a fantastic XML database--you just import your documents and query away!  Given the quality of the people that I personally know at MarkLogic, I'm sure that's true.  Still, I wanted to put that to the test.  Every database system has techniques for getting reasonable or  “blindingly fast” performance and I wanted to see how that works and at what cost.</p>
+</div>
+</p>
+<p property="author" typeof="Person"><span property="name">Alex Miłowski</span></p>
+</section>
 <h1>Experiments with Big Weather Data in MarkLogic - The Naive Approach</h1>
 <p>I've heard over-and-over that <a href="http://www.marklogic.com/">MarkLogic</a> is a fantastic XML database--you just import your documents and query away!  Given the quality of the people that I personally know at MarkLogic, I'm sure that's true.  Still, I wanted to put that to the test.  Every database system has techniques for getting reasonable or  “blindingly fast” performance and I wanted to see how that works and at what cost.</p>
 <p>The process that receives the APRS weather reports from the <a href="http://www.wxqa.com/">CWOP</a> produces data in five minute segments stored in separate documents and from each of the three APRS-IS servers.  Each document produced is between 130K and 430K in size and contains between 450 to 1600 weather reports.  Each hour, 36 of those documents are produced.  On average, about 17MB per hour, or 12GB per month, of data is produced.</p>

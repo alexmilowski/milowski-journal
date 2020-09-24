@@ -10,10 +10,23 @@
 "datePublished" : "2013-03-12T06:08:53.199000+00:00",
 "dateModified" : "2013-03-12T06:08:53.199000+00:00",
 "keywords" : "RDFa,JavaScript,RDFa API" ,
-"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }],
-"publisher" : { "@type" : "Person", "name" : "Alex Miłowski"}
+"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
 }
 </script>
+<section class="info">
+
+<div class="metadata">
+<p>
+<a href="http://www.milowski.com/journal/entry/2013-03-12T06:08:53.199000+00:00" title="link to this entry">🔗</a> Published on
+<span property="datePublished" content="2013-03-12T06:08:53.199000+00:00">2013-03-12 06:08:53.199000+00:00</span>
+<span property="dateModified" content="2013-03-12T06:08:53.199000+00:00"></span>
+</p>
+<p property="keywords">RDFa,JavaScript,RDFa API</p>
+<p property="description">After numerous inquires about my opinion on making the [RDFa API](http://www.w3.org/TR/rdfa-api/) simpler, I decided to do a bit of research. I've written several fairly complex *in-situ* services that use the RDFa API to provide functionality within the browser. As such, I decided to look at which parts of the RDFa API or the extensions that [Green Turtle ](https://code.google.com/p/green-turtle/) provides are actually used.</p>
+</div>
+</p>
+<p property="author" typeof="Person"><span property="name">Alex Miłowski</span></p>
+</section>
 <h1>Refactoring the RDFa API - Getting the Data</h1>
 <p>After numerous inquires about my opinion on making the <a href="http://www.w3.org/TR/rdfa-api/">RDFa API</a> simpler, I decided to do a bit of research. I've written several fairly complex <em>in-situ</em> services that use the RDFa API to provide functionality within the browser. As such, I decided to look at which parts of the RDFa API or the extensions that <a href="https://code.google.com/p/green-turtle/">Green Turtle </a> provides are actually used.</p>
 <p>I went through all my code and unceremonious counted all the different bits of RDFa related API calls I make. Here is the breakdown:</p>

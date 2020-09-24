@@ -10,10 +10,23 @@
 "datePublished" : "2013-06-11T16:52:39.010000+00:00",
 "dateModified" : "2013-06-11T16:52:39.010000+00:00",
 "keywords" : "RDFa,Microdata,Green Turtle" ,
-"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }],
-"publisher" : { "@type" : "Person", "name" : "Alex Miłowski"}
+"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
 }
 </script>
+<section class="info">
+
+<div class="metadata">
+<p>
+<a href="http://www.milowski.com/journal/entry/2013-06-11T16:52:39.010000+00:00" title="link to this entry">🔗</a> Published on
+<span property="datePublished" content="2013-06-11T16:52:39.010000+00:00">2013-06-11 16:52:39.010000+00:00</span>
+<span property="dateModified" content="2013-06-11T16:52:39.010000+00:00"></span>
+</p>
+<p property="keywords">RDFa,Microdata,Green Turtle</p>
+<p property="description">After being asked how hard it would be to add [Microdata](http://dev.w3.org/html5/md-LC/) , at least in some minimal way, to [Green Turtle](https://code.google.com/p/green-turtle/) I decided to find out.  Since I already have a bunch of infrastructure, this didn't feel like a hard thing to add.  If I did add support, at least experimentally, microdata and RDFa could use the same API and scripting support.</p>
+</div>
+</p>
+<p property="author" typeof="Person"><span property="name">Alex Miłowski</span></p>
+</section>
 <h1>Microdata in Green Turtle</h1>
 <p>After being asked how hard it would be to add <a href="http://dev.w3.org/html5/md-LC/">Microdata</a> , at least in some minimal way, to <a href="https://code.google.com/p/green-turtle/">Green Turtle</a> I decided to find out.  Since I already have a bunch of infrastructure, this didn't feel like a hard thing to add.  If I did add support, at least experimentally, microdata and RDFa could use the same API and scripting support.</p>
 <p>Of course, this requires understanding how to interpret microdata and generate a triples graph from it.  There are some pathological cases, such as untyped items, that are just impossible.  For example:</p>

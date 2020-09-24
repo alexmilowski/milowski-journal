@@ -10,10 +10,23 @@
 "datePublished" : "2014-09-03T23:36:29.634000+00:00",
 "dateModified" : "2014-09-03T23:36:29.634000+00:00",
 "keywords" : "OpenNEX,NASA,HDF,Python" ,
-"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }],
-"publisher" : { "@type" : "Person", "name" : "Alex Miłowski"}
+"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
 }
 </script>
+<section class="info">
+
+<div class="metadata">
+<p>
+<a href="http://www.milowski.com/journal/entry/2014-09-03T23:36:29.634000+00:00" title="link to this entry">🔗</a> Published on
+<span property="datePublished" content="2014-09-03T23:36:29.634000+00:00">2014-09-03 23:36:29.634000+00:00</span>
+<span property="dateModified" content="2014-09-03T23:36:29.634000+00:00"></span>
+</p>
+<p property="keywords">OpenNEX,NASA,HDF,Python</p>
+<p property="description">I've recently been playing around a lot with HDF5 data as second part of the [&lt;cite&gt;NASA Challenge: New Ways to Use, Visualize, and Analyze OpenNEX Climate and Earth Science Data&lt;/cite&gt;](https://www.innocentive.com/ar/challenge/9933584) . [Henry Thompson](http://www.ltg.ed.ac.uk/~ht/)  and I won a small award in the first challenge for our proposal to apply the PAN Methodology to the OpenNEX data.  Specifically, we are looking at the [NASA Earth Exchange (NEX) ](https://nex.nasa.gov/nex/static/htdocs/site/extra/opennex/) data sets that are [hosted by Amazon AWS](https://aws.amazon.com/nasa/nex/) that provides climate projects both retrospectively (1950-2005) and prospectively (2006-2099).</p>
+</div>
+</p>
+<p property="author" typeof="Person"><span property="name">Alex Miłowski</span></p>
+</section>
 <h1>NASA OpenNEX Challenge and Processing HDF5 in Python</h1>
 <p>I've recently been playing around a lot with HDF5 data as second part of the <a href="https://www.innocentive.com/ar/challenge/9933584"><cite>NASA Challenge: New Ways to Use, Visualize, and Analyze OpenNEX Climate and Earth Science Data</cite></a> . <a href="http://www.ltg.ed.ac.uk/~ht/">Henry Thompson</a>  and I won a small award in the first challenge for our proposal to apply the PAN Methodology to the OpenNEX data.  Specifically, we are looking at the <a href="https://nex.nasa.gov/nex/static/htdocs/site/extra/opennex/">NASA Earth Exchange (NEX) </a> data sets that are <a href="https://aws.amazon.com/nasa/nex/">hosted by Amazon AWS</a> that provides climate projects both retrospectively (1950-2005) and prospectively (2006-2099).</p>
 <p>The model is partitioned into files stored on Amazon S3 in 60 month segments (5 years). Each file contains a grid at 1/120° resolution of temperature values from the climate model.  The extent of the data set roughly covers the area between 24° to 49° latitude and -127° to -66° longitude (think: North America). In total, that is 60 copies of a matrix of 3105 columns by 7025 rows or 1,308,757,500 temperature values. Thus, each file is roughly 1.3GB in size.</p>

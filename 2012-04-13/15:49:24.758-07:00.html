@@ -10,10 +10,23 @@
 "datePublished" : "2012-04-13T15:49:24.758000-07:00",
 "dateModified" : "2012-04-13T15:49:24.758000-07:00",
 "keywords" : "MarkLogic,big data,weather" ,
-"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }],
-"publisher" : { "@type" : "Person", "name" : "Alex Miłowski"}
+"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
 }
 </script>
+<section class="info">
+
+<div class="metadata">
+<p>
+<a href="http://www.milowski.com/journal/entry/2012-04-13T15:49:24.758000-07:00" title="link to this entry">🔗</a> Published on
+<span property="datePublished" content="2012-04-13T15:49:24.758000-07:00">2012-04-13 15:49:24.758000-07:00</span>
+<span property="dateModified" content="2012-04-13T15:49:24.758000-07:00"></span>
+</p>
+<p property="keywords">MarkLogic,big data,weather</p>
+<p property="description">The [ “Naive Approach” ](http://www.milowski.com/journal/entry/2012-04-11T11:08:29.62-07:00/) of just importing the weather reports verbatim works if all you want to do is enumerate a particular weather report's data by segments of time.  That is, this expression works really well:</p>
+</div>
+</p>
+<p property="author" typeof="Person"><span property="name">Alex Miłowski</span></p>
+</section>
 <h1>Experiments with Big Weather Data in MarkLogic - Doomed Approach</h1>
 <p>The <a href="http://www.milowski.com/journal/entry/2012-04-11T11:08:29.62-07:00/"> “Naive Approach” </a> of just importing the weather reports verbatim works if all you want to do is enumerate a particular weather report's data by segments of time.  That is, this expression works really well:</p>
 <pre><code>/s:aprs/s:report[@from='DW8568' and @received&gt;$start and @received&lt;$end]

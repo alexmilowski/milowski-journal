@@ -10,10 +10,23 @@
 "datePublished" : "2012-09-19T15:38:11.827000+00:00",
 "dateModified" : "2012-09-19T15:38:11.827000+00:00",
 "keywords" : "RDFa,browser" ,
-"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }],
-"publisher" : { "@type" : "Person", "name" : "Alex Miłowski"}
+"author" : [ { "@type" : "Person", "name" : "Alex Miłowski" }]
 }
 </script>
+<section class="info">
+
+<div class="metadata">
+<p>
+<a href="http://www.milowski.com/journal/entry/2012-09-19T15:38:11.827000+00:00" title="link to this entry">🔗</a> Published on
+<span property="datePublished" content="2012-09-19T15:38:11.827000+00:00">2012-09-19 15:38:11.827000+00:00</span>
+<span property="dateModified" content="2012-09-19T15:38:11.827000+00:00"></span>
+</p>
+<p property="keywords">RDFa,browser</p>
+<p property="description">While there is a lot talk about how [RDFa](http://www.w3.org/TR/rdfa-core/) is or will be used by search engines and others for indexing, my main focus has been on how authors can use RDFa to encode  “local knowledge.” Services that are local to the page, most often implemented by inclusion of some script, act upon such local knowledge that is encoded somewhere in the page.  In the past, people used the `class` or `id` attributes to identify the targeted content and then some amount of scripting made the rest of the connections.</p>
+</div>
+</p>
+<p property="author" typeof="Person"><span property="name">Alex Miłowski</span></p>
+</section>
 <h1>RDFa in the Browser</h1>
 <p>While there is a lot talk about how <a href="http://www.w3.org/TR/rdfa-core/">RDFa</a> is or will be used by search engines and others for indexing, my main focus has been on how authors can use RDFa to encode  “local knowledge.” Services that are local to the page, most often implemented by inclusion of some script, act upon such local knowledge that is encoded somewhere in the page.  In the past, people used the <code>class</code> or <code>id</code> attributes to identify the targeted content and then some amount of scripting made the rest of the connections.</p>
 <p>I'm interested in using RDFa in this role of encoding local knowledge.  Once the author has made annotations using RDFa, a well-written service can just be included by referencing a script that acts upon the page by locating elements with certain type annotations.  An example of this is my post about <a href="http://www.milowski.com/journal/entry/2012-05-24T09:17:12.327-07:00/"><cite>Using RDFa to Annotate Images</cite></a> where images are overlaid with annotations drawn by inserting a canvas layer into the document.</p>
