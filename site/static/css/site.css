@@ -1,9 +1,7 @@
 body {
    margin: 0.5em 0.5em;
    background-color: white;
-}
-body > main {
-   font-size: 1em;
+   font-size: 1.25em;
    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
 }
 
@@ -38,7 +36,8 @@ section.entry > nav.article {
 
 aside section.about {
    font-size: 0.875em;
-   border-bottom: 1px solid rgb(200,200,200);
+   border-bottom: 1pt solid rgb(200,200,200);
+   margin-bottom: .125em;
 }
 
 aside > section > h2 {
@@ -49,6 +48,10 @@ aside > section > h2 {
 aside h2 span {
    float: right;
    font-size: 0.8125em;
+}
+
+header {
+   padding-left: 2em;
 }
 
 header > h1, footer > h1 {
@@ -139,11 +142,13 @@ div:not(.highlight) pre , article > pre {
    color: #f8f8f2;
    padding: 0.125em 0.125em;
    padding-left: 0.25em;
+   overflow-x: scroll;
 }
 
 div.highlight > pre {
    padding: 0.125em 0.125em;
    padding-left: 0.25em;
+   overflow-x: scroll;
 }
 figure > img {
    display: block;
@@ -153,4 +158,13 @@ figure > img {
 
 figcaption {
    text-align: center;
+}
+
+@media screen and (max-width: 640px) and (orientation: portrait) {
+
+   main > aside {
+      float: none;
+      width: auto;
+      margin-top: 1em;
+   }
 }
