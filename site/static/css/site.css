@@ -1,0 +1,156 @@
+body {
+   margin: 0.5em 0.5em;
+   background-color: white;
+}
+body > main {
+   font-size: 1em;
+   font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
+header {
+   min-height: 2em;
+}
+
+main > section {
+   padding-left: 2em;
+   padding-right: 2em;
+}
+
+main > aside {
+   float: right;
+   width: 20%;
+   min-width: 16em;
+   background-color: white;
+   z-index: 1;
+   padding-left: 1em;
+   padding-right: 1em;
+   padding-bottom: 1em;
+   margin-top: -3em;
+   text-align:justify;
+}
+
+section.entry > nav.article {
+   order: 1;
+   display: block;
+   font-size: 0.875em;
+   margin-bottom: 1em;
+}
+
+aside section.about {
+   font-size: 0.875em;
+   border-bottom: 1px solid rgb(200,200,200);
+}
+
+aside > section > h2 {
+   margin-top: 0.375em;
+   border-bottom: 1pt solid rgb(200,200,200);
+}
+
+aside h2 span {
+   float: right;
+   font-size: 0.8125em;
+}
+
+header > h1, footer > h1 {
+   font-family: monospace;
+   font-size: 1.5em;
+}
+
+article > h1 {
+   font-size: 1.5em;
+   border-bottom: 1px solid rgb(200,200,200);
+   margin-top: 0px;
+}
+
+article > section.info {
+   margin-bottom: 2em;
+}
+article > section.info > .metadata span {
+   font-size: 0.825em;
+
+}
+
+.between-article {
+   margin-top: 3em;
+   margin-bottom: 3em;
+   display: flex;
+   align-items: center;
+   text-align: center;
+}
+.between-article:before, .between-article:after {
+   flex: 1;
+   content: '';
+   border-bottom: 1px solid rgb(200,200,200)
+}
+
+article aside.keywords {
+   font-size: 0.75em;
+}
+
+article aside.keywords .keyword {
+   color: #cc6600;
+}
+
+article aside.keywords .keyword:before {
+   content: "#";
+   margin-right: -0.125em;
+}
+
+main > aside > .keywords {
+   margin-top: 0.5em;
+   font-size: 0.75em;
+   text-align: left;
+}
+main > aside > .keywords .keyword:before {
+   content: "#";
+   margin-right: -0.125em;
+}
+main > aside > .keywords .keyword {
+   padding-right: 0.25em;
+}
+
+.entry-list p {
+   color: rgb(100,100,100)
+}
+
+/* general rules */
+
+h1, h2, h3, h4, h5, h6 {
+   font-family: Helvetica, Arial, sans-serif;
+   color: rgb(50,50,50);
+}
+
+h1 {
+   color: rgb(50,50,50);
+}
+
+h2 {
+   font-size: 1.2em;
+   padding-bottom: 0.125em;
+}
+
+a:link, a:visited {
+   color: #cc6600;
+   text-decoration: none;
+}
+
+div:not(.highlight) pre , article > pre {
+   background-color: black;
+   color: #f8f8f2;
+   padding: 0.125em 0.125em;
+   padding-left: 0.25em;
+}
+
+div.highlight > pre {
+   padding: 0.125em 0.125em;
+   padding-left: 0.25em;
+}
+figure > img {
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+figcaption {
+   text-align: center;
+}

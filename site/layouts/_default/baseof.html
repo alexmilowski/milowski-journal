@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    {{- partial "head.html" . -}}
+</head>
+
+<body>
+    {{- partial "header.html" . -}}
+    <main>
+        <aside>
+           <section class="about">
+              <h2>About Me
+                 <span>
+                  <a href="https://www.linkedin.com/in/alexmilowski/" target="linkedin"><img src="https://static.licdn.com/scds/common/u/img/webpromo/btn_in_20x15.png" border="0" alt="View Alex Milowski's profile on LinkedIn" >profile</a>
+                 </span>
+                </h2>
+              <p>Dr. Milowski is a serial entrepreneur and computer scientist with experience in scientific applications, web and semantic technologies, 
+                 graph databases, machine learning, natural language processing, data representation, and algorithms. He holds a PhD in Informatics from the University of Edinburgh, where he researched large-scale computation over scientific data on the web.</p>
+           </section>
+           <section class="keywords">
+              {{ range .Site.Taxonomies.keywords.Alphabetical}}
+              <a class="keyword" href="{{ .Page.Permalink }}">{{ .Page.Title }} ({{.Count}})</a> 
+              {{ end }}
+           </section>
+        </aside>
+     
+        {{- block "main" . }}{{- end }}
+   
+    </main>
+</body>
+
+</html>

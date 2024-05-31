@@ -1,0 +1,9 @@
+baseURL: 'https://milowski.com/'
+languageCode: 'en-us'
+title: 'Alex Miłowski, geek'
+taxonomies:
+  keyword: keywords
+markup:
+  goldmark:
+    renderer:
+      unsafe: true

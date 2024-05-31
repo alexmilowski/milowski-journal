@@ -1,0 +1,7 @@
+{{ define "main" }}
+<main>
+  {{ range .Pages.ByDate.Reverse }}
+  <p><a href={{.RelPermalink}} title="entry">{{.Title}}</a> (<span title={{ .Date.UTC | time.Format "2006-01-02 15:04:05Z" }}>{{ .Date | time.Format "2006-01-02" }}</span>)</p>
+  {{ end}}
+  </main>
+{{ end }}
