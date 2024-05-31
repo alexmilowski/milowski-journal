@@ -20,7 +20,7 @@
            </section>
            <section class="keywords">
               {{ range .Site.Taxonomies.keywords.Alphabetical}}
-              <a class="keyword" href="{{ .Page.Permalink }}">{{ .Page.Title }} ({{.Count}})</a> 
+              <a class="keyword" href="{{ .Page.RelPermalink }}">{{ .Page.Title }} ({{.Count}})</a> 
               {{ end }}
            </section>
         </aside>
