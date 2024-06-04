@@ -23,8 +23,7 @@ main > aside {
    padding-left: 1em;
    padding-right: 1em;
    padding-bottom: 1em;
-   margin-top: -3em;
-   text-align:justify;
+   margin-top: -3.5em;
 }
 
 section.entry > nav.article {
@@ -45,6 +44,11 @@ aside > section > h2 {
    border-bottom: 1pt solid rgb(200,200,200);
 }
 
+aside section.about p > img {
+   float: left;
+   width: 40%;
+}
+
 aside h2 span {
    float: right;
    font-size: 0.8125em;
@@ -57,6 +61,11 @@ header {
 header > h1, footer > h1 {
    font-family: monospace;
    font-size: 1.5em;
+}
+
+header > h1 > img {
+   width: 2em;
+   vertical-align: middle;
 }
 
 article > h1 {
