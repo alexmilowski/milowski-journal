@@ -11,6 +11,7 @@ keywords:
   - Property Graph
   - ISO
 aliases: /p/2024-06/
+description: A short introduction what a GQL query looks like relative to Cypher
 ---
 
 [GQL ISO/IEC 39075:2024](https://www.iso.org/standard/76120.html) is a new database query language for property graphs that was recently 
