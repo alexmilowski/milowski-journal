@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.LanguageCode }}">
+  <head>
+    <title>{{ .Permalink }}</title>
+    <link rel="canonical" href="{{ .Permalink }}">
+    <meta name="robots" content="noindex">
+    <meta charset="utf-8">
+    <meta http-equiv="refresh" content="0; url={{ .Permalink }}">
+    <meta property="og:url" content="{{ .Page.Permalink }}">
+    <meta property="og:type" content="text/html">
+    <meta property="og:title" content="{{ .Title }}">
+    <meta property="og:image" content="{{ if .Param "image" }}{{ .Param "image" | absURL }}{{ else }}{{ "/img/logo.png" | absURL }}{{ end}}">
+    <meta property="og:description" content="{{ .Description}}">
+   </head>
+</html>
