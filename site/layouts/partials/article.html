@@ -1,7 +1,7 @@
 <article>
    <h1>{{.Title}}</h1>
    <section class="info">
-      <p class="metadata"><script type="IN/Share" data-url={{ absURL "" }}></script> <a href={{ absURL "" }} title="link to this entry">🔗</a> <span title={{ .Date.UTC | time.Format "2006-01-02 15:04:05Z" }}>{{ .Date | time.Format "2006-01-02" }}</span> </p>
+      <p class="metadata"><script type="IN/Share" data-url={{ .Page.Permalink }}></script> <a href={{ .Page.Permalink }} title="link to this entry">🔗</a> <span title={{ .Date.UTC | time.Format "2006-01-02 15:04:05Z" }}>{{ .Date | time.Format "2006-01-02" }}</span> </p>
    </section>
    <aside class="keywords">
       {{ $keywords := .Site.Taxonomies.keywords}}
