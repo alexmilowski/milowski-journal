@@ -1,0 +1,16 @@
+<figure class="{{ with .Get "class" }}{{ . }}{{ end }} listing">
+    {{ .Inner | .Page.RenderString}}
+   <figcaption>
+      {{ with (.Get "title") -}}
+        <h4>{{ . }}</h4>
+      {{- end -}}
+      {{- if or (.Get "caption") (.Get "attr") -}}<p>
+        {{- .Get "caption" | markdownify -}}
+        {{- with .Get "attrlink" }}
+          <a href="{{ . }}">
+        {{- end -}}
+        {{- .Get "attr" | markdownify -}}
+        {{- if .Get "attrlink" }}</a>{{ end }}</p>
+      {{- end }}
+    </figcaption>
+</figure>
