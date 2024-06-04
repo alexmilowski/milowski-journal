@@ -4,10 +4,11 @@
 
 <link rel="shortcut icon" type="image/png" href='{{ "/img/favicon.png" | relURL }}'>
 <link rel="icon" type="image/png" href='{{ "/img/favicon.png" | relURL }}'>
-<meta property="og:url" content='{{ absURL "" }}'>
-<meta property="og:type" content="website">
+<meta property="og:url" content="{{ .Page.Permalink }}">
+<meta property="og:type" content="text/html">
 <meta property="og:title" content="{{ .Title }}">
-<meta property="og:description" content="">
+<meta property="og:image" content="{{ if .Param "image" }}{{ .Param "image" | absURL }}{{ else }}{{ "/img/logo.png" | absURL }}{{ end}}">
+<meta property="og:description" content="{{ .Description}}">
 <meta name="viewport" content="width=device-width, initial-scale=0.8125">
 <link rel="stylesheet" href='{{ "/css/site.css" | relURL }}' type="text/css" >
 <link rel="stylesheet" href='{{ "/css/syntax.css" | relURL }}' type="text/css" >
