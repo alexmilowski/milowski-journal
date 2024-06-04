@@ -4,6 +4,8 @@ title: 'Alex Miłowski, geek'
 taxonomies:
   keyword: keywords
 markup:
+  highlight:
+    noClasses: false
   goldmark:
     renderer:
       unsafe: true
