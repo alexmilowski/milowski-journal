@@ -128,7 +128,7 @@ h1 {
 }
 
 h2 {
-   font-size: 1.2em;
+   font-size: 1.325em;
    padding-bottom: 0.125em;
 }
 
@@ -137,18 +137,28 @@ a:link, a:visited {
    text-decoration: none;
 }
 
-div:not(.highlight) pre , article > pre {
-   background-color: black;
+div:not(.highlight) pre , article > pre, figure > pre {
+   background-color: rgb(75,75,75);
    color: #f8f8f2;
-   padding: 0.125em 0.125em;
-   padding-left: 0.25em;
+   padding: 0.25em 0.25em;
+   padding-left: 0.5em;
    overflow-x: scroll;
 }
 
+pre.mermaid {
+   background-color: white;
+}
+
 div.highlight > pre {
-   padding: 0.125em 0.125em;
-   padding-left: 0.25em;
+   /*background-color:  rgb(85,85,85) !important;*/
+   padding: 0.25em 0.25em !important;
+   padding-left: 0.5em !important;
    overflow-x: scroll;
+}
+
+figure {
+   margin-left: 0px;
+   margin-right: 0px;
 }
 figure > img {
    display: block;
@@ -158,6 +168,26 @@ figure > img {
 
 figcaption {
    text-align: center;
+}
+
+figure figcaption h4 {
+   margin-top: 0px;
+}
+
+figure.listing figcaption h4 {
+   margin-top: -0.5em;
+}
+
+figure.listing > pre, figure.listing div.highlight {
+   margin-left: 1em;
+   margin-right: 1em;
+}
+
+.note {
+   border-left: 1px solid rgb(200,200,200);
+   margin-left: 2em;
+   margin-right: 2em;
+   padding-left: 0.5em;
 }
 
 @media screen and (max-width: 640px) and (orientation: portrait) {
