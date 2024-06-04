@@ -1,0 +1,6 @@
+<div class="note">
+   <h4>Note:{{- with (.Get "title") -}} {{ . }}{{- end -}}</h4>
+   <div>
+      {{ .Inner | .Page.RenderString}}
+   </div>
+</div>
