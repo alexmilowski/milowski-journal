@@ -10,6 +10,7 @@ keywords:
   - Cypher
   - Property Graph
   - ISO
+aliases: /p/2024-06/
 ---
 
 [GQL ISO/IEC 39075:2024](https://www.iso.org/standard/76120.html) is a new database query language for property graphs that was recently 
