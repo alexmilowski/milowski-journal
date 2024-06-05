@@ -10,7 +10,7 @@ keywords:
   - Cypher
   - Property Graph
   - ISO
-aliases: /p/2024-06/
+aliases: /p/2024/06/04/
 description: A short introduction what a GQL query looks like relative to Cypher
 ---
 
