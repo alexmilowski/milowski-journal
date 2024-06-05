@@ -49,6 +49,10 @@ aside section.about p > img {
    width: 40%;
 }
 
+aside section.about h3 {
+   font-size: 1em;
+}
+
 aside h2 span {
    float: right;
    font-size: 0.8125em;
