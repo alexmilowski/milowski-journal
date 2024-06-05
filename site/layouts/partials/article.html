@@ -3,7 +3,7 @@
    <section class="info">
       <p class="metadata">
          {{- if .Aliases -}}<script type="IN/Share" data-url={{ index .Aliases 0 | absURL }}></script>{{- else -}}<script type="IN/Share" data-url={{ .Page.Permalink }}></script>{{- end -}}
-         <a href={{ .Page.Permalink }} title="link to this entry">🔗</a> <span title={{ .Date.UTC | time.Format "2006-01-02 15:04:05Z" }}>{{ .Date | time.Format "2006-01-02" }}</span> </p>
+         <a href={{ .Page.Permalink }} title="link to this entry">🔗</a> <time datetime="{{.Date.Format "2006-01-02T15:04:05Z07:00"}}" title={{ .Date.UTC | time.Format "2006-01-02 15:04:05Z" }}>{{ .Date | time.Format "2006-01-02" }}</time> </p>
    </section>
    <aside class="keywords">
       {{ $keywords := .Site.Taxonomies.keywords}}
