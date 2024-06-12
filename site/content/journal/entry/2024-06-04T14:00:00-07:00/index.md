@@ -21,11 +21,11 @@ language for storing and querying [Property Graph](https://en.wikipedia.org/wiki
 
 A property graph can be described as a directed multigraph where the nodes and edges may have:
 
- * labels - a set of "type names" associated with the target
+ * labels - like a set of "type names" associated with the target
  * properties - a set of name/value pairs
 
 A simple way to conceptualize a property graph is with an [entity-relationship model](https://en.wikipedia.org/wiki/Entity–relationship_model)
-but with the addition of *attributes for relations*. For example, a very simple graph of movies, actors, and genres might start with
+<s> but with the addition of *attributes for relations* </s>. For example, a very simple graph of movies, actors, and genres might start with
 an ER diagram as follows:
 
 ```mermaid
@@ -44,6 +44,11 @@ erDiagram
    }
 
 ```
+
+{{< note >}}
+**Relations may also have attributes** - if we go back to the original ["The Entity-Relationship Model -- Toward a unified view of data", Chen, 1976](https://dl.acm.org/doi/pdf/10.1145/320434.320440),
+you will see: *"The information about an entity or a relationship is obtained by observation or measurement, and is expression by a set of attribute-value pairs."* As such, an ER diagram a great way to describe a property graph, but diagramming tools (e.g., mermaid) don't always help you show it that way. Also, while you can represent an n-ary relationship in an ER diagram, you can't necessarily restrict the cardinality of a relationship in the property graph.
+{{</ note >}}
 
 ## Querying property graphs
 
