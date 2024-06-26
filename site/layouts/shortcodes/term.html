@@ -1,0 +1,1 @@
+<mark class="term" {{- if .Get "id" -}}{{ with .Get "id" }} id="{{ . }}"{{ end }}{{ end }}>{{ .Inner | .Page.RenderString}}</mark>
