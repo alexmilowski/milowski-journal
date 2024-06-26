@@ -1,4 +1,4 @@
-<figure class="{{ with .Get "class" }}{{ . }}{{ end }} listing">
+<figure {{- if .Get "id" -}}{{ with .Get "id" }} id="{{ . }}"{{ end }}{{- end -}} class="{{ with .Get "class" }}{{ . }}{{ end }} listing">
     {{ .Inner | .Page.RenderString}}
    <figcaption>
       {{ with (.Get "title") -}}
