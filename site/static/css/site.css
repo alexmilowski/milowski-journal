@@ -219,6 +219,31 @@ figure.listing > pre, figure.listing div.highlight {
    margin-right: 1em;
 }
 
+dl {
+   margin-left: 1em;
+}
+
+dl dt {
+   font-weight: bold;
+   padding-bottom: 0.5em;
+}
+
+dl dd {
+   margin-inline-start: 0.5em;
+   margin-bottom: 0.5em;
+}
+
+mark.term {
+   background-color: inherit;
+   font-style: italic;
+}
+
+blockquote {
+   margin-left: 1em;
+   border-left: 1px solid rgb(200,200,200);
+   padding-left: 0.5em;
+}
+
 .note {
    border-left: 1px solid rgb(200,200,200);
    margin-left: 2em;
