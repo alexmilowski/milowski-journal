@@ -332,9 +332,60 @@ and edges would be used to construct the missing graph patterns. Without the sem
 kind of statements, a client application must test for the existence of various nodes and edges
 to perform updates; a possibly expensive operation to do outside the database engine.
 
+## Possible applications
+
+The obvious candidates for adoption are current databases that implement property graphs
+and the openCypher query language. These products are positioned close enough that a
+simple syntax transformation may support simple GQL queries. While a more complicated
+transformation layer may be able to be layered without much effort.
+
+A "complete" GQL implementation may be farther afield. This particularly depends on
+the features of the query language required by certain applications. There are 228 optional 
+features in the GQL standard. Whereas, particular application areas may require a common 
+subset of these to be implemented for successful use.
+
+In the near term, it is fair to assume that areas of applications will be the 
+same areas currently addressed by property graph database technologies. Longer term,
+you may see an expansion of possibilities as relational databases add graph query capabilities
+(e.g., Apache AGE for Postgres [@age]). Such things may bridge the gap for scaling
+database deployments.
+
+GQL is unlikely to change the scope of applications where openCypher has currently
+been used to access property graph databases. Instead, it just helps legitimize the
+offering of these database engines by giving them a standardized query language. By
+doing so, developer and user tools can be separated from database engines and this
+may help adoption.
+
 ## Conclusions
 
+As a new standard, it remains to be seen what the pace and breadth of adoption will be as
+database vendors and users contemplate graph databases. There are a core set of likely
+vendors who are already using openCypher where the conversion to GQL as an alternate
+syntax is probably. Whether there are conformance levels that match the subsets of GQL
+that are useful to them is worth further research.
 
+The GQL standard contains a variety of alternative syntaxes. For reasons not stated
+in the standard itself, there are keyword synonyms like "NODE" versus "VERTEX", 
+"EDGE" vs "RELATION", etc. that seem superfluous and likely to lead to user
+confusion or interoperability issues. Similarly, there are various keywords 
+that are simply optional without affecting the outcome (e.g., "PROPERTY GRAPH" vs
+"GRAPH") and that seems also unneeded.
+
+The standard itself is devoid of examples. It is not intended to be a primer. Yet, the
+semantics described in the "General Rules" of various statements feel under specified
+at times. The combination of these two will likely lead to the need for clarifications
+or revisions from the editors.
+
+Within GQL there is also a schema language for describing graphs nodes, edges, and
+their labels and properties. While a good start at describing graph structures, it
+will need more abilities in future revisions. It should be viewed as a schema language 
+for "leaf types" that can be used by the database engine for optimizations and 
+basic type checking.
+
+These concerns and opinions lead to one general observations: there will be revisions to 
+the GQL standard. This revision will contain, at least, corrections or clarifications. It
+is unlikely to expand the scope of an implementor's burden without sufficient justification.
+Meanwhile, let's welcome the new kid on the block and see what they can do.
 
 ## References
 
@@ -394,4 +445,8 @@ references:
    title: Formalising openCypher Graph Queries in Relational Algebra
    container-title: Advances in Databases and Information Systems
    doi: https://doi.org/10.1007/
+ - id: age
+   type: webpage
+   title: "Apache AGE : Graph Database for Postgres SQL"
+   url: https://age.apache.org
 ---
