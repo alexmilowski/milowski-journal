@@ -14,7 +14,7 @@ keywords:
   - RE
   - Relation Extraction
 aliases: /p/2024/09/09/
-description: Describing graphs with GQL schemas
+description: When knowledge graphs are generated with an LLM and the used with an LLM, there is an inherent circularity that we need to test.
 ---
 
 I recently read ["Medical Graph RAG: Towards Safe Medical Large Language Model via Graph Retrieval-Augmented Generation"](https://arxiv.org/abs/2408.04187)
