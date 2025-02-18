@@ -1,10 +1,5 @@
 <article>
    <h1>{{.Title}}</h1>
-   <section class="info">
-      <p class="metadata">
-         {{- if .Aliases -}}<script type="IN/Share" data-url={{ index .Aliases 0 | absURL }}></script>{{- else -}}<script type="IN/Share" data-url={{ .Page.Permalink }}></script>{{- end -}}
-         <a href={{ .Page.Permalink }} title="link to this entry">🔗</a> <time datetime="{{.Date.Format "2006-01-02T15:04:05Z07:00"}}" title={{ .Date.UTC | time.Format "2006-01-02 15:04:05Z" }}>{{ .Date | time.Format "2006-01-02" }}</time> </p>
-   </section>
    <aside class="keywords">
       {{ $keywords := .Site.Taxonomies.keywords}}
       {{ range .Keywords }}
@@ -13,5 +8,10 @@
       {{ end }}
       {{ end }}
    </aside>
+   <section class="info">
+      <p class="metadata">
+         {{- if .Aliases -}}<script type="IN/Share" data-url={{ index .Aliases 0 | absURL }}></script>{{- else -}}<script type="IN/Share" data-url={{ .Page.Permalink }}></script>{{- end -}}
+         <a href={{ .Page.Permalink }} title="link to this entry">🔗</a> <time datetime="{{.Date.Format "2006-01-02T15:04:05Z07:00"}}" title={{ .Date.UTC | time.Format "2006-01-02 15:04:05Z" }}>{{ .Date | time.Format "2006-01-02" }}</time> </p>
+   </section>
    {{.Content}}
 </article>

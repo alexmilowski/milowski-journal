@@ -1,11 +1,5 @@
 {{ define "main" }}
-   <section class="index">
-      {{- range (where .Site.RegularPages.ByDate.Reverse "Section" "journal" | first 3) }} {{- partial "article.html" . -}} <div class="between-article">next entry</div> {{ end }}
-      {{- range (where .Site.RegularPages.ByDate.Reverse "Section" "journal" | after 4 | first 1) }} 
-      <nav class="article">
-         {{ with .NextInSection}} → <a href={{.RelPermalink}} title="following entry">{{.Title}}</a> {{ end }}
-       </nav>
-       
-      {{end}}
+   <section class="index journal">
+      {{- range (where .Site.RegularPages.ByDate.Reverse "Section" "journal" ) }} {{- partial "summary.html" . -}}{{ end }}
    </section>
 {{ end }}

@@ -3,8 +3,12 @@ body {
    background-color: white;
    font-size: 1.25em;
    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+   line-height: 1.6
 }
 
+sup {
+   line-height: 0;
+}
 header {
    min-height: 2em;
 }
@@ -26,6 +30,10 @@ main > aside {
    margin-top: -3.5em;
 }
 
+section.entry, section.index {
+   padding-top: 1em;
+}
+
 section.entry > nav.article {
    order: 1;
    display: block;
@@ -42,6 +50,10 @@ aside section.about {
 aside > section > h2 {
    margin-top: 0.375em;
    border-bottom: 1pt solid rgb(200,200,200);
+}
+
+aside section.about p {
+   text-align: justify;
 }
 
 aside section.about p > img {
@@ -76,6 +88,7 @@ article > h1 {
    font-size: 1.5em;
    border-bottom: 1px solid rgb(200,200,200);
    margin-top: 0px;
+   margin-bottom: 0.375em;
 }
 
 article > section.info {
@@ -86,7 +99,55 @@ article > section.info > .metadata span {
 
 }
 
+article .metadata {
+   margin: 0;
+}
 
+article .metadata span.IN-widget {
+   vertical-align: middle !important;
+   margin-right: 0.375em !important;
+}
+
+main > section.index > article p, main > section.entry > article p {
+   text-align: justify;
+}
+
+main > section.index.journal {
+   display: flex;
+   flex-flow: row wrap;
+   width: 95%;
+   margin-left: auto;
+   margin-right: auto;
+   padding-left: 0;
+   padding-right: 0;
+}
+
+main > section.index.journal article.summary {
+   min-width: 10em;
+   width: 31%;
+   padding-left: 0.5em;
+   padding-right: 0.5em;
+   font-size: 0.875em;
+}
+
+article.summary > h1 {
+   font-size: 1em;
+}
+
+section.welcome {
+   text-align: justify;
+}
+
+article.summary > .info{
+   font-size: 0.875em;
+   margin-bottom: 0em;
+} 
+article.summary > .keywords {
+   font-size: 0.75em;
+}
+article.summary > .description {
+   font-size: 0.75em;
+}
 main > section > article table {
    width: 90%;
    margin-left: auto;
@@ -123,14 +184,17 @@ main > section > article table tbody > tr:nth-child(even) {
 }
 
 article aside.keywords {
-   font-size: 0.75em;
+   font-size: 0.875em;
+   float: right;
+   width: 75%;
+   text-align: right;
 }
 
 article aside.keywords .keyword {
    color: #cc6600;
 }
 
-article aside.keywords .keyword:before {
+article aside.keywords .keyword:before, article.summary section.keywords .keyword:before {
    content: "#";
    margin-right: -0.125em;
 }

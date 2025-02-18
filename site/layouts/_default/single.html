@@ -1,8 +1,8 @@
 {{ define "main" }}
 <section class="entry">
 <nav class="article">
-  {{ with .NextInSection}} <a href={{.RelPermalink}} title="previous entry">{{.Title}}</a> ← {{ end }}
-  {{ with .PrevInSection}} → <a href={{.RelPermalink}} title="following entry">{{.Title}}</a>{{ end }}
+  {{ with .NextInSection}} <a href={{.RelPermalink}} title="previous entry">{{.Title}}</a> ← {{ end }} [<a href="/journal/">articles</a>]
+  {{ with .PrevInSection}} → <a href={{.RelPermalink}} title="following entry">{{.Title}}</a> {{ end }}
 </nav>
 {{- partial "article.html" . -}} 
 </section>

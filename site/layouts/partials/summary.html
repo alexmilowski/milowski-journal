@@ -1,0 +1,16 @@
+<article class="summary">
+   <h1><a href={{.RelPermalink}}>{{.Title}}</a></h1>
+   <section class="keywords">
+      {{ $keywords := .Site.Taxonomies.keywords}}
+      {{ range .Keywords }}
+      {{ with $keywords.Get . }}
+      <a class="keyword" href="{{ .Page.Permalink }}">{{ .Page.Title }}</a> 
+      {{ end }}
+      {{ end }}
+   </section>
+   <section class="info">
+      <p class="metadata">
+         <time datetime="{{.Date.Format "2006-01-02T15:04:05Z07:00"}}" title={{ .Date.UTC | time.Format "2006-01-02 15:04:05Z" }}>{{ .Date | time.Format "2006-01-02" }}</time> </p>
+   </section>
+   <p class="description">{{.Description}}</p>
+</article>

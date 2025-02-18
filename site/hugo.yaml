@@ -9,3 +9,16 @@ markup:
   goldmark:
     renderer:
       unsafe: true
+    extensions:
+      footnote: true
+      extras:
+        delete:
+          enable: true
+        insert:
+          enable: true
+        mark:
+          enable: true
+        subscript:
+          enable: true
+        superscript:
+          enable: true        

@@ -1,0 +1,9 @@
+{{- $u := urls.Parse (.Get "src") -}}
+{{- $href := $u.String -}}
+{{- if not $u.IsAbs -}}
+  {{- with or (.Page.Resources.Get $u.Path) (resources.Get $u.Path) -}}
+    {{- $href = .RelPermalink -}}
+  {{- end -}}
+{{- end -}}
+
+<a href="{{ $href }}" download='{{ (.Get "filename") }}'>{{ (.Get "filename") }}</a>

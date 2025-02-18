@@ -1,9 +1,15 @@
 {{ define "main" }}
    <section class="index">
+      <section class="welcome">
+      <h1>Welcome!</h1>
+      <p>Here you'll find a variety of articles I've written over the years (see the <a href="/journal/">chronological list</a>). The site is organized as a very 
+         simple blog (old school) and below are few of the first entries listed in chronological order. You can find site keywords and more information about me in the upper right.</p>
+      </section>
+      <div class="between-article">ready? set? go!</div> 
       {{- range (where .Site.RegularPages.ByDate.Reverse "Section" "journal" | first 3) }} {{- partial "article.html" . -}} <div class="between-article">next entry</div> {{ end }}
       {{- range (where .Site.RegularPages.ByDate.Reverse "Section" "journal" | after 4 | first 1) }} 
       <nav class="article">
-         {{ with .NextInSection}} → <a href={{.RelPermalink}} title="following entry">{{.Title}}</a> {{ end }}
+         [<a href="/journal/">articles</a>] {{ with .NextInSection}} → <a href={{.RelPermalink}} title="following entry">{{.Title}}</a> {{ end }}
        </nav>
        
       {{end}}
