@@ -1,0 +1,80 @@
+Name,Category,Active,URL,Age,DSL,Annotation,Task Language,Deployment,SaaS
+Activepieces,Business Processing,Yes,https://github.com/activepieces/activepieces,2022-11,No,No,Typescript,"Docker, Kubernetes",Yes
+AiiDA,Science,Yes,https://github.com/aiidateam/aiida-core,2012-10,No,Yes,Python,Docker,No
+Apache Airflow,Data Science / ML,Yes,https://github.com/apache/airflow,2014-10,No,Yes,Python,"Docker, Kubernetes",No
+Argo,Data Science / ML,Yes,https://github.com/argoproj/argo-workflows,2017-10,YAML,No,Any,Kubernetes,No
+Arvados,Science,Yes,https://github.com/arvados/arv,2011-07,YAML,No,Any,Custom,No
+Azkaban,Data Engineering,No,https://github.com/azkaban/azkaban,2012-04,YAML,No,Any,Custom,No
+Brigade,Operations,No,https://github.com/brigadecore/brigade,2017-08,No,No,Any,Custom,No
+Bytechef,Business Processing,Yes,https://github.com/bytechefhq/bytechef,2016-06,No,No,Java,Custom,Yes
+Cabloy,Business Processing,No,https://github.com/cabloy/cabloy,2017-08,No,No,Javascript,Custom,No
+Cadence,Business Processing,Yes,https://github.com/cadence-workflow/cadence,2016-10,No,No,"Go, Java",Docker,No
+Camunda,Business Processing,Yes,https://github.com/camunda/camunda-bpm-platform,2012-03,XML,No,Java,Custom,Yes
+CDS,Operations,Yes,https://github.com/ovh/cds,2016-10,YAML,No,Any,Docker,No
+Celery Director,Business Processing,No,https://github.com/ovh/celery-director,2020-01,YAML,Yes,Python,Custom,No
+CGraph,Data Science / ML,Yes,https://github.com/ChunelFeng/CGraph,2021-04,No,No,C++,Custom,No
+CloudSlang,Operations,Yes,https://github.com/CloudSlang/cloud-slang,2014-10,YAML,No,Any,Custom,Yes
+Conductor,Business Processing,Yes,https://github.com/conductor-oss/conductor,2016-12,JSON,No,Any,Docker,Yes
+Copper Engine,Business Processing,No,https://github.com/copper-engine/copper-engine,2011-10,No,Yes,Java,Custom,No
+Couler,Data Science / ML,No,https://github.com/couler-proj/couler,2020-08,No,No,Python,Custom,No
+Covalent,Data Science / ML,Yes,https://github.com/AgnostiqHQ/covalent,2021-10,No,Yes,Python,Custom,Yes
+Cromwell,Science,Yes,https://github.com/broadinstitute/cromwell,2015-04,Custom,No,Any,Custom,No
+Cycl,Science,Yes,https://github.com/cylc/cylc-flow,2008-07,Custom,No,Python,Custom,No
+Cyclone,Data Science / ML,No,https://github.com/caicloud/cyclone,2016-10,No,No,Any,Kubernetes,No
+Dagu,Operations,Yes,https://github.com/dagu-org/dagu,2022-04,YAML,No,Any,Docker,No
+Dagster,Data Engineering,Yes,https://github.com/dagster-io/dagster,2018-05,No,Yes,Python,Custom,Yes
+Dapr Worflows,Business Processing,Yes,https://github.com/dapr/dapr,2019-06,No,No,Any,"Kubernetes, Serverless",No
+Didact,Business Processing,No,https://github.com/DidactHQ/didact,2023-01,No,No,.Net,Custom,No
+DigDag,Operations,No,https://github.com/treasure-data/digdag,2015-09,Custom,No,Java,Custom,No
+Direktiv,Business Processing,Yes,https://github.com/direktiv/direktiv,2021-02,Custom,Yes,Rust,Custom,No
+DolphinScheduler,Data Engineering,Yes,https://github.com/apache/dolphinscheduler,2019-02,No,Yes,Python,"Docker, Kubernetes",No
+elsa-workflows,Business Processing,Yes,https://github.com/elsa-workflows/elsa-core,2018-09,No,No,.Net,Custom,No
+easy-rules,Business Processing,No,https://github.com/j-easy/easy-rules,2013-03,No,Yes,Java,Custom,No
+FireWorks,Operations,No,https://github.com/materialsproject/fireworks,2013-01,YAML,No,Any,Custom,No
+Fission Workflows,Business Processing,No,https://github.com/fission/fission-workflows,2017-07,YAML,No,Any,Kubernetes,No
+Flowable,Business Processing,Yes,https://github.com/flowable/flowable-engine,2012-09,XML,No,Java,Custom,No
+Flor,Business Processing,No,https://github.com/floraison/flor,2015-11,No,No,Ruby,Custom,No
+Flyte,Data Science / ML,Yes,https://github.com/flyteorg/flyte,2019-04,No,Yes,Python,Kubernetes,Yes
+ForML,Data Science / ML,No,https://github.com/formlio/forml/,2018-12,No,No,Python,Custom,No
+Galaxy Project,Science,Yes,https://github.com/galaxyproject/galaxy,2008-11,No,No,Python,Custom,No
+Goflow,Operations,No,https://github.com/fieldryand/goflow,2020-03,No,No,Any,Docker,No
+Huginn,Business Processing,Yes,https://github.com/huginn/huginn,2013-03,No,No,Liquid,Docker,No
+Imixs-Workflow,Business Processing,Yes,https://github.com/imixs/imixs-workflow,2014-01,XML,No,"Java, Javascript","Docker, Kubernetes",No
+Inngest,Data Science / ML,Yes,https://github.com/inngest/inngest,2021-03,No,Yes,"Javascript, Python, Go, Java",Custom,Yes
+iWF,Business Processing,Yes,https://github.com/indeedeng/iwf,2022-07,No,No,"Java, Go, Python",Docker,No
+Kestra,Business Processing,Yes,https://github.com/kestra-io/kestra,2019-08,YAML,No,Any,"Docker, Kubernetes",Yes
+Kiba,Data Engineering,No,https://github.com/thbar/kiba,2013-07,No,No,Ruby,Custom,No
+Kubeflow,Data Science / ML,Yes,https://github.com/kubeflow/pipelines,2018-05,YAML,Yes,Python,Kubernetes,No
+Laravel Workflow,Business Processing,No,https://github.com/laravel-workflow/laravel-workflow,2022-02,No,No,PHP,Custom,No
+Littleflow,Data Science / ML,Yes,https://github.com/alexmilowski/littleflow,2022-07,Custom,Yes,Python,Kubernetes,No
+Petri Flow,Business Processing,No,https://github.com/hooopo/petri_flow,2020-01,No,No,Ruby,Custom,No
+Martian,Science,Yes,https://github.com/martian-lang/martian,2014-07,Custom,No,Go,Custom,No
+Metaflow,Data Science / ML,Yes,https://github.com/Netflix/metaflow,2019-12,No,Yes,Python,Kubernetes,Yes
+MassTransit,Business Processing,Yes,https://github.com/MassTransit/MassTransit,2007-12,No,No,.Net,Custom,No
+Mistral,Business Processing,Yes,https://github.com/openstack/mistral,2013-10,YAML,No,Any,Custom,No
+MLRun,Data Science / ML,Yes,https://github.com/mlrun/mlrun,2019-05,No,Yes,Python,Kubernetes,Yes
+N8n-io,Data Science / ML,Yes,https://github.com/n8n-io/n8n,2019-06,No,No,Any,Docker,Yes
+Nextflow,Science,Yes,https://github.com/nextflow-io/nextflow,2013-03,Custom,No,Java,Custom,No
+Node-RED,Business Processing,Yes,https://github.com/node-red/node-red,2013-09,No,No,Javascript,Custom,No
+Pallets,Business Processing,No,https://github.com/linkyndy/pallets,2016-04,No,No,Ruby,Custom,No
+Pegasus,Science,Yes,https://github.com/pegasus-isi/pegasus,2007-03,No,No,Any,Custom,No
+Piper,Business Processing,No,https://github.com/runabol/piper,2016-06,No,No,Java,Custom,No
+Ploomer,Data Engineering,Yes,https://github.com/ploomber/ploomber,2020-01,YAML,No,Python,Custom,No
+Plync,Data Science / ML,No,https://github.com/plynx-team/plynx,2017-11,No,No,Any,Kubernetes,No
+Polyaxon,Data Science / ML,Yes,https://github.com/polyaxon/polyaxon,2016-03,YAML,No,Python,Kubernetes,No
+Popper,Business Processing,No,https://github.com/getpopper/popper,2015-09,YAML,No,Any,Custom,No
+Prefect,Data Engineering,Yes,https://github.com/PrefectHQ/prefect,2021-07,No,Yes,Python,Custom,Yes
+Restate,Business Processing,Yes,https://github.com/restatedev/restate,2023-01,No,No,Any,Kubernetes,Yes
+rill-flow,Data Science / ML,Yes,https://github.com/weibocom/rill-flow,2023-11,YAML,No,Any,Custom,No
+RunDeck,Operations,Yes,https://github.com/rundeck/rundeck,2010-10,No,No,Any,Custom,Yes
+SciPipe,Science,No,https://github.com/scipipe/scipipe,2015-03,No,No,Go,Custom,No
+Snakemake,Data Engineering,Yes,https://github.com/snakemake/snakemake,2011-11,Custom,No,Any,Custom,No
+StackStorm,Business Processing,Yes,https://github.com/StackStorm/st2,2014-05,YAML,No,Any,"Docker, Kubernetes",No
+StepWise,Business Processing,Yes,https://github.com/LittleLittleCloud/StepWise,2024-09,No,No,.Net,Custom,No
+Titanoboa,Data Engineering,No,https://github.com/commsor/titanoboa,2018-05,No,No,Java,Custom,No
+Tork,Business Processing,Yes,https://github.com/runabol/tork,2023-05,YAML,No,Any,Docker,No
+utask,Business Processing,Yes,https://github.com/ovh/utask,2019-11,YAML,No,Any,Custom,No
+Wexflow,Business Processing,Yes,https://github.com/aelassas/wexflow,2022-10,XML,No,.Net,Custom,No
+Windmill,Business Processing,Yes,https://github.com/windmill-labs/windmill,2022-05,No,No,Any,"Docker, Kubernetes",No
+YAWL,Business Processing,Yes,https://github.com/yawlfoundation/yawl,2006-05,XML,No,Any,Custom,No
+zenml,Data Science / ML,Yes,https://github.com/zenml-io/zenml,2020-11,No,Yes,Python,Custom,No
